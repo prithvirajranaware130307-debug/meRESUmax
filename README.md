@@ -101,6 +101,44 @@ Frontend will start on `http://127.0.0.1:5173`.
 
 ---
 
+## ☁️ Deploying to Render
+
+You can deploy meRESUmax on Render using either the included `render.yaml` Blueprint or manual service creation:
+
+### Option A: Automatic Blueprint (Recommended)
+1. In your [Render Dashboard](https://dashboard.render.com), click **New +** → **Blueprint**.
+2. Connect your GitHub repository: `https://github.com/prithvirajranaware130307-debug/meRESUmax`.
+3. Render will automatically detect `render.yaml` and configure both the backend web service and the frontend static site with the correct build and start commands!
+
+### Option B: Manual Configuration
+
+#### 1. Backend Service (Web Service)
+- **Environment**: Python
+- **Root Directory**: `backend`
+- **Build Command**: `pip install -r requirements.txt`
+- **Start Command**: `gunicorn --bind 0.0.0.0:$PORT run:app`
+- **Health Check Path**: `/api/health`
+- **Environment Variables**:
+  - `FLASK_ENV`: `production`
+  - `SECRET_KEY`: *(Generate a secure random string)*
+  - `CORS_ORIGINS`: `*` *(or your frontend Render URL)*
+  - `GEMINI_API_KEY`: *(Optional: Google Gemini API key)*
+  - `GEMINI_MODEL`: `gemini-2.5-flash`
+  - `DATABASE_URL`: *(Optional Render PostgreSQL instance, or defaults to local SQLite)*
+
+#### 2. Frontend Service (Static Site)
+- **Root Directory**: `frontend`
+- **Build Command**: `npm ci && npm run build`
+- **Publish Directory**: `dist`
+- **Environment Variables**:
+  - `VITE_API_URL`: `https://<your-backend-service-name>.onrender.com`
+- **Redirects / Rewrites**:
+  - **Type**: `Rewrite`
+  - **Source**: `/*`
+  - **Destination**: `/index.html` *(ensures React client-side routing works on page refreshes)*
+
+---
+
 ## 🧪 Automated Test Suite
 
 Run the full pytest test suite:

@@ -166,6 +166,36 @@ class ResumeParser:
         return sections
 
     @staticmethod
+    def extract_contact_details(text: str) -> Dict[str, str]:
+        email_match = re.search(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', text)
+        phone_match = re.search(r'(?:\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}', text)
+        linkedin_match = re.search(r'(?:https?:\/\/)?(?:www\.)?linkedin\.com\/in\/([A-Za-z0-9_-]+)', text, re.IGNORECASE)
+        github_match = re.search(r'(?:https?:\/\/)?(?:www\.)?github\.com\/([A-Za-z0-9_-]+)', text, re.IGNORECASE)
+        
+        return {
+            'email': email_match.group(0) if email_match else '',
+            'phone': phone_match.group(0) if phone_match else '',
+            'linkedin': f"https://linkedin.com/in/{linkedin_match.group(1)}" if linkedin_match else '',
+            'github': f"https://github.com/{github_match.group(1)}" if github_match else ''
+        }
+
+    @staticmethod
+    def extract_measurable_impact(text: str) -> List[str]:
+        """Extract lines or clauses demonstrating quantifiable achievements and metrics."""
+        lines = [line.strip() for line in text.split('\n') if line.strip()]
+        impact_lines = []
+        metric_pattern = re.compile(
+            r'(\d+%\s*|\$\d+|\b\d+\+?\s*(users|clients|requests|records|ms|seconds|stars|downloads|percent|reduction|increase|gain|throughput|queries))',
+            re.IGNORECASE
+        )
+        for line in lines:
+            if metric_pattern.search(line):
+                cleaned = line.lstrip('•-* ').strip()
+                if 20 <= len(cleaned) <= 220 and cleaned not in impact_lines:
+                    impact_lines.append(cleaned)
+        return impact_lines[:8]
+
+    @staticmethod
     def extract_skills(text: str) -> Dict[str, Any]:
         extracted_by_cat = {}
         all_skills = []
@@ -214,6 +244,8 @@ class ResumeParser:
 
         sections = cls.extract_sections(text)
         skills_info = cls.extract_skills(text)
+        contact_info = cls.extract_contact_details(text)
+        measurable_impact = cls.extract_measurable_impact(text)
 
         words = text.split()
         word_count = len(words)
@@ -222,6 +254,8 @@ class ResumeParser:
             'text': text,
             'word_count': word_count,
             'sections': sections,
+            'contact_info': contact_info,
+            'measurable_impact': measurable_impact,
             'skills': skills_info['skills_list'],
             'skills_by_category': skills_info['skills_by_category'],
             'total_skills_count': skills_info['total_skills_count']

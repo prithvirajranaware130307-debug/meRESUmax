@@ -6,7 +6,7 @@ import hashlib
 from functools import wraps
 from flask import request, jsonify, g
 from ..config import Config
-from ..models import User
+from ..models import db, User
 
 def generate_token(user_id: int) -> str:
     payload = {
@@ -43,6 +43,8 @@ def get_current_user():
         token = auth_header.split(' ', 1)[1].strip()
     elif 'token' in request.cookies:
         token = request.cookies.get('token')
+    elif request.args.get('token'):
+        token = request.args.get('token')
     
     if not token:
         return None
@@ -51,7 +53,7 @@ def get_current_user():
     if not user_id:
         return None
         
-    return User.query.get(user_id)
+    return db.session.get(User, user_id)
 
 def auth_required(f):
     @wraps(f)

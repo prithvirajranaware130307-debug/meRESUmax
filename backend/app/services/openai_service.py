@@ -18,25 +18,24 @@ class AIService:
         return None
 
     @classmethod
-    def _call_gemini(
-        cls,
-        resume_text: str,
-        skills: List[str],
-        target_role: str,
-        quality_score: float,
-        matched_skills: List[str],
-        missing_skills: List[str]
-    ) -> Dict[str, Any]:
-        """Calls Google Gemini API with JSON structured output."""
+    def _build_prompts(cls, resume_text: str, skills: List[str], target_role: str, quality_score: float, matched_skills: List[str], missing_skills: List[str]):
         safe_text = resume_text[:3500]
         system_prompt = (
             "You are meRESUmax Career Intelligence AI, a senior technical recruiter and career coach. "
-            "Analyze the candidate's resume objectively. Do NOT invent fake companies, degrees, or years of experience. "
+            "Analyze the candidate's resume objectively. Do NOT invent fake degrees or non-existent companies. "
+            "Provide actionable suggestions with realistic before-and-after examples. "
+            "For every weak area, include an improved example (e.g., transforming passive phrasing like 'Worked on a website' "
+            "into quantifiable STAR bullets like 'Built a responsive React dashboard that reduced manual reporting time by 35% for 20 internal users'). "
+            "Suggest missing skills relevant to the target role. Give ATS-friendly keyword recommendations without keyword stuffing. "
             "Return ONLY valid JSON with keys: "
             "'executive_summary' (string), "
             "'summary_rewrite' (suggested enhanced 3-sentence summary for target role), "
             "'key_insights' (array of 3 strings), "
-            "'project_bullet_improvements' (array of objects with 'original_theme', 'suggested_rewrite', 'rationale'), "
+            "'high_priority_fixes' (array of 3 objects with 'issue', 'action', 'priority'), "
+            "'better_bullet_examples' (array of 3 objects with 'weak', 'better', 'rationale'), "
+            "'missing_skills' (array of missing skills for target role), "
+            "'ats_keywords' (array of 5 ATS-friendly keyword phrases), "
+            "'next_steps' (array of 3 actionable next steps), "
             "'interview_prep_tips' (array of 3 technical questions and advice), "
             "'roadmap_milestones' (array of 4 objects with 'title', 'description', 'priority', 'category')."
         )
@@ -48,6 +47,20 @@ class AIService:
             f"Missing Key Skills: {', '.join(missing_skills[:10])}\n"
             f"Resume Content Excerpt:\n{safe_text}\n"
         )
+        return system_prompt, user_prompt
+
+    @classmethod
+    def _call_gemini(
+        cls,
+        resume_text: str,
+        skills: List[str],
+        target_role: str,
+        quality_score: float,
+        matched_skills: List[str],
+        missing_skills: List[str]
+    ) -> Dict[str, Any]:
+        """Calls Google Gemini API with JSON structured output."""
+        system_prompt, user_prompt = cls._build_prompts(resume_text, skills, target_role, quality_score, matched_skills, missing_skills)
 
         model = Config.GEMINI_MODEL or "gemini-2.5-flash"
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={Config.GEMINI_API_KEY}"
@@ -66,6 +79,27 @@ class AIService:
         res_json = resp.json()
         raw_text = res_json['candidates'][0]['content']['parts'][0]['text']
         ai_data = json.loads(raw_text)
+        
+        # Normalize bullet improvements for compatibility
+        if 'better_bullet_examples' in ai_data and 'project_bullet_improvements' not in ai_data:
+            ai_data['project_bullet_improvements'] = [
+                {
+                    'original_theme': item.get('weak', ''),
+                    'suggested_rewrite': item.get('better', ''),
+                    'rationale': item.get('rationale', '')
+                }
+                for item in ai_data['better_bullet_examples']
+            ]
+        elif 'project_bullet_improvements' in ai_data and 'better_bullet_examples' not in ai_data:
+            ai_data['better_bullet_examples'] = [
+                {
+                    'weak': item.get('original_theme', ''),
+                    'better': item.get('suggested_rewrite', ''),
+                    'rationale': item.get('rationale', '')
+                }
+                for item in ai_data['project_bullet_improvements']
+            ]
+
         ai_data['provider'] = 'google_gemini'
         ai_data['model'] = model
         ai_data['is_live_ai'] = True
@@ -96,26 +130,7 @@ class AIService:
         client = cls.get_client()
         if client:
             try:
-                safe_text = resume_text[:3500]
-                system_prompt = (
-                    "You are meRESUmax Career Intelligence AI, a senior technical recruiter and career coach. "
-                    "Analyze the candidate's resume objectively. Do NOT invent fake companies, degrees, or years of experience. "
-                    "Return ONLY valid JSON with keys: "
-                    "'executive_summary' (string), "
-                    "'summary_rewrite' (suggested enhanced 3-sentence summary for target role), "
-                    "'key_insights' (array of 3 strings), "
-                    "'project_bullet_improvements' (array of objects with 'original_theme', 'suggested_rewrite', 'rationale'), "
-                    "'interview_prep_tips' (array of 3 technical questions and advice), "
-                    "'roadmap_milestones' (array of 4 objects with 'title', 'description', 'priority', 'category')."
-                )
-                user_prompt = (
-                    f"Target Role: {target_role}\n"
-                    f"Resume Quality Score: {quality_score}/100\n"
-                    f"Extracted Skills: {', '.join(skills[:25])}\n"
-                    f"Matched Skills: {', '.join(matched_skills[:15])}\n"
-                    f"Missing Key Skills: {', '.join(missing_skills[:10])}\n"
-                    f"Resume Content Excerpt:\n{safe_text}\n"
-                )
+                system_prompt, user_prompt = cls._build_prompts(resume_text, skills, target_role, quality_score, matched_skills, missing_skills)
 
                 response = client.chat.completions.create(
                     model=Config.OPENAI_MODEL or "gpt-4o-mini",
@@ -130,6 +145,26 @@ class AIService:
                 
                 content = response.choices[0].message.content
                 ai_data = json.loads(content)
+                
+                if 'better_bullet_examples' in ai_data and 'project_bullet_improvements' not in ai_data:
+                    ai_data['project_bullet_improvements'] = [
+                        {
+                            'original_theme': item.get('weak', ''),
+                            'suggested_rewrite': item.get('better', ''),
+                            'rationale': item.get('rationale', '')
+                        }
+                        for item in ai_data['better_bullet_examples']
+                    ]
+                elif 'project_bullet_improvements' in ai_data and 'better_bullet_examples' not in ai_data:
+                    ai_data['better_bullet_examples'] = [
+                        {
+                            'weak': item.get('original_theme', ''),
+                            'better': item.get('suggested_rewrite', ''),
+                            'rationale': item.get('rationale', '')
+                        }
+                        for item in ai_data['project_bullet_improvements']
+                    ]
+
                 ai_data['provider'] = 'openai'
                 ai_data['model'] = Config.OPENAI_MODEL or 'gpt-4o-mini'
                 ai_data['is_live_ai'] = True
@@ -151,7 +186,7 @@ class AIService:
         matched_skills: List[str],
         missing_skills: List[str]
     ) -> Dict[str, Any]:
-        """High-fidelity fallback advice calibrated to the candidate's actual data."""
+        """High-fidelity fallback advice calibrated to the candidate's actual data with realistic examples."""
         top_matched = matched_skills[:4] if matched_skills else skills[:4]
         top_missing = missing_skills[:4] if missing_skills else ["System Design", "Cloud Infrastructure"]
         
@@ -176,22 +211,59 @@ class AIService:
             "Enhance resume bullet points with STAR format (Situation, Task, Action, Result) with quantified metrics."
         ]
 
-        project_bullet_improvements = [
+        high_priority_fixes = [
             {
-                'original_theme': "Built an application and integrated backend APIs.",
-                'suggested_rewrite': f"Architected a scalable {target_role} service utilizing {top_matched[0] if top_matched else 'Python'}, reducing latency by 28% and handling concurrent client requests.",
-                'rationale': "Emphasizes technical ownership, active verbs, and quantified performance impact."
+                'issue': f"Missing benchmark skills for {target_role}: {missing_str}",
+                'action': f"Add a targeted capstone project showcasing {top_missing[0] if top_missing else 'modern frameworks'} with automated tests and CI/CD.",
+                'priority': "High"
             },
             {
-                'original_theme': "Worked on database design and user authentication.",
-                'suggested_rewrite': "Implemented secure JWT-based session authentication and indexed relational database schemas, ensuring data isolation and sub-100ms query response times.",
-                'rationale': "Highlights security awareness, schema optimization, and measurable query speed."
+                'issue': "Passive language and unquantified project descriptions",
+                'action': "Revise all bullet points to use active verbs and quantify impact (latency reductions, data volumes, users served).",
+                'priority': "High"
+            },
+            {
+                'issue': "ATS scanability and section keyword density",
+                'action': "Group technical skills by category (Languages, Databases, Tools) and include explicit keywords from the job description.",
+                'priority': "Medium"
             }
+        ]
+
+        better_bullet_examples = [
+            {
+                'weak': "Worked on a website.",
+                'better': "Built a responsive React dashboard that reduced manual reporting time by 35% for 20 internal users.",
+                'rationale': "Specifies component architecture, identifies the active user base, and quantifies workflow efficiency gain."
+            },
+            {
+                'weak': "Know Python and SQL.",
+                'better': "Used Python, Pandas, and SQL to clean and analyze 50,000+ records, improving reporting accuracy.",
+                'rationale': "Replaces static keyword declarations with verified volume metrics and real business intelligence outcomes."
+            },
+            {
+                'weak': "Made a college project.",
+                'better': "Developed a Flask-based expense tracker with user authentication and PostgreSQL persistence; deployed it for live testing.",
+                'rationale': "Highlights backend security ownership, relational schema design, and production deployment."
+            }
+        ]
+
+        ats_keywords = [
+            f"{target_role} Architecture",
+            f"RESTful API & {top_skills_str.split(',')[0]} Integration",
+            f"Relational & Distributed Databases ({'PostgreSQL, Redis' if 'PostgreSQL' not in top_skills_str else 'SQLAlchemy, Indexing'})",
+            "Agile Development & CI/CD Pipelines",
+            "Automated Testing & Code Quality (PyTest / Jest)"
+        ]
+
+        next_steps = [
+            f"Update your summary section with the role-tailored rewrite targeting {target_role}.",
+            "Replace 2-3 vague bullet points in your projects with the STAR transformations above.",
+            f"Complete a containerized showcase project integrating {top_missing[0] if top_missing else 'Docker & Cloud Deployment'}."
         ]
 
         interview_prep_tips = [
             f"Be ready to explain how you would design a system using {top_matched[0] if top_matched else 'your primary stack'} alongside {top_missing[0] if top_missing else 'relational storage'}.",
-            "Practice walking through a difficult bug you resolved: the debugging methodology, root cause analysis, and preventative regression tests.",
+            "Practice walking through a difficult bug you resolved: debugging methodology, root cause analysis, and preventative regression tests.",
             f"Review standard technical challenges specific to {target_role}: API rate limiting, concurrency handling, and clean code principles."
         ]
 
@@ -226,7 +298,19 @@ class AIService:
             'executive_summary': executive_summary,
             'summary_rewrite': summary_rewrite,
             'key_insights': key_insights,
-            'project_bullet_improvements': project_bullet_improvements,
+            'high_priority_fixes': high_priority_fixes,
+            'better_bullet_examples': better_bullet_examples,
+            'project_bullet_improvements': [
+                {
+                    'original_theme': item['weak'],
+                    'suggested_rewrite': item['better'],
+                    'rationale': item['rationale']
+                }
+                for item in better_bullet_examples
+            ],
+            'missing_skills': top_missing,
+            'ats_keywords': ats_keywords,
+            'next_steps': next_steps,
             'interview_prep_tips': interview_prep_tips,
             'roadmap_milestones': roadmap_milestones,
             'provider': 'deterministic_fallback',

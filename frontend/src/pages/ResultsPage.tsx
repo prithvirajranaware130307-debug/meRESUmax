@@ -7,7 +7,8 @@ import { GlassButton } from '../components/glass/GlassButton';
 import { ScoreDial } from '../components/glass/ScoreDial';
 import { 
   Sparkles, Download, ArrowLeft, CheckCircle2, AlertTriangle, 
-  Copy, Check, FileText, Briefcase, HelpCircle, Compass, Share2
+  Copy, Check, FileText, Briefcase, HelpCircle, Compass, 
+  TrendingUp, ArrowRight, Tag, ListOrdered, ShieldAlert
 } from 'lucide-react';
 
 export const ResultsPage: React.FC = () => {
@@ -15,7 +16,7 @@ export const ResultsPage: React.FC = () => {
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
-  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadAnalysis() {
@@ -32,10 +33,10 @@ export const ResultsPage: React.FC = () => {
     loadAnalysis();
   }, [analysisId]);
 
-  const copyToClipboard = (text: string, index: number) => {
+  const copyToClipboard = (text: string, key: string) => {
     navigator.clipboard.writeText(text);
-    setCopiedIndex(index);
-    setTimeout(() => setCopiedIndex(null), 2000);
+    setCopiedKey(key);
+    setTimeout(() => setCopiedKey(null), 2000);
   };
 
   if (isLoading) {
@@ -62,6 +63,70 @@ export const ResultsPage: React.FC = () => {
   }
 
   const ai = analysis.ai_feedback || {};
+
+  // Standardize high priority fixes
+  const highPriorityFixes = ai.high_priority_fixes && ai.high_priority_fixes.length > 0
+    ? ai.high_priority_fixes
+    : (analysis.weaknesses && analysis.weaknesses.length > 0
+        ? analysis.weaknesses.map((w, i) => ({
+            issue: w,
+            action: analysis.improvements?.[i] || "Update your resume section to address this gap.",
+            priority: i === 0 ? "High" : "Medium"
+          }))
+        : [
+            {
+              issue: "Unquantified project outcomes",
+              action: "Add measurable numbers, data volume, and percentages to project bullet points.",
+              priority: "High"
+            }
+          ]
+      );
+
+  // Standardize bullet transformations
+  const bulletExamples = ai.better_bullet_examples && ai.better_bullet_examples.length > 0
+    ? ai.better_bullet_examples
+    : (ai.project_bullet_improvements && ai.project_bullet_improvements.length > 0
+        ? ai.project_bullet_improvements.map((p) => ({
+            weak: p.original_theme,
+            better: p.suggested_rewrite,
+            rationale: p.rationale
+          }))
+        : [
+            {
+              weak: "Worked on a website.",
+              better: "Built a responsive React dashboard that reduced manual reporting time by 35% for 20 internal users.",
+              rationale: "Specifies component architecture, identifies the active user base, and quantifies workflow efficiency gain."
+            },
+            {
+              weak: "Know Python and SQL.",
+              better: "Used Python, Pandas, and SQL to clean and analyze 50,000+ records, improving reporting accuracy.",
+              rationale: "Replaces static keyword declarations with verified volume metrics and real business intelligence outcomes."
+            },
+            {
+              weak: "Made a college project.",
+              better: "Developed a Flask-based expense tracker with user authentication and PostgreSQL persistence; deployed it for live testing.",
+              rationale: "Highlights backend security ownership, relational schema design, and production deployment."
+            }
+          ]
+      );
+
+  const atsKeywords = ai.ats_keywords && ai.ats_keywords.length > 0
+    ? ai.ats_keywords
+    : [
+        `${analysis.target_role} Architecture`,
+        "RESTful API Integration",
+        "Relational & Distributed Databases",
+        "CI/CD & Cloud Deployment",
+        "Automated Unit & Integration Testing"
+      ];
+
+  const nextSteps = ai.next_steps && ai.next_steps.length > 0
+    ? ai.next_steps
+    : [
+        `Revise the top summary with the role-calibrated rewrite for ${analysis.target_role}.`,
+        "Replace passive bullet points with the quantified STAR examples provided below.",
+        "Add an end-to-end capstone project covering your top missing skills."
+      ];
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-28 pb-20 relative z-10">
@@ -140,7 +205,7 @@ export const ResultsPage: React.FC = () => {
             </p>
           </div>
           <div className="pt-3 border-t border-white/5 flex items-center justify-between text-[11px] text-text-muted">
-            <span>Engine: {ai.provider === 'openai' ? 'OpenAI GPT-4o' : 'Deterministic Heuristic Engine'}</span>
+            <span>Engine: {ai.provider === 'google_gemini' ? `Google Gemini (${ai.model || '2.5-flash'})` : (ai.provider === 'openai' ? 'OpenAI GPT-4o' : 'Deterministic Heuristic Engine')}</span>
             <span className="text-brand-mint font-medium">Explainable Audit</span>
           </div>
         </GlassCard>
@@ -168,7 +233,90 @@ export const ResultsPage: React.FC = () => {
         </div>
       </GlassCard>
 
-      {/* Skills: Matched vs Missing */}
+      {/* 1. High Priority Fixes Section */}
+      <GlassCard variant="standard" className="p-6 mb-8 border border-amber-500/20">
+        <div className="flex items-center gap-2 mb-4">
+          <ShieldAlert size={18} className="text-amber-400" />
+          <h2 className="text-base font-bold text-white">High Priority Fixes</h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {highPriorityFixes.map((fix, idx) => (
+            <div key={idx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/20 text-amber-300">
+                    {fix.priority || 'High'} Priority
+                  </span>
+                  <span className="text-xs text-text-muted font-mono">#{idx + 1}</span>
+                </div>
+                <div className="text-xs font-semibold text-rose-300 mb-2">
+                  {fix.issue}
+                </div>
+                <p className="text-xs text-text-secondary leading-relaxed">
+                  {fix.action}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </GlassCard>
+
+      {/* 2. Better Bullet Examples Section */}
+      <GlassCard variant="standard" className="p-6 mb-8">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <TrendingUp size={18} className="text-brand-cyan" />
+            <h2 className="text-base font-bold text-white">Better Bullet Examples (Realistic Transformations)</h2>
+          </div>
+          <span className="text-xs text-text-muted hidden sm:inline">Weak vs. Quantified STAR Transformations</span>
+        </div>
+        <div className="space-y-4">
+          {bulletExamples.map((item, idx) => (
+            <div key={idx} className="p-4 rounded-xl bg-white/[0.03] border border-white/5 space-y-3">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+                {/* Weak */}
+                <div className="p-3 rounded-lg bg-rose-500/5 border border-rose-500/20">
+                  <div className="text-[11px] font-semibold text-rose-400 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-rose-500" />
+                    <span>Weak / Passive Phrasing</span>
+                  </div>
+                  <div className="text-xs sm:text-sm text-rose-200/90 italic">
+                    "{item.weak}"
+                  </div>
+                </div>
+
+                {/* Better */}
+                <div className="p-3 rounded-lg bg-mint-500/10 border border-mint-500/30 relative">
+                  <div className="flex items-center justify-between mb-1">
+                    <div className="text-[11px] font-semibold text-brand-mint uppercase tracking-wider flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-brand-mint" />
+                      <span>Better (Quantified STAR Bullet)</span>
+                    </div>
+                    <button
+                      onClick={() => copyToClipboard(item.better, `bullet-${idx}`)}
+                      className="text-xs text-text-secondary hover:text-white flex items-center gap-1 transition-colors"
+                      title="Copy improved bullet"
+                    >
+                      {copiedKey === `bullet-${idx}` ? <Check size={13} className="text-brand-mint" /> : <Copy size={13} />}
+                      <span className="text-[10px]">{copiedKey === `bullet-${idx}` ? 'Copied' : 'Copy'}</span>
+                    </button>
+                  </div>
+                  <div className="text-xs sm:text-sm text-white font-medium pr-10">
+                    "{item.better}"
+                  </div>
+                </div>
+              </div>
+
+              {/* Rationale */}
+              <div className="text-[11px] text-brand-cyan/90 pl-1">
+                <span className="font-semibold text-text-secondary">Rationale:</span> {item.rationale}
+              </div>
+            </div>
+          ))}
+        </div>
+      </GlassCard>
+
+      {/* 3. Skills: Matched vs Missing */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         {/* Matched Skills */}
         <GlassCard variant="standard" className="p-6">
@@ -193,7 +341,7 @@ export const ResultsPage: React.FC = () => {
         <GlassCard variant="standard" className="p-6">
           <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-brand-amber mb-3">
             <AlertTriangle size={16} />
-            <span>Missing / Target Tech Stack ({analysis.missing_skills.length})</span>
+            <span>Missing Skills ({analysis.missing_skills.length})</span>
           </div>
           <div className="flex flex-wrap gap-2">
             {analysis.missing_skills.length > 0 ? (
@@ -209,59 +357,73 @@ export const ResultsPage: React.FC = () => {
         </GlassCard>
       </div>
 
-      {/* Actionable Rewrites: Summary & Project Bullets */}
-      <div className="space-y-6 mb-8">
-        {/* Recommended Professional Summary Rewrite */}
-        {ai.summary_rewrite && (
-          <GlassCard variant="standard" className="p-6 border border-brand-blue/20">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-brand-cyan">
-                <Sparkles size={14} />
-                <span>Recommended Summary Rewrite</span>
+      {/* 4. ATS Keywords & Next Steps */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        {/* ATS-Friendly Keywords */}
+        <GlassCard variant="standard" className="p-6">
+          <div className="flex items-center gap-2 mb-3">
+            <Tag size={16} className="text-brand-blue" />
+            <h2 className="text-sm font-bold text-white uppercase tracking-wider">ATS-Friendly Keywords (No Stuffing)</h2>
+          </div>
+          <p className="text-xs text-text-secondary mb-3">
+            Incorporate these contextual phrases naturally into your experience bullet points to match automated applicant tracking filters:
+          </p>
+          <div className="space-y-2">
+            {atsKeywords.map((kw, i) => (
+              <div key={i} className="text-xs p-2 rounded-lg bg-white/[0.03] border border-white/5 text-brand-cyan flex items-center justify-between">
+                <span>{kw}</span>
+                <button
+                  onClick={() => copyToClipboard(kw, `kw-${i}`)}
+                  className="text-text-muted hover:text-white p-1"
+                  title="Copy keyword phrase"
+                >
+                  {copiedKey === `kw-${i}` ? <Check size={13} className="text-brand-mint" /> : <Copy size={13} />}
+                </button>
               </div>
-              <button
-                onClick={() => copyToClipboard(ai.summary_rewrite || '', 99)}
-                className="text-xs text-text-secondary hover:text-white flex items-center gap-1.5 transition-colors"
-              >
-                {copiedIndex === 99 ? <Check size={14} className="text-brand-mint" /> : <Copy size={14} />}
-                <span>{copiedIndex === 99 ? 'Copied' : 'Copy'}</span>
-              </button>
-            </div>
-            <p className="text-sm text-white italic bg-black/30 p-4 rounded-xl border border-white/10 leading-relaxed">
-              "{ai.summary_rewrite}"
-            </p>
-          </GlassCard>
-        )}
+            ))}
+          </div>
+        </GlassCard>
 
-        {/* Project Bullet Improvements */}
-        {ai.project_bullet_improvements && ai.project_bullet_improvements.length > 0 && (
-          <GlassCard variant="standard" className="p-6">
-            <h2 className="text-base font-bold text-white mb-4">STAR Project Bullet Enhancements</h2>
-            <div className="space-y-4">
-              {ai.project_bullet_improvements.map((item, idx) => (
-                <div key={idx} className="p-4 rounded-xl bg-white/[0.03] border border-white/5 space-y-2">
-                  <div className="text-xs text-text-muted">
-                    <span className="font-semibold text-text-secondary">Original Focus:</span> {item.original_theme}
-                  </div>
-                  <div className="text-sm text-brand-cyan font-medium bg-black/40 p-3 rounded-lg border border-white/10 flex items-start justify-between gap-3">
-                    <span>{item.suggested_rewrite}</span>
-                    <button
-                      onClick={() => copyToClipboard(item.suggested_rewrite, idx)}
-                      className="text-text-muted hover:text-white shrink-0 p-1"
-                      title="Copy rewrite"
-                    >
-                      {copiedIndex === idx ? <Check size={14} className="text-brand-mint" /> : <Copy size={14} />}
-                    </button>
-                  </div>
-                  <div className="text-[11px] text-brand-mint">
-                    <span className="font-semibold">Why this works:</span> {item.rationale}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </GlassCard>
-        )}
+        {/* Next Steps */}
+        <GlassCard variant="standard" className="p-6">
+          <div className="flex items-center gap-2 mb-3">
+            <ListOrdered size={16} className="text-brand-mint" />
+            <h2 className="text-sm font-bold text-white uppercase tracking-wider">Recommended Next Steps</h2>
+          </div>
+          <div className="space-y-3">
+            {nextSteps.map((step, idx) => (
+              <div key={idx} className="p-3 rounded-lg bg-white/[0.03] border border-white/5 text-xs text-text-secondary flex items-start gap-2.5">
+                <span className="w-5 h-5 rounded-full bg-brand-mint/20 text-brand-mint font-bold flex items-center justify-center shrink-0 mt-0.5 text-[11px]">
+                  {idx + 1}
+                </span>
+                <span className="leading-relaxed">{step}</span>
+              </div>
+            ))}
+          </div>
+        </GlassCard>
       </div>
+
+      {/* Summary Rewrite */}
+      {ai.summary_rewrite && (
+        <GlassCard variant="standard" className="p-6 mb-8 border border-brand-blue/20">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-brand-cyan">
+              <Sparkles size={14} />
+              <span>Recommended Summary Rewrite</span>
+            </div>
+            <button
+              onClick={() => copyToClipboard(ai.summary_rewrite || '', 'summary')}
+              className="text-xs text-text-secondary hover:text-white flex items-center gap-1.5 transition-colors"
+            >
+              {copiedKey === 'summary' ? <Check size={14} className="text-brand-mint" /> : <Copy size={14} />}
+              <span>{copiedKey === 'summary' ? 'Copied' : 'Copy'}</span>
+            </button>
+          </div>
+          <p className="text-sm text-white italic bg-black/30 p-4 rounded-xl border border-white/10 leading-relaxed">
+            "{ai.summary_rewrite}"
+          </p>
+        </GlassCard>
+      )}
 
       {/* Technical Interview Preparation Tips */}
       {ai.interview_prep_tips && ai.interview_prep_tips.length > 0 && (

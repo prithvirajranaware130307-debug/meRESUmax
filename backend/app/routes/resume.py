@@ -47,6 +47,8 @@ def upload_resume():
         resume.parsed_data = {
             'word_count': parsed_result['word_count'],
             'sections': parsed_result['sections'],
+            'contact_info': parsed_result.get('contact_info', {}),
+            'measurable_impact': parsed_result.get('measurable_impact', []),
             'skills': parsed_result['skills'],
             'skills_by_category': parsed_result['skills_by_category'],
             'total_skills_count': parsed_result['total_skills_count']

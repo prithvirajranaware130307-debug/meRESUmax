@@ -1,6 +1,7 @@
 import { User, Resume, Analysis, Job, RoadmapTask } from '../types';
 
-const API_BASE = '/api';
+const rawApiUrl = (import.meta.env.VITE_API_URL || '/api').trim().replace(/\/+$/, '');
+const API_BASE = rawApiUrl.endsWith('/api') ? rawApiUrl : (rawApiUrl === '' ? '/api' : `${rawApiUrl}/api`);
 
 function getAuthHeaders(isFormData: boolean = false): HeadersInit {
   const token = localStorage.getItem('meresumax_token');
@@ -121,7 +122,8 @@ export const api = {
   },
 
   getReportDownloadUrl(analysisId: number): string {
-    return `${API_BASE}/analyses/${analysisId}/report`;
+    const token = localStorage.getItem('meresumax_token');
+    return `${API_BASE}/analyses/${analysisId}/report${token ? `?token=${encodeURIComponent(token)}` : ''}`;
   },
 
   // Jobs

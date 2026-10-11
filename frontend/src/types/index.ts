@@ -25,6 +25,13 @@ export interface Resume {
   parsed_data: {
     word_count: number;
     sections: Record<string, string>;
+    contact_info?: {
+      email?: string;
+      phone?: string;
+      linkedin?: string;
+      github?: string;
+    };
+    measurable_impact?: string[];
     skills: string[];
     skills_by_category: Record<string, string[]>;
     total_skills_count: number;
@@ -38,6 +45,18 @@ export interface CategoryScore {
   title: string;
 }
 
+export interface BetterBulletExample {
+  weak: string;
+  better: string;
+  rationale: string;
+}
+
+export interface HighPriorityFix {
+  issue: string;
+  action: string;
+  priority: string;
+}
+
 export interface AIProjectRewrite {
   original_theme: string;
   suggested_rewrite: string;
@@ -48,7 +67,12 @@ export interface AIFeedback {
   executive_summary?: string;
   summary_rewrite?: string;
   key_insights?: string[];
+  high_priority_fixes?: HighPriorityFix[];
+  better_bullet_examples?: BetterBulletExample[];
   project_bullet_improvements?: AIProjectRewrite[];
+  missing_skills?: string[];
+  ats_keywords?: string[];
+  next_steps?: string[];
   interview_prep_tips?: string[];
   roadmap_milestones?: Array<{
     title: string;
@@ -57,6 +81,7 @@ export interface AIFeedback {
     category: string;
   }>;
   provider?: string;
+  model?: string;
   is_live_ai?: boolean;
   provider_status?: string;
 }
