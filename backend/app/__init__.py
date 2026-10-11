@@ -76,5 +76,19 @@ def create_app(config_class=Config):
 
     with app.app_context():
         db.create_all()
+        # Seed default demo candidate account if not present
+        from .models import User
+        if not User.query.filter_by(email='demo.candidate@meresumax.ai').first():
+            demo_user = User(
+                name='Demo Candidate',
+                email='demo.candidate@meresumax.ai',
+                target_role='Software Developer',
+                education='University of Technology',
+                degree='B.S. in Computer Science',
+                graduation_year='2024'
+            )
+            demo_user.set_password('DemoPass123!')
+            db.session.add(demo_user)
+            db.session.commit()
 
     return app
