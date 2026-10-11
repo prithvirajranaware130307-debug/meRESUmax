@@ -1,6 +1,7 @@
 import json
 import logging
 from typing import Dict, Any, List
+import requests
 from openai import OpenAI
 from ..config import Config
 
@@ -17,6 +18,60 @@ class AIService:
         return None
 
     @classmethod
+    def _call_gemini(
+        cls,
+        resume_text: str,
+        skills: List[str],
+        target_role: str,
+        quality_score: float,
+        matched_skills: List[str],
+        missing_skills: List[str]
+    ) -> Dict[str, Any]:
+        """Calls Google Gemini API with JSON structured output."""
+        safe_text = resume_text[:3500]
+        system_prompt = (
+            "You are meRESUmax Career Intelligence AI, a senior technical recruiter and career coach. "
+            "Analyze the candidate's resume objectively. Do NOT invent fake companies, degrees, or years of experience. "
+            "Return ONLY valid JSON with keys: "
+            "'executive_summary' (string), "
+            "'summary_rewrite' (suggested enhanced 3-sentence summary for target role), "
+            "'key_insights' (array of 3 strings), "
+            "'project_bullet_improvements' (array of objects with 'original_theme', 'suggested_rewrite', 'rationale'), "
+            "'interview_prep_tips' (array of 3 technical questions and advice), "
+            "'roadmap_milestones' (array of 4 objects with 'title', 'description', 'priority', 'category')."
+        )
+        user_prompt = (
+            f"Target Role: {target_role}\n"
+            f"Resume Quality Score: {quality_score}/100\n"
+            f"Extracted Skills: {', '.join(skills[:25])}\n"
+            f"Matched Skills: {', '.join(matched_skills[:15])}\n"
+            f"Missing Key Skills: {', '.join(missing_skills[:10])}\n"
+            f"Resume Content Excerpt:\n{safe_text}\n"
+        )
+
+        model = Config.GEMINI_MODEL or "gemini-2.5-flash"
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={Config.GEMINI_API_KEY}"
+        headers = {"Content-Type": "application/json"}
+        payload = {
+            "system_instruction": {"parts": [{"text": system_prompt}]},
+            "contents": [{"parts": [{"text": user_prompt}]}],
+            "generationConfig": {
+                "responseMimeType": "application/json",
+                "temperature": 0.4
+            }
+        }
+
+        resp = requests.post(url, headers=headers, json=payload, timeout=25.0)
+        resp.raise_for_status()
+        res_json = resp.json()
+        raw_text = res_json['candidates'][0]['content']['parts'][0]['text']
+        ai_data = json.loads(raw_text)
+        ai_data['provider'] = 'google_gemini'
+        ai_data['model'] = model
+        ai_data['is_live_ai'] = True
+        return ai_data
+
+    @classmethod
     def generate_resume_intelligence(
         cls, 
         resume_text: str, 
@@ -28,15 +83,20 @@ class AIService:
     ) -> Dict[str, Any]:
         """
         Generates structured AI feedback, actionable rewrites, and roadmap steps.
-        Falls back to high-grade deterministic synthesis if OpenAI API is unconfigured or unavailable.
+        Tries Google Gemini first (if configured), then OpenAI, then falls back to deterministic engine.
         """
+        # 1. Try Google Gemini if configured
+        if Config.GEMINI_API_KEY and Config.GEMINI_API_KEY.strip() and not Config.GEMINI_API_KEY.startswith("replace_"):
+            try:
+                return cls._call_gemini(resume_text, skills, target_role, quality_score, matched_skills, missing_skills)
+            except Exception as e:
+                logger.error(f"Google Gemini API call failed: {e}")
+
+        # 2. Try OpenAI if configured
         client = cls.get_client()
-        
         if client:
             try:
-                # Sanitize text: truncate to 3500 chars to protect privacy and respect token limits
                 safe_text = resume_text[:3500]
-                
                 system_prompt = (
                     "You are meRESUmax Career Intelligence AI, a senior technical recruiter and career coach. "
                     "Analyze the candidate's resume objectively. Do NOT invent fake companies, degrees, or years of experience. "
@@ -48,7 +108,6 @@ class AIService:
                     "'interview_prep_tips' (array of 3 technical questions and advice), "
                     "'roadmap_milestones' (array of 4 objects with 'title', 'description', 'priority', 'category')."
                 )
-                
                 user_prompt = (
                     f"Target Role: {target_role}\n"
                     f"Resume Quality Score: {quality_score}/100\n"
@@ -77,14 +136,10 @@ class AIService:
                 return ai_data
             except Exception as e:
                 logger.error(f"OpenAI API call failed or timed out: {e}")
-                # Seamless fallback with note
-                fallback = cls._generate_deterministic_fallback(skills, target_role, quality_score, matched_skills, missing_skills)
-                fallback['provider_status'] = f"Deterministic Fallback (OpenAI Error: {str(e)[:80]})"
-                return fallback
 
-        # No API Key provided: Provide deterministic high-grade intelligence
+        # 3. No live AI or failure: Provide deterministic high-grade intelligence
         fallback = cls._generate_deterministic_fallback(skills, target_role, quality_score, matched_skills, missing_skills)
-        fallback['provider_status'] = "Deterministic Heuristic Engine (Configure OPENAI_API_KEY for live GPT-4o inferences)"
+        fallback['provider_status'] = "Deterministic Heuristic Engine"
         return fallback
 
     @classmethod
