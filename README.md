@@ -46,6 +46,20 @@
    - Salted password hashing (PBKDF2 / SHA-256).
    - Zero third-party ad tracking, user account deletion, and strict data confidentiality.
 
+9. **Interactive AI Mock Interview Simulator**
+   - Role-tailored 5-question interview loops spanning Technical Depth, Architecture, STAR Behavioral scenarios, and Debugging.
+   - Live browser Web Speech API voice dictation and real-time STAR method evaluation with senior exemplar answers.
+   - Comprehensive debrief scorecard with readiness indices and transcript download.
+
+10. **AI Cover Letter & LinkedIn Optimizer**
+    - High-converting, ATS-optimized cover letter synthesis matching target company and job descriptions.
+    - SEO-ranked LinkedIn headlines and storytelling 1st-person "About" bio copy with core competency keywords.
+
+11. **Live ATS Resume Architect & Multi-Format Exporter**
+    - Live dual-pane editor with real-time ATS scan health scoring.
+    - 3 recruiter-approved ATS templates (Modern, Minimalist, Executive).
+    - Instant export to print-ready PDF, clean plaintext (.txt), and structured JSON.
+
 ---
 
 ## 🏗 Tech Stack

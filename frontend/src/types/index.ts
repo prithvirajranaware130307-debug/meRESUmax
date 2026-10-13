@@ -139,3 +139,68 @@ export interface RoadmapTask {
   created_at?: string;
   completed_at?: string;
 }
+
+export interface InterviewQuestion {
+  id: number;
+  question: string;
+  category: string;
+  tips: string;
+}
+
+export interface InterviewEvaluation {
+  overall_score: number;
+  star_score: number;
+  technical_depth: number;
+  clarity_score: number;
+  strengths: string[];
+  areas_for_improvement: string[];
+  suggested_exemplar_answer: string;
+  feedback_summary: string;
+}
+
+export interface CoverLetterResult {
+  cover_letter: string;
+  subject_line: string;
+  key_highlights: string[];
+  match_notes: string;
+}
+
+export interface LinkedInResult {
+  headlines: string[];
+  about_section: string;
+  core_competencies: string[];
+  featured_post_prompt?: string;
+}
+
+export interface ResumeBuilderData {
+  fullName: string;
+  email: string;
+  phone: string;
+  location: string;
+  linkedin: string;
+  github: string;
+  portfolio: string;
+  summary: string;
+  skills: string[];
+  experience: Array<{
+    id: string;
+    company: string;
+    role: string;
+    duration: string;
+    bullets: string[];
+  }>;
+  education: Array<{
+    id: string;
+    school: string;
+    degree: string;
+    year: string;
+    gpa?: string;
+  }>;
+  projects: Array<{
+    id: string;
+    title: string;
+    technologies: string;
+    description: string;
+    bullets: string[];
+  }>;
+}

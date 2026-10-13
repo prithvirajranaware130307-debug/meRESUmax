@@ -8,7 +8,8 @@ import { GlassButton } from '../components/glass/GlassButton';
 import { ScoreDial } from '../components/glass/ScoreDial';
 import { 
   Sparkles, FileUp, Briefcase, Compass, ArrowRight, 
-  CheckCircle2, Clock, AlertTriangle, ChevronRight, Layers, FileText
+  CheckCircle2, Clock, AlertTriangle, ChevronRight, Layers, FileText,
+  Mic, Wand2, Layout
 } from 'lucide-react';
 
 export const DashboardPage: React.FC = () => {
@@ -146,6 +147,75 @@ export const DashboardPage: React.FC = () => {
           </div>
         </GlassCard>
       )}
+
+      {/* AI Career Acceleration Suite Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <Link to="/interview" className="group">
+          <GlassCard className="p-5 h-full border-purple-500/20 bg-gradient-to-br from-surface-card to-purple-950/20 hover:border-purple-500/40 transition-all flex flex-col justify-between">
+            <div className="space-y-3">
+              <div className="w-10 h-10 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
+                <Mic size={20} />
+              </div>
+              <div>
+                <h3 className="text-sm font-bold text-white group-hover:text-purple-300 transition-colors">
+                  AI Mock Interview
+                </h3>
+                <p className="text-xs text-text-muted mt-1 leading-relaxed">
+                  Interactive voice or text simulation evaluated with STAR methodology and technical depth scoring.
+                </p>
+              </div>
+            </div>
+            <div className="pt-3 mt-3 border-t border-white/5 flex items-center justify-between text-xs text-purple-300 font-medium">
+              <span>Start Loop</span>
+              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+            </div>
+          </GlassCard>
+        </Link>
+
+        <Link to="/tools" className="group">
+          <GlassCard className="p-5 h-full border-blue-500/20 bg-gradient-to-br from-surface-card to-blue-950/20 hover:border-blue-500/40 transition-all flex flex-col justify-between">
+            <div className="space-y-3">
+              <div className="w-10 h-10 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
+                <Wand2 size={20} />
+              </div>
+              <div>
+                <h3 className="text-sm font-bold text-white group-hover:text-blue-300 transition-colors">
+                  Cover Letter & LinkedIn
+                </h3>
+                <p className="text-xs text-text-muted mt-1 leading-relaxed">
+                  Generate company-tailored ATS cover letters and recruiter-magnet LinkedIn headlines in seconds.
+                </p>
+              </div>
+            </div>
+            <div className="pt-3 mt-3 border-t border-white/5 flex items-center justify-between text-xs text-blue-300 font-medium">
+              <span>Open Tools</span>
+              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+            </div>
+          </GlassCard>
+        </Link>
+
+        <Link to="/builder" className="group">
+          <GlassCard className="p-5 h-full border-brand-cyan/20 bg-gradient-to-br from-surface-card to-cyan-950/20 hover:border-brand-cyan/40 transition-all flex flex-col justify-between">
+            <div className="space-y-3">
+              <div className="w-10 h-10 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/20 flex items-center justify-center text-brand-cyan group-hover:scale-105 transition-transform">
+                <Layout size={20} />
+              </div>
+              <div>
+                <h3 className="text-sm font-bold text-white group-hover:text-brand-cyan transition-colors">
+                  Live ATS Resume Builder
+                </h3>
+                <p className="text-xs text-text-muted mt-1 leading-relaxed">
+                  Draft, customize, and export recruiter-approved resumes with live ATS health scoring and print PDF.
+                </p>
+              </div>
+            </div>
+            <div className="pt-3 mt-3 border-t border-white/5 flex items-center justify-between text-xs text-brand-cyan font-medium">
+              <span>Launch Builder</span>
+              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+            </div>
+          </GlassCard>
+        </Link>
+      </div>
 
       {/* Two Column Layout: Roadmap & Recommended Jobs */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

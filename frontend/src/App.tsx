@@ -16,6 +16,9 @@ import { RoadmapPage } from './pages/RoadmapPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { HistoryPage } from './pages/HistoryPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { InterviewPage } from './pages/InterviewPage';
+import { CareerToolsPage } from './pages/CareerToolsPage';
+import { ResumeBuilderPage } from './pages/ResumeBuilderPage';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
@@ -97,6 +100,30 @@ export const App: React.FC = () => {
                 element={
                   <ProtectedRoute>
                     <HistoryPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/interview"
+                element={
+                  <ProtectedRoute>
+                    <InterviewPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/tools"
+                element={
+                  <ProtectedRoute>
+                    <CareerToolsPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/builder"
+                element={
+                  <ProtectedRoute>
+                    <ResumeBuilderPage />
                   </ProtectedRoute>
                 }
               />

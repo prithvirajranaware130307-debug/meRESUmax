@@ -41,6 +41,8 @@ def create_app(config_class=Config):
     from .routes.roadmap import roadmap_bp
     from .routes.profile import profile_bp, account_bp
     from .routes.health import health_bp
+    from .routes.interview import interview_bp
+    from .routes.career_tools import career_tools_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(resume_bp)
@@ -50,6 +52,8 @@ def create_app(config_class=Config):
     app.register_blueprint(profile_bp)
     app.register_blueprint(account_bp)
     app.register_blueprint(health_bp)
+    app.register_blueprint(interview_bp)
+    app.register_blueprint(career_tools_bp)
 
     # Friendly root and error handlers
     @app.route('/')

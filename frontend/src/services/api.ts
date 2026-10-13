@@ -246,9 +246,80 @@ export const api = {
     return result;
   },
 
+  // Interview Simulator
+  async getInterviewQuestions(data: {
+    target_role?: string;
+    difficulty?: string;
+    skills?: string[];
+    resume_summary?: string;
+  }): Promise<{ target_role: string; difficulty: string; questions: import('../types').InterviewQuestion[] }> {
+    const res = await fetch(`${API_BASE}/interview/questions`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || 'Failed to fetch interview questions');
+    return result;
+  },
+
+  async evaluateInterviewAnswer(data: {
+    question: string;
+    category: string;
+    candidate_answer: string;
+    target_role?: string;
+    difficulty?: string;
+  }): Promise<import('../types').InterviewEvaluation> {
+    const res = await fetch(`${API_BASE}/interview/evaluate`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || 'Failed to evaluate interview response');
+    return result;
+  },
+
+  // Career Tools
+  async generateCoverLetter(data: {
+    candidate_name?: string;
+    target_role?: string;
+    company_name?: string;
+    job_description?: string;
+    resume_summary?: string;
+    skills?: string[];
+    tone?: string;
+  }): Promise<import('../types').CoverLetterResult> {
+    const res = await fetch(`${API_BASE}/tools/cover-letter`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || 'Failed to generate cover letter');
+    return result;
+  },
+
+  async generateLinkedIn(data: {
+    candidate_name?: string;
+    target_role?: string;
+    skills?: string[];
+    resume_summary?: string;
+  }): Promise<import('../types').LinkedInResult> {
+    const res = await fetch(`${API_BASE}/tools/linkedin`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || 'Failed to generate LinkedIn profile copy');
+    return result;
+  },
+
   // System Health
   async getHealth(): Promise<any> {
     const res = await fetch(`${API_BASE}/health`);
     return res.json();
   }
 };
+
