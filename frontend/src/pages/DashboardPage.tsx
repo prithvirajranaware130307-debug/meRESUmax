@@ -9,7 +9,7 @@ import { ScoreDial } from '../components/glass/ScoreDial';
 import { 
   Sparkles, FileUp, Briefcase, Compass, ArrowRight, 
   CheckCircle2, Clock, AlertTriangle, ChevronRight, Layers, FileText,
-  Mic, Wand2, Layout
+  Mic, Wand2, Layout, Kanban
 } from 'lucide-react';
 
 export const DashboardPage: React.FC = () => {
@@ -149,7 +149,7 @@ export const DashboardPage: React.FC = () => {
       )}
 
       {/* AI Career Acceleration Suite Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <Link to="/interview" className="group">
           <GlassCard className="p-5 h-full border-purple-500/20 bg-gradient-to-br from-surface-card to-purple-950/20 hover:border-purple-500/40 transition-all flex flex-col justify-between">
             <div className="space-y-3">
@@ -211,6 +211,28 @@ export const DashboardPage: React.FC = () => {
             </div>
             <div className="pt-3 mt-3 border-t border-white/5 flex items-center justify-between text-xs text-brand-cyan font-medium">
               <span>Launch Builder</span>
+              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+            </div>
+          </GlassCard>
+        </Link>
+
+        <Link to="/tracker" className="group">
+          <GlassCard className="p-5 h-full border-brand-mint/20 bg-gradient-to-br from-surface-card to-emerald-950/20 hover:border-brand-mint/40 transition-all flex flex-col justify-between">
+            <div className="space-y-3">
+              <div className="w-10 h-10 rounded-2xl bg-brand-mint/10 border border-brand-mint/20 flex items-center justify-center text-brand-mint group-hover:scale-105 transition-transform">
+                <Kanban size={20} />
+              </div>
+              <div>
+                <h3 className="text-sm font-bold text-white group-hover:text-brand-mint transition-colors">
+                  Application Tracker
+                </h3>
+                <p className="text-xs text-text-muted mt-1 leading-relaxed">
+                  Interactive Kanban board to track interview rounds, offer stages, and follow-up reminders.
+                </p>
+              </div>
+            </div>
+            <div className="pt-3 mt-3 border-t border-white/5 flex items-center justify-between text-xs text-brand-mint font-medium">
+              <span>View Pipeline</span>
               <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </div>
           </GlassCard>

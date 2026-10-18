@@ -19,6 +19,7 @@ import { SettingsPage } from './pages/SettingsPage';
 import { InterviewPage } from './pages/InterviewPage';
 import { CareerToolsPage } from './pages/CareerToolsPage';
 import { ResumeBuilderPage } from './pages/ResumeBuilderPage';
+import { ApplicationTrackerPage } from './pages/ApplicationTrackerPage';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
@@ -124,6 +125,14 @@ export const App: React.FC = () => {
                 element={
                   <ProtectedRoute>
                     <ResumeBuilderPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/tracker"
+                element={
+                  <ProtectedRoute>
+                    <ApplicationTrackerPage />
                   </ProtectedRoute>
                 }
               />

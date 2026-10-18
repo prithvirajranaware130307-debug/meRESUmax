@@ -204,3 +204,43 @@ export interface ResumeBuilderData {
     bullets: string[];
   }>;
 }
+
+export type ApplicationStatus = 'saved' | 'applied' | 'interviewing' | 'offer' | 'rejected';
+export type ApplicationPriority = 'high' | 'medium' | 'low';
+
+export interface JobApplication {
+  id: number;
+  user_id: number;
+  job_id?: number | null;
+  company: string;
+  role: string;
+  location: string;
+  job_type: string;
+  status: ApplicationStatus;
+  priority: ApplicationPriority;
+  salary_range: string;
+  url: string;
+  contact_name: string;
+  contact_email: string;
+  notes: string;
+  next_step: string;
+  applied_date?: string | null;
+  interview_date?: string | null;
+  deadline?: string | null;
+  days_since_applied?: number | null;
+  is_interview_upcoming?: boolean;
+  created_at?: string;
+  updated_at?: string;
+  job?: Job | null;
+}
+
+export interface ApplicationStats {
+  total: number;
+  saved: number;
+  applied: number;
+  interviewing: number;
+  offer: number;
+  rejected: number;
+  conversion_rate: number;
+}
+

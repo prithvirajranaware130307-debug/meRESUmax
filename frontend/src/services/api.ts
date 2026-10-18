@@ -1,4 +1,4 @@
-import { User, Resume, Analysis, Job, RoadmapTask } from '../types';
+import { User, Resume, Analysis, Job, RoadmapTask, JobApplication, ApplicationStats } from '../types';
 
 const rawApiUrl = (import.meta.env.VITE_API_URL || '/api').trim().replace(/\/+$/, '');
 const API_BASE = rawApiUrl.endsWith('/api') ? rawApiUrl : (rawApiUrl === '' ? '/api' : `${rawApiUrl}/api`);
@@ -313,6 +313,67 @@ export const api = {
     });
     const result = await res.json();
     if (!res.ok) throw new Error(result.error || 'Failed to generate LinkedIn profile copy');
+    return result;
+  },
+
+  // Applications & Kanban Tracker
+  async getApplications(params?: { status?: string; priority?: string; search?: string }): Promise<{
+    applications: JobApplication[];
+    stats: ApplicationStats;
+    upcoming_interviews: JobApplication[];
+  }> {
+    const query = new URLSearchParams();
+    if (params?.status) query.append('status', params.status);
+    if (params?.priority) query.append('priority', params.priority);
+    if (params?.search) query.append('search', params.search);
+
+    const res = await fetch(`${API_BASE}/applications?${query.toString()}`, {
+      headers: getAuthHeaders()
+    });
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || 'Failed to fetch applications');
+    return result;
+  },
+
+  async createApplication(data: Partial<JobApplication>): Promise<{ message: string; application: JobApplication }> {
+    const res = await fetch(`${API_BASE}/applications`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || 'Failed to track application');
+    return result;
+  },
+
+  async updateApplication(id: number, data: Partial<JobApplication>): Promise<{ message: string; application: JobApplication }> {
+    const res = await fetch(`${API_BASE}/applications/${id}`, {
+      method: 'PATCH',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || 'Failed to update application');
+    return result;
+  },
+
+  async deleteApplication(id: number): Promise<{ message: string }> {
+    const res = await fetch(`${API_BASE}/applications/${id}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders()
+    });
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || 'Failed to delete application');
+    return result;
+  },
+
+  async seedSampleApplications(): Promise<{ message: string; seeded: boolean; count?: number }> {
+    const res = await fetch(`${API_BASE}/applications/seed-sample`, {
+      method: 'POST',
+      headers: getAuthHeaders()
+    });
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || 'Failed to seed sample applications');
     return result;
   },
 

@@ -60,6 +60,12 @@
     - 3 recruiter-approved ATS templates (Modern, Minimalist, Executive).
     - Instant export to print-ready PDF, clean plaintext (.txt), and structured JSON.
 
+12. **Interactive Job Application Tracker (Kanban Pipeline)**
+    - Visual multi-stage Kanban pipeline (Wishlist & Saved, Applied, Interviewing, Offer Received, Archived).
+    - Pipeline conversion analytics, interview countdowns, and upcoming milestone badges.
+    - 1-click stage progression, client-side CSV / JSON export, and direct integration with AI Mock Interview loops.
+    - 1-click "Track Pipeline" button on all job opportunities.
+
 ---
 
 ## 🏗 Tech Stack

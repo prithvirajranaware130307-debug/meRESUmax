@@ -6,7 +6,7 @@ import { GlassButton } from '../glass/GlassButton';
 import { 
   Menu, X, Sparkles, LayoutDashboard, FileUp, 
   Briefcase, Compass, History, User, LogOut, ChevronRight,
-  Mic, Wand2, Layout
+  Mic, Wand2, Layout, Kanban
 } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
@@ -132,6 +132,15 @@ export const Navbar: React.FC = () => {
               >
                 <Layout size={15} />
                 Builder
+              </Link>
+              <Link
+                to="/tracker"
+                className={`px-3 py-1.5 text-xs lg:text-sm font-medium rounded-xl flex items-center gap-1.5 transition-all duration-200 ${
+                  isActive('/tracker') ? 'text-white bg-white/10' : 'text-text-secondary hover:text-white hover:bg-white/5'
+                }`}
+              >
+                <Kanban size={15} />
+                Tracker
               </Link>
               <Link
                 to="/history"
@@ -305,6 +314,14 @@ export const Navbar: React.FC = () => {
               >
                 <Layout size={18} className="text-brand-cyan" />
                 <span>Resume Builder</span>
+              </Link>
+              <Link
+                to="/tracker"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-4 py-2.5 text-sm font-medium rounded-xl hover:bg-white/10 flex items-center gap-3"
+              >
+                <Kanban size={18} className="text-brand-mint" />
+                <span>Application Tracker</span>
               </Link>
               <Link
                 to="/history"

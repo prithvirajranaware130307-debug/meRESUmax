@@ -5,7 +5,8 @@ import { GlassCard } from '../components/glass/GlassCard';
 import { GlassButton } from '../components/glass/GlassButton';
 import { 
   Search, MapPin, Briefcase, Filter, ExternalLink, 
-  Bookmark, CheckCircle2, AlertCircle, Sparkles, Building
+  Bookmark, CheckCircle2, AlertCircle, Sparkles, Building,
+  Kanban, Check
 } from 'lucide-react';
 
 export const JobsPage: React.FC = () => {
@@ -14,6 +15,7 @@ export const JobsPage: React.FC = () => {
   const [location, setLocation] = useState('');
   const [jobType, setJobType] = useState('all');
   const [savedJobIds, setSavedJobIds] = useState<Set<string>>(new Set());
+  const [trackedJobIds, setTrackedJobIds] = useState<Set<string>>(new Set());
   const [isLive, setIsLive] = useState(false);
   const [providerMessage, setProviderMessage] = useState('');
   const [isLoading, setIsLoading] = useState(true);
@@ -58,6 +60,30 @@ export const JobsPage: React.FC = () => {
       newSaved.add(job.external_id);
       setSavedJobIds(newSaved);
       await api.saveJob(idx + 1000, job);
+    }
+  };
+
+  const handleTrackInKanban = async (job: Job) => {
+    try {
+      const salaryStr = job.salary_min
+        ? `${job.salary_currency === 'INR' ? `₹${(job.salary_min / 100000).toFixed(1)}L` : `$${job.salary_min.toLocaleString()}`}${job.salary_max ? ` - ${job.salary_currency === 'INR' ? `₹${(job.salary_max / 100000).toFixed(1)}L` : `$${job.salary_max.toLocaleString()}`}` : ''}`
+        : '';
+
+      await api.createApplication({
+        company: job.company,
+        role: job.title,
+        location: job.location,
+        job_type: job.job_type,
+        status: 'saved',
+        priority: 'medium',
+        salary_range: salaryStr,
+        url: job.url,
+        notes: `Discovered on meRESUmax. Required skills: ${job.required_skills?.slice(0, 4).join(', ')}`
+      });
+
+      setTrackedJobIds(prev => new Set(prev).add(job.external_id));
+    } catch (err) {
+      console.error('Failed to track job in pipeline:', err);
     }
   };
 
@@ -194,15 +220,39 @@ export const JobsPage: React.FC = () => {
                     )}
                   </div>
 
-                  <a
-                    href={job.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium text-xs transition-colors"
-                  >
-                    <span>Apply Outbound</span>
-                    <ExternalLink size={12} />
-                  </a>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => handleTrackInKanban(job)}
+                      disabled={trackedJobIds.has(job.external_id)}
+                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+                        trackedJobIds.has(job.external_id)
+                          ? 'bg-brand-mint/20 text-brand-mint border border-brand-mint/30 cursor-default'
+                          : 'bg-brand-blue/15 hover:bg-brand-blue/30 text-brand-cyan border border-brand-blue/30'
+                      }`}
+                    >
+                      {trackedJobIds.has(job.external_id) ? (
+                        <>
+                          <Check size={12} />
+                          <span>Tracked</span>
+                        </>
+                      ) : (
+                        <>
+                          <Kanban size={12} />
+                          <span>Track Pipeline</span>
+                        </>
+                      )}
+                    </button>
+
+                    <a
+                      href={job.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium text-xs transition-colors"
+                    >
+                      <span>Apply</span>
+                      <ExternalLink size={12} />
+                    </a>
+                  </div>
                 </div>
               </GlassCard>
             );
