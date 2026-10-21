@@ -404,7 +404,7 @@ class AIService:
             'reply': reply,
             'provider': 'deterministic_demo',
             'is_live_ai': False,
-            'disclaimer': 'Demo Mode (Heuristic Engine) - Running locally without external API keys. Configure GEMINI_API_KEY or OPENAI_API_KEY to activate live AI.'
+            'disclaimer': 'Demo assistant mode — Running in built-in fallback mode without external API keys. Configure GEMINI_API_KEY or OPENAI_API_KEY to activate live AI.'
         }
 
     @classmethod

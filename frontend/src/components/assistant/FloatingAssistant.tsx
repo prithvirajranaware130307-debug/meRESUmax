@@ -245,10 +245,12 @@ export const FloatingAssistant: React.FC = () => {
                         )}
                       </div>
 
-                      {/* Demo disclaimer pill if message was generated in fallback */}
-                      {m.isDemo && m.disclaimer && (
-                        <div className="text-[10px] text-amber-300/80 px-2 py-0.5 rounded-md bg-amber-500/10 border border-amber-500/20 inline-block font-mono">
-                          {m.disclaimer}
+                      {/* Demo disclaimer badge if message was generated in fallback */}
+                      {m.isDemo && (
+                        <div className="text-[10px] text-amber-300 px-2 py-0.5 rounded-md bg-amber-500/10 border border-amber-500/20 inline-flex items-center gap-1.5 font-medium">
+                          <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                          <span>Demo assistant mode</span>
+                          {m.disclaimer && <span className="text-amber-300/70 font-normal">• {m.disclaimer}</span>}
                         </div>
                       )}
 
