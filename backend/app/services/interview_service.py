@@ -131,9 +131,73 @@ ROLE_QUESTION_BANKS = {
         },
         {
             'id': 5,
-            'question': 'How do you keep your technical skills current with evolving frameworks, tools, and best engineering practices without succumbing to hype?',
+            'question': 'Walk me through how you keep your technical skills current with evolving frameworks, tools, and best engineering practices without succumbing to hype?',
             'category': 'Problem Solving',
             'tips': 'Discuss reading official documentation, building prototypes, evaluating practical business value, and continuous learning habits.'
+        }
+    ],
+    'python': [
+        {
+            'id': 1,
+            'question': 'Explain Python’s Global Interpreter Lock (GIL), its impact on multi-threaded CPU-bound tasks, and how Python 3.12+ (or multiprocessing/asyncio) addresses concurrency.',
+            'category': 'Technical Depth',
+            'tips': 'Discuss CPython GIL internals, CPU-bound vs I/O-bound workloads, multiprocessing vs threading, asyncio event loop, and PEP 684/703 subinterpreters.'
+        },
+        {
+            'id': 2,
+            'question': 'How does Python manage memory internally? Explain reference counting, cyclic garbage collection, and how you profile memory leaks in production.',
+            'category': 'Architecture',
+            'tips': 'Address PyObject reference counting, generational cyclic garbage collector (gc module), tracemalloc, objgraph, and memory profiling tools.'
+        },
+        {
+            'id': 3,
+            'question': 'Tell me about a time you optimized a slow Python backend pipeline or data processing job. What was the bottleneck and how did you profile it?',
+            'category': 'Behavioral (STAR)',
+            'tips': 'Use STAR: Mention cProfile, line_profiler, eliminating N+1 queries, vectorized operations (NumPy), generators for lazy evaluation, and the resulting speedup.'
+        },
+        {
+            'id': 4,
+            'question': 'What are Python generators and context managers, and how do they differ from standard collections and try/finally blocks in memory efficiency?',
+            'category': 'Domain Expertise',
+            'tips': 'Explain lazy evaluation with yield, the iterator protocol (__iter__, __next__), contextlib and __enter__/__exit__, and streaming large datasets.'
+        },
+        {
+            'id': 5,
+            'question': 'How do you design robust Python packages or web APIs? Discuss type annotations (mypy), dependency management (poetry/pip-tools), and automated testing.',
+            'category': 'Problem Solving',
+            'tips': 'Cover PEP 484 type hints, Pydantic data validation, pytest fixtures and parameterization, and CI/CD linting with ruff or flake8.'
+        }
+    ],
+    'data_analyst': [
+        {
+            'id': 1,
+            'question': 'Explain how you use advanced SQL window functions (ROW_NUMBER, RANK, DENSE_RANK, LAG/LEAD) and query partitioning to answer complex analytical business questions.',
+            'category': 'Technical Depth',
+            'tips': 'Contrast ranking nuances, running totals, cohort retention analysis, and explain how indexing and CTEs impact query performance.'
+        },
+        {
+            'id': 2,
+            'question': 'How do you structure data validation and anomaly detection pipelines when cleaning noisy, missing, or contradictory datasets in Pandas or SQL?',
+            'category': 'Architecture',
+            'tips': 'Address imputation techniques, outlier detection (IQR vs z-score), data drift, schema constraints, and building idempotent transformation steps.'
+        },
+        {
+            'id': 3,
+            'question': 'Describe a scenario where your analytical findings challenged a leadership assumption or changed a major product roadmap decision.',
+            'category': 'Behavioral (STAR)',
+            'tips': 'Use STAR: Describe the data source, statistical significance, how you visualized insights to bridge technical and business gaps, and the business impact.'
+        },
+        {
+            'id': 4,
+            'question': 'How do you design and interpret A/B tests? Explain sample sizing, statistical power, p-values, and avoiding false positives with multiple testing corrections.',
+            'category': 'Domain Expertise',
+            'tips': 'Discuss minimum detectable effect (MDE), alpha/beta errors, Bonferroni correction, and guardrail metrics to safeguard user experience.'
+        },
+        {
+            'id': 5,
+            'question': 'Walk me through how you design an executive KPI dashboard in Tableau, PowerBI, or Metabase that prevents dashboard bloat and drives decisive action.',
+            'category': 'Problem Solving',
+            'tips': 'Cover visual hierarchy, leading vs lagging indicators, user personas, drill-down granularity, and automated refresh scheduling.'
         }
     ]
 }
@@ -197,7 +261,11 @@ class InterviewService:
         # Curated Fallback with dynamic skill injection
         if any(k in role_lower for k in ['front', 'react', 'ui', 'web', 'vue', 'angular']):
             bank = [dict(q) for q in ROLE_QUESTION_BANKS['frontend']]
-        elif any(k in role_lower for k in ['back', 'python', 'node', 'django', 'fastapi', 'java', 'golang', 'c#']):
+        elif 'python' in role_lower:
+            bank = [dict(q) for q in ROLE_QUESTION_BANKS['python']]
+        elif any(k in role_lower for k in ['data analyst', 'business analyst', 'bi analyst', 'analytics', 'data analysis']):
+            bank = [dict(q) for q in ROLE_QUESTION_BANKS['data_analyst']]
+        elif any(k in role_lower for k in ['back', 'node', 'django', 'fastapi', 'java', 'golang', 'c#']):
             bank = [dict(q) for q in ROLE_QUESTION_BANKS['backend']]
         elif any(k in role_lower for k in ['ai', 'machine learning', 'ml', 'data science', 'llm', 'deep learning']):
             bank = [dict(q) for q in ROLE_QUESTION_BANKS['ai']]

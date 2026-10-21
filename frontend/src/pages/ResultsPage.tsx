@@ -136,10 +136,17 @@ export const ResultsPage: React.FC = () => {
           <Link to="/dashboard" className="inline-flex items-center gap-1.5 text-xs text-text-muted hover:text-white mb-2 transition-colors">
             <ArrowLeft size={14} /> Back to Command Center
           </Link>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            Audit Results: {analysis.target_role}
-          </h1>
-          <p className="text-xs text-text-secondary mt-0.5">
+          <div className="flex flex-wrap items-center gap-3">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+              Audit Results: {analysis.target_role}
+            </h1>
+            {!ai.is_live_ai && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-300 border border-amber-500/30 shadow-sm">
+                <Sparkles size={12} className="text-amber-400" /> Demo analysis mode
+              </span>
+            )}
+          </div>
+          <p className="text-xs text-text-secondary mt-1">
             Document: <span className="text-white font-medium">{analysis.resume_filename}</span> • {analysis.created_at?.slice(0, 10)}
           </p>
         </div>

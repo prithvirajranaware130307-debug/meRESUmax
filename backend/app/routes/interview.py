@@ -43,7 +43,7 @@ def evaluate_answer():
     data = request.get_json() or {}
     question = data.get('question', '').strip()
     category = data.get('category', 'Technical Depth')
-    candidate_answer = data.get('candidate_answer', '').strip()
+    candidate_answer = (data.get('candidate_answer') or data.get('answer') or '').strip()
     target_role = data.get('target_role', 'Software Developer')
     difficulty = data.get('difficulty', 'Mid-Level')
 

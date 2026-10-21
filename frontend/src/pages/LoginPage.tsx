@@ -35,6 +35,21 @@ export const LoginPage: React.FC = () => {
     setPassword('DemoPass123!');
   };
 
+  const handleInstantDemoLogin = async () => {
+    setEmail('demo.candidate@meresumax.ai');
+    setPassword('DemoPass123!');
+    setError('');
+    setIsLoading(true);
+    try {
+      await login({ email: 'demo.candidate@meresumax.ai', password: 'DemoPass123!' });
+      navigate('/dashboard');
+    } catch (err: any) {
+      setError(err.message || 'Demo login failed. Please verify credentials.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen pt-28 pb-16 flex items-center justify-center px-4 relative z-10">
       <div className="w-full max-w-md">
@@ -99,16 +114,26 @@ export const LoginPage: React.FC = () => {
             </GlassButton>
           </form>
 
-          {/* Quick Demo Fill */}
-          <div className="mt-5 pt-4 border-t border-white/10 text-center">
+          {/* Quick Demo Sign In & Auto-fill */}
+          <div className="mt-5 pt-4 border-t border-white/10 space-y-2">
             <button
               type="button"
-              onClick={fillDemoAccount}
-              className="text-xs text-brand-cyan hover:text-white flex items-center justify-center gap-1.5 mx-auto font-medium transition-colors"
+              onClick={handleInstantDemoLogin}
+              disabled={isLoading}
+              className="w-full py-2.5 px-4 rounded-xl bg-brand-cyan/15 hover:bg-brand-cyan/25 border border-brand-cyan/30 text-xs font-semibold text-brand-cyan hover:text-white flex items-center justify-center gap-2 transition-all shadow-sm active:scale-[0.99]"
             >
-              <Sparkles size={13} />
-              <span>Auto-fill Demo Candidate Credentials</span>
+              <Sparkles size={14} className="text-brand-cyan" />
+              <span>Instant Demo Sign In (1-Click)</span>
             </button>
+            <div className="text-center">
+              <button
+                type="button"
+                onClick={fillDemoAccount}
+                className="text-[11px] text-text-muted hover:text-text-secondary transition-colors"
+              >
+                Or auto-fill demo credentials into form
+              </button>
+            </div>
           </div>
 
           <div className="mt-6 text-center text-xs text-text-secondary">

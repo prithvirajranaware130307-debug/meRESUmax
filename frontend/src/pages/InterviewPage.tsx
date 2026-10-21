@@ -11,12 +11,13 @@ import {
 } from 'lucide-react';
 
 const TARGET_ROLES = [
-  'Software Developer',
   'Frontend Developer',
   'Backend Developer',
-  'Full Stack Engineer',
-  'AI/ML Engineer',
+  'Python Developer',
   'Data Analyst',
+  'AI/ML Engineer',
+  'Full Stack Engineer',
+  'Software Developer',
   'Cloud / DevOps Engineer',
   'Cybersecurity Analyst'
 ];
