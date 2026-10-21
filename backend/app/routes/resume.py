@@ -1,5 +1,7 @@
 import os
+import time
 import uuid
+import logging
 from flask import Blueprint, request, jsonify, g
 from werkzeug.utils import secure_filename
 from ..config import Config
@@ -7,11 +9,18 @@ from ..models import db, Resume
 from ..services.parser import ResumeParser
 from ..utils.auth_helper import auth_required
 
+logger = logging.getLogger(__name__)
+
 resume_bp = Blueprint('resumes', __name__, url_prefix='/api/resumes')
 
 @resume_bp.route('/upload', methods=['POST'])
 @auth_required
 def upload_resume():
+    t_start = time.perf_counter()
+
+    if request.content_length and request.content_length > Config.MAX_CONTENT_LENGTH:
+        return jsonify({'error': 'File size exceeds maximum allowed limit of 16 MB.'}), 413
+
     if 'file' not in request.files:
         return jsonify({'error': 'No file part in the request.'}), 400
 
@@ -29,11 +38,28 @@ def upload_resume():
     unique_filename = f"{uuid.uuid4().hex}_{original_filename}"
     file_path = os.path.join(Config.UPLOAD_FOLDER, unique_filename)
     
-    file.save(file_path)
+    try:
+        file.save(file_path)
+    except Exception as e:
+        logger.error(f"Failed to save uploaded file: {e}")
+        return jsonify({'error': 'Failed to save uploaded file to storage.'}), 500
+
     file_size = os.path.getsize(file_path)
 
+    if file_size > Config.MAX_CONTENT_LENGTH:
+        if os.path.exists(file_path):
+            os.remove(file_path)
+        return jsonify({'error': 'File size exceeds maximum allowed limit of 16 MB.'}), 413
+
+    if file_size == 0:
+        if os.path.exists(file_path):
+            os.remove(file_path)
+        return jsonify({'error': 'Uploaded file is empty (0 bytes). Please upload a valid document.'}), 400
+
     try:
+        t_parse_start = time.perf_counter()
         parsed_result = ResumeParser.parse_file(file_path)
+        t_parse = time.perf_counter() - t_parse_start
         
         resume = Resume(
             user_id=g.user.id,
@@ -57,15 +83,24 @@ def upload_resume():
         db.session.add(resume)
         db.session.commit()
 
+        t_total = time.perf_counter() - t_start
+        logger.info(f"[RESUME_UPLOAD_TIMING] user_id={g.user.id} file='{original_filename}' size={file_size}B parse_time={t_parse:.3f}s total_time={t_total:.3f}s")
+
         return jsonify({
             'message': 'Resume uploaded and parsed successfully.',
             'resume': resume.to_dict()
         }), 201
 
+    except ValueError as ve:
+        if os.path.exists(file_path):
+            os.remove(file_path)
+        logger.warning(f"Resume validation/parsing error: {ve}")
+        return jsonify({'error': str(ve)}), 422
     except Exception as e:
         if os.path.exists(file_path):
             os.remove(file_path)
-        return jsonify({'error': f"Failed to parse resume: {str(e)}"}), 422
+        logger.error(f"Unexpected error while processing resume upload: {e}")
+        return jsonify({'error': f"Failed to parse resume: {str(e)}"}), 500
 
 @resume_bp.route('', methods=['GET'])
 @auth_required

@@ -16,23 +16,37 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(() => {
+    try {
+      const cached = localStorage.getItem('meresumax_user');
+      return cached ? JSON.parse(cached) : null;
+    } catch {
+      return null;
+    }
+  });
   const [token, setToken] = useState<string | null>(localStorage.getItem('meresumax_token'));
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const refreshUser = async () => {
     try {
       if (localStorage.getItem('meresumax_token')) {
-        const { user } = await api.getMe();
-        setUser(user);
+        const { user: fetchedUser } = await api.getMe();
+        setUser(fetchedUser);
+        localStorage.setItem('meresumax_user', JSON.stringify(fetchedUser));
       } else {
         setUser(null);
+        localStorage.removeItem('meresumax_user');
       }
-    } catch (err) {
-      console.warn('Session expired or invalid:', err);
-      localStorage.removeItem('meresumax_token');
-      setToken(null);
-      setUser(null);
+    } catch (err: any) {
+      console.warn('Session verification notice:', err);
+      // Only clear credentials if the server explicitly confirmed token invalidity (401/expired).
+      // Never wipe credentials during transient network hiccups or Render cold starts.
+      if (err?.message && (err.message.includes('expired') || err.message.includes('log in again') || err.message.includes('401'))) {
+        localStorage.removeItem('meresumax_token');
+        localStorage.removeItem('meresumax_user');
+        setToken(null);
+        setUser(null);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -45,6 +59,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async (data: { email: string; password: string }) => {
     const res = await api.login(data);
     localStorage.setItem('meresumax_token', res.token);
+    localStorage.setItem('meresumax_user', JSON.stringify(res.user));
     setToken(res.token);
     setUser(res.user);
   };
@@ -52,12 +67,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const register = async (data: { name: string; email: string; password: string; target_role?: string }) => {
     const res = await api.register(data);
     localStorage.setItem('meresumax_token', res.token);
+    localStorage.setItem('meresumax_user', JSON.stringify(res.user));
     setToken(res.token);
     setUser(res.user);
   };
 
   const logout = () => {
     localStorage.removeItem('meresumax_token');
+    localStorage.removeItem('meresumax_user');
     setToken(null);
     setUser(null);
   };

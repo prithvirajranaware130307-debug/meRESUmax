@@ -18,110 +18,148 @@ function getAuthHeaders(isFormData: boolean = false): HeadersInit {
   return headers;
 }
 
+/**
+ * Robust fetch wrapper with client-side timeout, connection retry awareness, and error normalization.
+ */
+async function request<T>(endpoint: string, options: RequestInit = {}, timeoutMs: number = 25000): Promise<T> {
+  const url = endpoint.startsWith('http://') || endpoint.startsWith('https://') 
+    ? endpoint 
+    : `${API_BASE}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+
+  let res: Response;
+  try {
+    res = await fetch(url, {
+      ...options,
+      signal: controller.signal
+    });
+  } catch (err: any) {
+    clearTimeout(timer);
+    if (err.name === 'AbortError') {
+      throw new Error('The request timed out. The analysis service may be starting up on Render—please wait a few seconds and try again.');
+    }
+    if (err.message && err.message.toLowerCase().includes('failed to fetch')) {
+      throw new Error('The analysis service is starting. Please wait a few seconds and try again.');
+    }
+    throw err;
+  } finally {
+    clearTimeout(timer);
+  }
+
+  let result: any = null;
+  const contentType = res.headers.get('content-type') || '';
+  if (contentType.includes('application/json')) {
+    try {
+      result = await res.json();
+    } catch {
+      result = null;
+    }
+  } else {
+    // Non-JSON response, e.g. HTML 502/504 Bad Gateway from Render/Cloudflare cold starts
+    if (res.status === 502 || res.status === 503 || res.status === 504) {
+      throw new Error('The analysis service is starting. Please wait a few seconds and try again.');
+    }
+    if (res.status === 413) {
+      throw new Error('File size exceeds the maximum allowed limit of 16 MB.');
+    }
+    throw new Error(`Server returned status ${res.status}. Please check your connection and try again.`);
+  }
+
+  if (!res.ok) {
+    if (res.status === 401) {
+      throw new Error(result?.error || 'Your session has expired. Please log in again.');
+    }
+    if (res.status === 413) {
+      throw new Error(result?.error || 'File size exceeds maximum allowed limit of 16 MB.');
+    }
+    if (res.status === 422) {
+      throw new Error(result?.error || 'Could not parse document. Please ensure it is a valid, readable PDF or DOCX file.');
+    }
+    if (res.status >= 500) {
+      throw new Error(result?.error || 'The analysis service encountered an unexpected error. Please try again.');
+    }
+    throw new Error(result?.error || `Request failed with status ${res.status}`);
+  }
+
+  return result as T;
+}
+
 export const api = {
   // Auth
   async register(data: { name: string; email: string; password: string; target_role?: string }): Promise<{ token: string; user: User }> {
-    const res = await fetch(`${API_BASE}/auth/register`, {
+    return request('/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Registration failed');
-    return result;
   },
 
   async login(data: { email: string; password: string }): Promise<{ token: string; user: User }> {
-    const res = await fetch(`${API_BASE}/auth/login`, {
+    return request('/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Login failed');
-    return result;
   },
 
   async getMe(): Promise<{ user: User }> {
-    const res = await fetch(`${API_BASE}/auth/me`, {
+    return request('/auth/me', {
       headers: getAuthHeaders()
-    });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Failed to fetch current user');
-    return result;
+    }, 12000);
   },
 
   // Resumes
   async uploadResume(file: File): Promise<{ message: string; resume: Resume }> {
     const formData = new FormData();
     formData.append('file', file);
-    const res = await fetch(`${API_BASE}/resumes/upload`, {
+    return request('/resumes/upload', {
       method: 'POST',
       headers: getAuthHeaders(true),
       body: formData
-    });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Upload failed');
-    return result;
+    }, 35000);
   },
 
   async getResumes(): Promise<{ resumes: Resume[] }> {
-    const res = await fetch(`${API_BASE}/resumes`, {
+    return request('/resumes', {
       headers: getAuthHeaders()
     });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Failed to fetch resumes');
-    return result;
   },
 
   async deleteResume(id: number): Promise<{ message: string }> {
-    const res = await fetch(`${API_BASE}/resumes/${id}`, {
+    return request(`/resumes/${id}`, {
       method: 'DELETE',
       headers: getAuthHeaders()
     });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Failed to delete resume');
-    return result;
   },
 
   // Analyses
   async createAnalysis(data: { resume_id: number; target_role: string; job_description?: string }): Promise<{ analysis: Analysis }> {
-    const res = await fetch(`${API_BASE}/analyses`, {
+    return request('/analyses', {
       method: 'POST',
       headers: getAuthHeaders(),
       body: JSON.stringify(data)
-    });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Failed to generate analysis');
-    return result;
+    }, 35000);
   },
 
   async getAnalyses(): Promise<{ analyses: Analysis[] }> {
-    const res = await fetch(`${API_BASE}/analyses`, {
+    return request('/analyses', {
       headers: getAuthHeaders()
     });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Failed to fetch analyses');
-    return result;
   },
 
   async getAnalysis(id: number): Promise<{ analysis: Analysis }> {
-    const res = await fetch(`${API_BASE}/analyses/${id}`, {
+    return request(`/analyses/${id}`, {
       headers: getAuthHeaders()
-    });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Failed to fetch analysis details');
-    return result;
+    }, 15000);
   },
 
   async deleteAnalysis(id: number): Promise<{ message: string }> {
-    const res = await fetch(`${API_BASE}/analyses/${id}`, {
+    return request(`/analyses/${id}`, {
       method: 'DELETE',
       headers: getAuthHeaders()
     });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Failed to delete analysis');
-    return result;
   },
 
   getReportDownloadUrl(analysisId: number): string {
@@ -137,116 +175,86 @@ export const api = {
     if (params?.page) query.set('page', params.page.toString());
     if (params?.type) query.set('type', params.type);
 
-    const res = await fetch(`${API_BASE}/jobs?${query.toString()}`);
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Failed to load jobs');
-    return result;
+    return request(`/jobs?${query.toString()}`);
   },
 
   async getRecommendations(): Promise<{ jobs: Job[] }> {
-    const res = await fetch(`${API_BASE}/jobs/recommendations`, {
+    return request('/jobs/recommendations', {
       headers: getAuthHeaders()
     });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Failed to load job recommendations');
-    return result;
   },
 
   async saveJob(jobId: number, jobPayload?: Partial<Job>): Promise<{ message: string }> {
-    const res = await fetch(`${API_BASE}/jobs/${jobId}/save`, {
+    return request(`/jobs/${jobId}/save`, {
       method: 'POST',
       headers: getAuthHeaders(),
       body: JSON.stringify(jobPayload || {})
     });
-    return res.json();
   },
 
   async unsaveJob(jobId: number): Promise<{ message: string }> {
-    const res = await fetch(`${API_BASE}/jobs/${jobId}/save`, {
+    return request(`/jobs/${jobId}/save`, {
       method: 'DELETE',
       headers: getAuthHeaders()
     });
-    return res.json();
   },
 
   async getSavedJobs(): Promise<{ saved_jobs: Array<{ id: number; job: Job; saved_at: string }> }> {
-    const res = await fetch(`${API_BASE}/jobs/saved`, {
+    return request('/jobs/saved', {
       headers: getAuthHeaders()
     });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Failed to fetch saved jobs');
-    return result;
   },
 
   // Roadmap
   async getRoadmap(): Promise<{ tasks: RoadmapTask[] }> {
-    const res = await fetch(`${API_BASE}/roadmap`, {
+    return request('/roadmap', {
       headers: getAuthHeaders()
     });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Failed to fetch roadmap tasks');
-    return result;
   },
 
   async addRoadmapTask(data: Partial<RoadmapTask>): Promise<{ task: RoadmapTask }> {
-    const res = await fetch(`${API_BASE}/roadmap`, {
+    return request('/roadmap', {
       method: 'POST',
       headers: getAuthHeaders(),
       body: JSON.stringify(data)
     });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Failed to add roadmap task');
-    return result;
   },
 
   async updateRoadmapTask(id: number, data: Partial<RoadmapTask>): Promise<{ task: RoadmapTask }> {
-    const res = await fetch(`${API_BASE}/roadmap/${id}`, {
+    return request(`/roadmap/${id}`, {
       method: 'PATCH',
       headers: getAuthHeaders(),
       body: JSON.stringify(data)
     });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Failed to update task');
-    return result;
   },
 
   async deleteRoadmapTask(id: number): Promise<{ message: string }> {
-    const res = await fetch(`${API_BASE}/roadmap/${id}`, {
+    return request(`/roadmap/${id}`, {
       method: 'DELETE',
       headers: getAuthHeaders()
     });
-    return res.json();
   },
 
   // Profile
   async getProfile(): Promise<{ profile: User }> {
-    const res = await fetch(`${API_BASE}/profile`, {
+    return request('/profile', {
       headers: getAuthHeaders()
     });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Failed to load profile');
-    return result;
   },
 
   async updateProfile(data: Partial<User>): Promise<{ profile: User }> {
-    const res = await fetch(`${API_BASE}/profile`, {
+    return request('/profile', {
       method: 'PUT',
       headers: getAuthHeaders(),
       body: JSON.stringify(data)
     });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Failed to update profile');
-    return result;
   },
 
   async deleteAccount(): Promise<{ message: string }> {
-    const res = await fetch(`${API_BASE}/account`, {
+    return request('/account', {
       method: 'DELETE',
       headers: getAuthHeaders()
     });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Failed to delete account');
-    return result;
   },
 
   // Interview Simulator
@@ -256,14 +264,11 @@ export const api = {
     skills?: string[];
     resume_summary?: string;
   }): Promise<{ target_role: string; difficulty: string; questions: import('../types').InterviewQuestion[] }> {
-    const res = await fetch(`${API_BASE}/interview/questions`, {
+    return request('/interview/questions', {
       method: 'POST',
       headers: getAuthHeaders(),
       body: JSON.stringify(data)
-    });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Failed to fetch interview questions');
-    return result;
+    }, 15000);
   },
 
   async evaluateInterviewAnswer(data: {
@@ -273,14 +278,11 @@ export const api = {
     target_role?: string;
     difficulty?: string;
   }): Promise<import('../types').InterviewEvaluation> {
-    const res = await fetch(`${API_BASE}/interview/evaluate`, {
+    return request('/interview/evaluate', {
       method: 'POST',
       headers: getAuthHeaders(),
       body: JSON.stringify(data)
-    });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Failed to evaluate interview response');
-    return result;
+    }, 15000);
   },
 
   // Career Tools
@@ -293,14 +295,11 @@ export const api = {
     skills?: string[];
     tone?: string;
   }): Promise<import('../types').CoverLetterResult> {
-    const res = await fetch(`${API_BASE}/tools/cover-letter`, {
+    return request('/tools/cover-letter', {
       method: 'POST',
       headers: getAuthHeaders(),
       body: JSON.stringify(data)
-    });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Failed to generate cover letter');
-    return result;
+    }, 20000);
   },
 
   async generateLinkedIn(data: {
@@ -309,14 +308,11 @@ export const api = {
     skills?: string[];
     resume_summary?: string;
   }): Promise<import('../types').LinkedInResult> {
-    const res = await fetch(`${API_BASE}/tools/linkedin`, {
+    return request('/tools/linkedin', {
       method: 'POST',
       headers: getAuthHeaders(),
       body: JSON.stringify(data)
-    });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Failed to generate LinkedIn profile copy');
-    return result;
+    }, 20000);
   },
 
   // Applications & Kanban Tracker
@@ -330,54 +326,39 @@ export const api = {
     if (params?.priority) query.append('priority', params.priority);
     if (params?.search) query.append('search', params.search);
 
-    const res = await fetch(`${API_BASE}/applications?${query.toString()}`, {
+    return request(`/applications?${query.toString()}`, {
       headers: getAuthHeaders()
     });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Failed to fetch applications');
-    return result;
   },
 
   async createApplication(data: Partial<JobApplication>): Promise<{ message: string; application: JobApplication }> {
-    const res = await fetch(`${API_BASE}/applications`, {
+    return request('/applications', {
       method: 'POST',
       headers: getAuthHeaders(),
       body: JSON.stringify(data)
     });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Failed to track application');
-    return result;
   },
 
   async updateApplication(id: number, data: Partial<JobApplication>): Promise<{ message: string; application: JobApplication }> {
-    const res = await fetch(`${API_BASE}/applications/${id}`, {
+    return request(`/applications/${id}`, {
       method: 'PATCH',
       headers: getAuthHeaders(),
       body: JSON.stringify(data)
     });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Failed to update application');
-    return result;
   },
 
   async deleteApplication(id: number): Promise<{ message: string }> {
-    const res = await fetch(`${API_BASE}/applications/${id}`, {
+    return request(`/applications/${id}`, {
       method: 'DELETE',
       headers: getAuthHeaders()
     });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Failed to delete application');
-    return result;
   },
 
   async seedSampleApplications(): Promise<{ message: string; seeded: boolean; count?: number }> {
-    const res = await fetch(`${API_BASE}/applications/seed-sample`, {
+    return request('/applications/seed-sample', {
       method: 'POST',
       headers: getAuthHeaders()
     });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Failed to seed sample applications');
-    return result;
   },
 
   // Floating AI Assistant
@@ -388,21 +369,16 @@ export const api = {
     is_live_ai: boolean;
     disclaimer?: string | null;
   }> {
-    const chatBase = import.meta.env.VITE_AI_CHAT_API_URL || `${API_BASE}/assistant/chat`;
-    const res = await fetch(chatBase, {
+    const chatBase = import.meta.env.VITE_AI_CHAT_API_URL || '/assistant/chat';
+    return request(chatBase, {
       method: 'POST',
       headers: getAuthHeaders(),
       body: JSON.stringify(data)
-    });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Failed to send chat message');
-    return result;
+    }, 15000);
   },
 
   // System Health
   async getHealth(): Promise<any> {
-    const res = await fetch(`${API_BASE}/health`);
-    return res.json();
+    return request('/health', {}, 10000);
   }
 };
-

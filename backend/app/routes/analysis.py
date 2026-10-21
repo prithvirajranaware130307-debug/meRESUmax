@@ -1,4 +1,6 @@
 import os
+import time
+import logging
 from flask import Blueprint, request, jsonify, g, send_file
 from ..config import Config
 from ..models import db, Resume, Analysis, RoadmapTask
@@ -8,11 +10,14 @@ from ..services.openai_service import AIService
 from ..services.report_generator import ReportGenerator
 from ..utils.auth_helper import auth_required
 
+logger = logging.getLogger(__name__)
+
 analysis_bp = Blueprint('analyses', __name__, url_prefix='/api/analyses')
 
 @analysis_bp.route('', methods=['POST'])
 @auth_required
 def create_analysis():
+    t_start = time.perf_counter()
     data = request.get_json() or {}
     resume_id = data.get('resume_id')
     target_role = data.get('target_role', g.user.target_role or 'Software Developer')
@@ -21,68 +26,104 @@ def create_analysis():
     if not resume_id:
         return jsonify({'error': 'resume_id is required.'}), 400
 
-    resume = Resume.query.filter_by(id=resume_id, user_id=g.user.id).first()
+    try:
+        resume_id_int = int(resume_id)
+    except (ValueError, TypeError):
+        return jsonify({'error': 'Invalid resume_id format. Must be an integer.'}), 400
+
+    resume = Resume.query.filter_by(id=resume_id_int, user_id=g.user.id).first()
     if not resume:
         return jsonify({'error': 'Resume not found or unauthorized.'}), 404
 
-    # 1. Deterministic Heuristic Scoring
-    parsed = resume.parsed_data
-    parsed['text'] = resume.extracted_text
-    
-    scoring_result = ResumeScorer.calculate_quality_score(parsed, target_role)
-    quality_score = scoring_result['overall_score']
+    try:
+        # 1. Deterministic Heuristic Scoring
+        t_score_start = time.perf_counter()
+        parsed = dict(resume.parsed_data or {})
+        parsed['text'] = resume.extracted_text or ''
+        
+        scoring_result = ResumeScorer.calculate_quality_score(parsed, target_role)
+        quality_score = scoring_result['overall_score']
+        t_score = time.perf_counter() - t_score_start
 
-    # 2. Job Matching
-    matching_result = JobMatcher.match_resume_to_role(parsed, target_role, custom_jd)
-    job_match_score = matching_result['match_score']
+        # 2. Job Matching
+        t_match_start = time.perf_counter()
+        matching_result = JobMatcher.match_resume_to_role(parsed, target_role, custom_jd)
+        job_match_score = matching_result['match_score']
+        t_match = time.perf_counter() - t_match_start
 
-    # 3. AI Intelligence (OpenAI or deterministic fallback)
-    ai_feedback = AIService.generate_resume_intelligence(
-        resume_text=resume.extracted_text,
-        skills=parsed.get('skills', []),
-        target_role=target_role,
-        quality_score=quality_score,
-        matched_skills=matching_result['matched_skills'],
-        missing_skills=matching_result['missing_skills']
-    )
+        # 3. AI Intelligence (Fast provider with strict timeout or immediate deterministic fallback)
+        t_ai_start = time.perf_counter()
+        try:
+            ai_feedback = AIService.generate_resume_intelligence(
+                resume_text=resume.extracted_text or '',
+                skills=parsed.get('skills', []),
+                target_role=target_role,
+                quality_score=quality_score,
+                matched_skills=matching_result['matched_skills'],
+                missing_skills=matching_result['missing_skills']
+            )
+        except Exception as ai_err:
+            logger.warning(f"AI intelligence exception, using deterministic fallback: {ai_err}")
+            ai_feedback = AIService._generate_deterministic_fallback(
+                skills=parsed.get('skills', []),
+                target_role=target_role,
+                quality_score=quality_score,
+                matched_skills=matching_result['matched_skills'],
+                missing_skills=matching_result['missing_skills']
+            )
+            ai_feedback['provider_status'] = "Deterministic Heuristic Engine (Fallback)"
+        t_ai = time.perf_counter() - t_ai_start
 
-    # 4. Save Analysis Record
-    analysis = Analysis(
-        user_id=g.user.id,
-        resume_id=resume.id,
-        target_role=target_role,
-        quality_score=quality_score,
-        job_match_score=job_match_score
-    )
-    analysis.category_scores = scoring_result['category_scores']
-    analysis.strengths = scoring_result['strengths']
-    analysis.weaknesses = scoring_result['weaknesses']
-    analysis.improvements = scoring_result['improvements']
-    analysis.matched_skills = matching_result['matched_skills']
-    analysis.missing_skills = matching_result['missing_skills']
-    analysis.ai_feedback = ai_feedback
-
-    db.session.add(analysis)
-    db.session.commit()
-
-    # 5. Populate Roadmap Tasks
-    milestones = ai_feedback.get('roadmap_milestones', [])
-    for m in milestones:
-        task = RoadmapTask(
+        # 4. Save Analysis Record
+        t_db_start = time.perf_counter()
+        analysis = Analysis(
             user_id=g.user.id,
-            analysis_id=analysis.id,
-            title=m.get('title', 'Learning Objective'),
-            description=m.get('description', ''),
-            priority=m.get('priority', 'medium'),
-            category=m.get('category', 'skill')
+            resume_id=resume.id,
+            target_role=target_role,
+            quality_score=quality_score,
+            job_match_score=job_match_score
         )
-        db.session.add(task)
-    db.session.commit()
+        analysis.category_scores = scoring_result.get('category_scores', {})
+        analysis.strengths = scoring_result.get('strengths', [])
+        analysis.weaknesses = scoring_result.get('weaknesses', [])
+        analysis.improvements = scoring_result.get('improvements', [])
+        analysis.matched_skills = matching_result.get('matched_skills', [])
+        analysis.missing_skills = matching_result.get('missing_skills', [])
+        analysis.ai_feedback = ai_feedback
 
-    return jsonify({
-        'message': 'Analysis generated successfully.',
-        'analysis': analysis.to_dict()
-    }), 201
+        db.session.add(analysis)
+        db.session.commit()
+
+        # 5. Populate Roadmap Tasks
+        milestones = ai_feedback.get('roadmap_milestones', [])
+        for m in milestones:
+            task = RoadmapTask(
+                user_id=g.user.id,
+                analysis_id=analysis.id,
+                title=m.get('title', 'Learning Objective'),
+                description=m.get('description', ''),
+                priority=m.get('priority', 'medium'),
+                category=m.get('category', 'skill')
+            )
+            db.session.add(task)
+        db.session.commit()
+        t_db = time.perf_counter() - t_db_start
+
+        t_total = time.perf_counter() - t_start
+        logger.info(
+            f"[ANALYSIS_TIMING] analysis_id={analysis.id} user_id={g.user.id} role='{target_role}' "
+            f"scoring={t_score:.3f}s matching={t_match:.3f}s ai={t_ai:.3f}s db={t_db:.3f}s total={t_total:.3f}s"
+        )
+
+        return jsonify({
+            'message': 'Analysis generated successfully.',
+            'analysis': analysis.to_dict()
+        }), 201
+
+    except Exception as e:
+        db.session.rollback()
+        logger.error(f"Failed to generate analysis for resume {resume_id}: {e}", exc_info=True)
+        return jsonify({'error': f"Failed to complete resume analysis: {str(e)}"}), 500
 
 @analysis_bp.route('', methods=['GET'])
 @auth_required

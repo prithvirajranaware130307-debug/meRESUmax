@@ -97,27 +97,64 @@ class ResumeParser:
         text_content = []
         try:
             reader = PdfReader(file_path)
-            for page in reader.pages:
-                extracted = page.extract_text()
-                if extracted:
-                    text_content.append(extracted)
-            return "\n".join(text_content).strip()
+            if reader.is_encrypted:
+                try:
+                    # Attempt decrypt with empty password for unprompted encrypted PDFs
+                    reader.decrypt("")
+                except Exception:
+                    raise ValueError("This PDF is password-protected or encrypted. Please upload an unencrypted file.")
+            
+            # Limit page traversal to 30 pages to prevent infinite loops / memory exhaustion
+            max_pages = min(len(reader.pages), 30)
+            total_chars = 0
+            for i in range(max_pages):
+                try:
+                    extracted = reader.pages[i].extract_text()
+                    if extracted:
+                        text_content.append(extracted)
+                        total_chars += len(extracted)
+                        if total_chars > 40000:
+                            break
+                except Exception:
+                    continue
+
+            full_text = "\n".join(text_content).strip()
+            return full_text[:40000]
+        except ValueError:
+            raise
         except Exception as e:
-            raise ValueError(f"Failed to parse PDF: {str(e)}")
+            raise ValueError(f"Failed to parse PDF document: {str(e)}")
 
     @staticmethod
     def extract_text_from_docx(file_path: str) -> str:
         try:
             doc = Document(file_path)
-            paragraphs = [p.text for p in doc.paragraphs if p.text.strip()]
-            for table in doc.tables:
-                for row in table.rows:
-                    for cell in row.cells:
-                        if cell.text.strip():
-                            paragraphs.append(cell.text.strip())
-            return "\n".join(paragraphs).strip()
+            paragraphs = []
+            total_chars = 0
+            
+            for p in doc.paragraphs[:500]:
+                cleaned = p.text.strip()
+                if cleaned:
+                    paragraphs.append(cleaned)
+                    total_chars += len(cleaned)
+                    if total_chars > 40000:
+                        break
+                        
+            if total_chars <= 40000:
+                for table in doc.tables[:30]:
+                    for row in table.rows[:100]:
+                        for cell in row.cells:
+                            cleaned = cell.text.strip()
+                            if cleaned:
+                                paragraphs.append(cleaned)
+                                total_chars += len(cleaned)
+                                if total_chars > 40000:
+                                    break
+                                    
+            full_text = "\n".join(paragraphs).strip()
+            return full_text[:40000]
         except Exception as e:
-            raise ValueError(f"Failed to parse DOCX: {str(e)}")
+            raise ValueError(f"Failed to parse DOCX document: {str(e)}")
 
     @staticmethod
     def extract_sections(text: str) -> Dict[str, str]:

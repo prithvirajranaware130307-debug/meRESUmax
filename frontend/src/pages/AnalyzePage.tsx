@@ -5,7 +5,7 @@ import { GlassCard } from '../components/glass/GlassCard';
 import { GlassButton } from '../components/glass/GlassButton';
 import { 
   FileUp, FileText, CheckCircle2, AlertCircle, X, 
-  Sparkles, ArrowRight, Loader2, Target, AlignLeft, ShieldCheck
+  Sparkles, ArrowRight, Loader2, Target, AlignLeft, ShieldCheck, RotateCcw
 } from 'lucide-react';
 
 const TARGET_ROLES = [
@@ -45,7 +45,11 @@ export const AnalyzePage: React.FC = () => {
       return;
     }
     if (file.size > 16 * 1024 * 1024) {
-      setError('File size exceeds the 16 MB limit.');
+      setError('File size exceeds the 16 MB limit. Please select a smaller document.');
+      return;
+    }
+    if (file.size === 0) {
+      setError('The selected file is empty (0 bytes). Please select a valid document.');
       return;
     }
     setSelectedFile(file);
@@ -53,7 +57,7 @@ export const AnalyzePage: React.FC = () => {
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
-    setIsDragging(true);
+    if (!isProcessing) setIsDragging(true);
   };
 
   const handleDragLeave = () => {
@@ -63,12 +67,13 @@ export const AnalyzePage: React.FC = () => {
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
-    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+    if (!isProcessing && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
       handleFileChange(e.dataTransfer.files[0]);
     }
   };
 
   const handleStartAnalysis = async () => {
+    if (isProcessing) return; // Prevent duplicate concurrent requests
     if (!selectedFile) {
       setError('Please select or drop a resume file first.');
       return;
@@ -82,27 +87,34 @@ export const AnalyzePage: React.FC = () => {
     setError('');
 
     try {
-      setProcessingStage('1/4: Ingesting document and verifying file integrity...');
+      setProcessingStage('Uploading secure document...');
       const uploadRes = await api.uploadResume(selectedFile);
+      
+      if (!uploadRes?.resume?.id) {
+        throw new Error('Upload succeeded but resume record could not be established.');
+      }
       const resumeId = uploadRes.resume.id;
 
-      setProcessingStage('2/4: Extracting sections and cross-referencing technical skills taxonomy...');
-      await new Promise((r) => setTimeout(r, 600));
-
-      setProcessingStage(`3/4: Calculating transparent heuristic quality scores against ${effectiveRole}...`);
-      await new Promise((r) => setTimeout(r, 600));
-
-      setProcessingStage('4/4: Generating AI career intelligence and personalized roadmap...');
+      setProcessingStage('Extracting resume content & technical skills...');
+      setProcessingStage(`Calculating quality score & matching ${effectiveRole} skills...`);
+      
       const analysisRes = await api.createAnalysis({
         resume_id: resumeId,
         target_role: effectiveRole,
         job_description: jobDescription
       });
 
-      // Navigate directly to the results page
+      setProcessingStage('Preparing recommendations & final audit report...');
+
+      if (!analysisRes?.analysis?.id) {
+        throw new Error('Analysis completed but did not return a valid audit record.');
+      }
+
+      // Navigate directly to the verified results page
       navigate(`/results/${analysisRes.analysis.id}`);
     } catch (err: any) {
-      setError(err.message || 'Analysis failed. Please check the document and try again.');
+      console.error('Resume audit error:', err);
+      setError(err.message || 'Analysis could not be completed. Please check your document and try again.');
       setIsProcessing(false);
     }
   };
@@ -118,30 +130,46 @@ export const AnalyzePage: React.FC = () => {
           Analyze Your Resume
         </h1>
         <p className="text-text-secondary text-sm mt-2">
-          Upload your resume in PDF or DOCX format to receive transparent heuristic quality scores, skill gap intelligence, and role fit matching.
+          Upload your resume in PDF or DOCX format for deep ATS analysis, skill matching, and actionable STAR rewrites.
         </p>
       </div>
 
       <GlassCard variant="elevated" className="p-6 sm:p-8 border border-white/20 shadow-glass-lg">
         {error && (
-          <div className="mb-6 p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2.5">
-            <AlertCircle size={16} className="shrink-0" />
-            <span>{error}</span>
+          <div className="mb-6 p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-2.5">
+              <AlertCircle size={18} className="shrink-0 text-rose-400" />
+              <span className="leading-relaxed">{error}</span>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={handleStartAnalysis}
+                disabled={!selectedFile || isProcessing}
+                className="px-3 py-1.5 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 text-xs font-semibold flex items-center gap-1.5 transition-colors"
+              >
+                <RotateCcw size={13} />
+                <span>Retry</span>
+              </button>
+            </div>
           </div>
         )}
 
         {isProcessing ? (
           /* Processing State Visualizer */
-          <div className="py-14 flex flex-col items-center justify-center text-center space-y-5">
+          <div className="py-14 flex flex-col items-center justify-center text-center space-y-6">
             <div className="relative">
               <div className="w-20 h-20 rounded-full border-2 border-brand-cyan/20 border-t-brand-cyan animate-spin" />
               <div className="absolute inset-0 flex items-center justify-center">
-                <Sparkles size={24} className="text-brand-blue animate-pulse" />
+                <Sparkles size={24} className="text-brand-cyan animate-pulse" />
               </div>
             </div>
-            <div className="space-y-2">
-              <h3 className="text-lg font-bold text-white">Analyzing Document Potential</h3>
-              <p className="text-xs text-brand-cyan font-mono">{processingStage}</p>
+            <div className="space-y-2 max-w-md">
+              <h3 className="text-lg font-bold text-white tracking-tight">Analyzing Resume Potential</h3>
+              <p className="text-xs text-brand-cyan font-mono animate-pulse">{processingStage}</p>
+              <p className="text-[11px] text-text-muted mt-2">
+                Running heuristic parser, role skills benchmark, and intelligence feedback.
+              </p>
             </div>
           </div>
         ) : (
@@ -157,7 +185,7 @@ export const AnalyzePage: React.FC = () => {
                   onDragOver={handleDragOver}
                   onDragLeave={handleDragLeave}
                   onDrop={handleDrop}
-                  onClick={() => fileInputRef.current?.click()}
+                  onClick={() => !isProcessing && fileInputRef.current?.click()}
                   className={`border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all duration-200 ${
                     isDragging
                       ? 'border-brand-cyan bg-brand-cyan/10 shadow-glow-cyan'
@@ -169,6 +197,7 @@ export const AnalyzePage: React.FC = () => {
                     type="file"
                     accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                     className="hidden"
+                    disabled={isProcessing}
                     onChange={(e) => e.target.files?.[0] && handleFileChange(e.target.files[0])}
                   />
                   <div className="w-12 h-12 rounded-xl bg-brand-blue/20 text-brand-cyan flex items-center justify-center mx-auto mb-3 border border-brand-blue/30 shadow-glass-sm">
@@ -193,13 +222,14 @@ export const AnalyzePage: React.FC = () => {
                         {selectedFile.name}
                       </div>
                       <div className="text-xs text-text-muted">
-                        {(selectedFile.size / 1024).toFixed(1)} KB • Ready for extraction
+                        {(selectedFile.size / 1024).toFixed(1)} KB • Ready for audit
                       </div>
                     </div>
                   </div>
                   <button
-                    onClick={() => setSelectedFile(null)}
-                    className="p-2 rounded-lg text-text-muted hover:text-rose-400 hover:bg-rose-500/10 transition-colors"
+                    onClick={() => !isProcessing && setSelectedFile(null)}
+                    disabled={isProcessing}
+                    className="p-2 rounded-lg text-text-muted hover:text-rose-400 hover:bg-rose-500/10 transition-colors disabled:opacity-40"
                     title="Remove file"
                   >
                     <X size={18} />
@@ -218,7 +248,8 @@ export const AnalyzePage: React.FC = () => {
                 <select
                   value={targetRole}
                   onChange={(e) => setTargetRole(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-black/40 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all cursor-pointer"
+                  disabled={isProcessing}
+                  className="w-full px-4 py-2.5 bg-black/40 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all cursor-pointer disabled:opacity-50"
                 >
                   {TARGET_ROLES.map((role) => (
                     <option key={role} value={role} className="bg-[#0B1020]">
@@ -237,8 +268,9 @@ export const AnalyzePage: React.FC = () => {
                     type="text"
                     value={customRoleText}
                     onChange={(e) => setCustomRoleText(e.target.value)}
+                    disabled={isProcessing}
                     placeholder="e.g. Solutions Architect"
-                    className="w-full px-4 py-2.5 bg-black/40 border border-white/10 rounded-xl text-sm text-white placeholder-text-muted focus:outline-none focus:border-brand-blue"
+                    className="w-full px-4 py-2.5 bg-black/40 border border-white/10 rounded-xl text-sm text-white placeholder-text-muted focus:outline-none focus:border-brand-blue disabled:opacity-50"
                   />
                 </div>
               )}
@@ -256,9 +288,10 @@ export const AnalyzePage: React.FC = () => {
               <textarea
                 value={jobDescription}
                 onChange={(e) => setJobDescription(e.target.value)}
+                disabled={isProcessing}
                 placeholder="Paste the full job description or key responsibilities here to calculate precise keyword alignment..."
                 rows={4}
-                className="w-full p-3.5 bg-black/40 border border-white/10 rounded-xl text-xs sm:text-sm text-white placeholder-text-muted focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all"
+                className="w-full p-3.5 bg-black/40 border border-white/10 rounded-xl text-xs sm:text-sm text-white placeholder-text-muted focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all disabled:opacity-50"
               />
             </div>
 
@@ -268,7 +301,8 @@ export const AnalyzePage: React.FC = () => {
                 onClick={handleStartAnalysis}
                 variant="primary"
                 size="lg"
-                disabled={!selectedFile}
+                disabled={!selectedFile || isProcessing}
+                isLoading={isProcessing}
                 className="w-full"
                 icon={<Sparkles size={18} />}
               >

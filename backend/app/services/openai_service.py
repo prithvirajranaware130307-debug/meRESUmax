@@ -12,14 +12,14 @@ class AIService:
     def get_client(cls):
         if Config.OPENAI_API_KEY and Config.OPENAI_API_KEY.strip() and not Config.OPENAI_API_KEY.startswith("replace_"):
             try:
-                return OpenAI(api_key=Config.OPENAI_API_KEY, timeout=20.0)
+                return OpenAI(api_key=Config.OPENAI_API_KEY, timeout=7.0)
             except Exception as e:
                 logger.warning(f"Failed to initialize OpenAI client: {e}")
         return None
 
     @classmethod
     def _build_prompts(cls, resume_text: str, skills: List[str], target_role: str, quality_score: float, matched_skills: List[str], missing_skills: List[str]):
-        safe_text = resume_text[:3500]
+        safe_text = resume_text[:2000]
         system_prompt = (
             "You are meRESUmax Career Intelligence AI, a senior technical recruiter and career coach. "
             "Analyze the candidate's resume objectively. Do NOT invent fake degrees or non-existent companies. "
@@ -42,9 +42,9 @@ class AIService:
         user_prompt = (
             f"Target Role: {target_role}\n"
             f"Resume Quality Score: {quality_score}/100\n"
-            f"Extracted Skills: {', '.join(skills[:25])}\n"
-            f"Matched Skills: {', '.join(matched_skills[:15])}\n"
-            f"Missing Key Skills: {', '.join(missing_skills[:10])}\n"
+            f"Extracted Skills: {', '.join(skills[:20])}\n"
+            f"Matched Skills: {', '.join(matched_skills[:12])}\n"
+            f"Missing Key Skills: {', '.join(missing_skills[:8])}\n"
             f"Resume Content Excerpt:\n{safe_text}\n"
         )
         return system_prompt, user_prompt
@@ -59,7 +59,7 @@ class AIService:
         matched_skills: List[str],
         missing_skills: List[str]
     ) -> Dict[str, Any]:
-        """Calls Google Gemini API with JSON structured output."""
+        """Calls Google Gemini API with JSON structured output and 7s strict timeout."""
         system_prompt, user_prompt = cls._build_prompts(resume_text, skills, target_role, quality_score, matched_skills, missing_skills)
 
         model = Config.GEMINI_MODEL or "gemini-2.5-flash"
@@ -74,7 +74,7 @@ class AIService:
             }
         }
 
-        resp = requests.post(url, headers=headers, json=payload, timeout=25.0)
+        resp = requests.post(url, headers=headers, json=payload, timeout=7.0)
         resp.raise_for_status()
         res_json = resp.json()
         raw_text = res_json['candidates'][0]['content']['parts'][0]['text']
@@ -117,16 +117,19 @@ class AIService:
     ) -> Dict[str, Any]:
         """
         Generates structured AI feedback, actionable rewrites, and roadmap steps.
-        Tries Google Gemini first (if configured), then OpenAI, then falls back to deterministic engine.
+        Tries single primary AI provider with 7s strict timeout, then immediately falls back to deterministic engine.
         """
         # 1. Try Google Gemini if configured
         if Config.GEMINI_API_KEY and Config.GEMINI_API_KEY.strip() and not Config.GEMINI_API_KEY.startswith("replace_"):
             try:
                 return cls._call_gemini(resume_text, skills, target_role, quality_score, matched_skills, missing_skills)
             except Exception as e:
-                logger.error(f"Google Gemini API call failed: {e}")
+                logger.warning(f"Google Gemini API call failed or timed out ({e}). Falling back immediately to deterministic engine.")
+                fallback = cls._generate_deterministic_fallback(skills, target_role, quality_score, matched_skills, missing_skills)
+                fallback['provider_status'] = "Deterministic Heuristic Engine (Fallback)"
+                return fallback
 
-        # 2. Try OpenAI if configured
+        # 2. Try OpenAI if configured (and Gemini not configured)
         client = cls.get_client()
         if client:
             try:
@@ -360,7 +363,7 @@ class AIService:
                     "contents": [{"parts": [{"text": f"Context:\n{context_str}\nUser Question: {msg_clean}"}]}],
                     "generationConfig": {"temperature": 0.4, "maxOutputTokens": 600}
                 }
-                resp = requests.post(url, headers={"Content-Type": "application/json"}, json=payload, timeout=20.0)
+                resp = requests.post(url, headers={"Content-Type": "application/json"}, json=payload, timeout=6.0)
                 if resp.status_code == 200:
                     data = resp.json()
                     reply = data['candidates'][0]['content']['parts'][0]['text']

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { api } from '../services/api';
 import { Analysis } from '../types';
@@ -8,7 +8,7 @@ import { ScoreDial } from '../components/glass/ScoreDial';
 import { 
   Sparkles, Download, ArrowLeft, CheckCircle2, AlertTriangle, 
   Copy, Check, FileText, Briefcase, HelpCircle, Compass, 
-  TrendingUp, ArrowRight, Tag, ListOrdered, ShieldAlert
+  TrendingUp, ArrowRight, Tag, ListOrdered, ShieldAlert, RotateCcw
 } from 'lucide-react';
 
 export const ResultsPage: React.FC = () => {
@@ -18,20 +18,34 @@ export const ResultsPage: React.FC = () => {
   const [error, setError] = useState('');
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
-  useEffect(() => {
-    async function loadAnalysis() {
-      if (!analysisId) return;
-      try {
-        const res = await api.getAnalysis(parseInt(analysisId));
-        setAnalysis(res.analysis);
-      } catch (err: any) {
-        setError(err.message || 'Failed to load analysis results.');
-      } finally {
-        setIsLoading(false);
-      }
+  const loadAnalysis = useCallback(async () => {
+    const id = parseInt(analysisId || '', 10);
+    if (!analysisId || isNaN(id)) {
+      setError('Invalid or missing audit reference. Please select or run a resume audit.');
+      setIsLoading(false);
+      return;
     }
-    loadAnalysis();
+
+    setIsLoading(true);
+    setError('');
+
+    try {
+      const res = await api.getAnalysis(id);
+      if (!res?.analysis) {
+        throw new Error('Analysis record could not be retrieved from the server.');
+      }
+      setAnalysis(res.analysis);
+    } catch (err: any) {
+      console.error('Failed to load analysis:', err);
+      setError(err.message || 'Failed to load analysis results. Please retry.');
+    } finally {
+      setIsLoading(false);
+    }
   }, [analysisId]);
+
+  useEffect(() => {
+    loadAnalysis();
+  }, [loadAnalysis]);
 
   const copyToClipboard = (text: string, key: string) => {
     navigator.clipboard.writeText(text);
@@ -39,30 +53,87 @@ export const ResultsPage: React.FC = () => {
     setTimeout(() => setCopiedKey(null), 2000);
   };
 
+  // Loading Skeleton State
   if (isLoading) {
     return (
-      <div className="min-h-screen pt-36 flex flex-col items-center justify-center text-center">
-        <div className="w-12 h-12 rounded-full border-2 border-brand-cyan/20 border-t-brand-cyan animate-spin mb-4" />
-        <div className="text-sm font-semibold text-white">Loading Career Intelligence Audit...</div>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-28 pb-20 relative z-10 animate-pulse">
+        {/* Header Skeleton */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+          <div className="space-y-2">
+            <div className="w-36 h-4 bg-white/10 rounded-lg" />
+            <div className="w-72 h-8 bg-white/15 rounded-xl" />
+            <div className="w-48 h-3 bg-white/10 rounded-lg" />
+          </div>
+          <div className="flex items-center gap-3 w-full sm:w-auto">
+            <div className="w-36 h-10 bg-white/10 rounded-xl" />
+            <div className="w-32 h-10 bg-white/10 rounded-xl" />
+          </div>
+        </div>
+
+        {/* 3 Score Cards Skeleton */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="h-56 rounded-2xl bg-white/[0.04] border border-white/10 p-6 flex flex-col items-center justify-center space-y-4">
+            <div className="w-28 h-28 rounded-full border-4 border-white/10" />
+            <div className="w-36 h-4 bg-white/10 rounded" />
+          </div>
+          <div className="h-56 rounded-2xl bg-white/[0.04] border border-white/10 p-6 flex flex-col items-center justify-center space-y-4">
+            <div className="w-28 h-28 rounded-full border-4 border-white/10" />
+            <div className="w-36 h-4 bg-white/10 rounded" />
+          </div>
+          <div className="h-56 rounded-2xl bg-white/[0.04] border border-white/10 p-6 flex flex-col justify-between">
+            <div className="space-y-3">
+              <div className="w-24 h-4 bg-white/10 rounded" />
+              <div className="w-full h-16 bg-white/5 rounded-xl" />
+            </div>
+            <div className="w-36 h-3 bg-white/10 rounded" />
+          </div>
+        </div>
+
+        {/* Category Breakdown Skeleton */}
+        <div className="h-28 rounded-2xl bg-white/[0.03] border border-white/5 p-6 mb-8" />
+        {/* Sections Skeleton */}
+        <div className="h-64 rounded-2xl bg-white/[0.03] border border-white/5 p-6" />
       </div>
     );
   }
 
+  // Error / Unavailable State
   if (error || !analysis) {
     return (
       <div className="max-w-md mx-auto pt-36 px-4 text-center">
-        <GlassCard variant="elevated" className="p-8">
-          <div className="text-rose-400 mb-2 font-bold">Audit Not Found</div>
-          <p className="text-xs text-text-secondary mb-5">{error || 'This analysis could not be located.'}</p>
-          <Link to="/analyze">
-            <GlassButton variant="primary">Analyze a Resume</GlassButton>
-          </Link>
+        <GlassCard variant="elevated" className="p-8 border border-white/20 shadow-glass-lg">
+          <div className="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center mx-auto mb-4">
+            <ShieldAlert size={24} />
+          </div>
+          <h1 className="text-white text-lg font-bold mb-1.5">Analysis Unavailable</h1>
+          <p className="text-xs text-text-secondary mb-6 leading-relaxed">
+            {error || 'The requested career intelligence audit could not be loaded. Please retry or run a new resume audit.'}
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <GlassButton
+              variant="primary"
+              size="md"
+              onClick={loadAnalysis}
+              icon={<RotateCcw size={15} />}
+              className="w-full sm:w-auto"
+            >
+              Retry Loading
+            </GlassButton>
+            <Link to="/analyze" className="w-full sm:w-auto">
+              <GlassButton variant="secondary" size="md" className="w-full sm:w-auto">
+                Analyze a Resume
+              </GlassButton>
+            </Link>
+          </div>
         </GlassCard>
       </div>
     );
   }
 
   const ai = analysis.ai_feedback || {};
+  const matchedSkills = analysis.matched_skills || [];
+  const missingSkills = analysis.missing_skills || [];
+  const categoryScores = analysis.category_scores || {};
 
   // Standardize high priority fixes
   const highPriorityFixes = ai.high_priority_fixes && ai.high_priority_fixes.length > 0
@@ -175,28 +246,28 @@ export const ResultsPage: React.FC = () => {
         {/* Quality Score */}
         <GlassCard variant="elevated" className="p-6 flex flex-col items-center justify-center text-center">
           <ScoreDial 
-            score={Math.round(analysis.quality_score)} 
+            score={Math.round(analysis.quality_score || 0)} 
             label="Quality Score" 
             sublabel="Overall Resume Strength" 
             colorScheme="dynamic" 
             size={140} 
           />
           <div className="mt-4 text-xs font-semibold text-brand-mint">
-            {analysis.quality_score >= 80 ? 'Competitive for Tier-1 Opportunities' : 'Solid Base with Growth Potential'}
+            {(analysis.quality_score || 0) >= 80 ? 'Competitive for Tier-1 Opportunities' : 'Solid Base with Growth Potential'}
           </div>
         </GlassCard>
 
         {/* Job Match Score */}
         <GlassCard variant="elevated" className="p-6 flex flex-col items-center justify-center text-center">
           <ScoreDial 
-            score={Math.round(analysis.job_match_score)} 
+            score={Math.round(analysis.job_match_score || 0)} 
             label="Role Match Fit" 
             sublabel={analysis.target_role} 
             colorScheme="cyan" 
             size={140} 
           />
           <div className="mt-4 text-xs font-semibold text-brand-cyan">
-            {analysis.matched_skills.length} Archetype Skills Verified
+            {matchedSkills.length} Archetype Skills Verified
           </div>
         </GlassCard>
 
@@ -222,19 +293,19 @@ export const ResultsPage: React.FC = () => {
       <GlassCard variant="standard" className="p-6 mb-8">
         <h2 className="text-base font-bold text-white mb-4">Heuristic Category Breakdown</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-          {Object.entries(analysis.category_scores || {}).map(([key, item]) => (
+          {Object.entries(categoryScores).map(([key, item]: [string, any]) => (
             <div key={key} className="p-4 rounded-xl bg-white/[0.03] border border-white/5 space-y-2">
               <div className="flex items-center justify-between text-xs font-semibold text-white">
-                <span className="truncate">{item.title}</span>
-                <span className="text-brand-cyan shrink-0">{item.score}/{item.max}</span>
+                <span className="truncate">{item?.title || key}</span>
+                <span className="text-brand-cyan shrink-0">{item?.score ?? 0}/{item?.max ?? 20}</span>
               </div>
               <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
                 <div 
                   className="h-full bg-gradient-to-r from-brand-blue to-brand-cyan rounded-full transition-all duration-500"
-                  style={{ width: `${item.percentage}%` }}
+                  style={{ width: `${Math.min(100, item?.percentage ?? 0)}%` }}
                 />
               </div>
-              <div className="text-[11px] text-text-muted">{item.percentage}% rating</div>
+              <div className="text-[11px] text-text-muted">{item?.percentage ?? 0}% rating</div>
             </div>
           ))}
         </div>
@@ -329,11 +400,11 @@ export const ResultsPage: React.FC = () => {
         <GlassCard variant="standard" className="p-6">
           <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-brand-mint mb-3">
             <CheckCircle2 size={16} />
-            <span>Verified Matched Skills ({analysis.matched_skills.length})</span>
+            <span>Verified Matched Skills ({matchedSkills.length})</span>
           </div>
           <div className="flex flex-wrap gap-2">
-            {analysis.matched_skills.length > 0 ? (
-              analysis.matched_skills.map((sk) => (
+            {matchedSkills.length > 0 ? (
+              matchedSkills.map((sk) => (
                 <span key={sk} className="text-xs px-2.5 py-1 rounded-lg bg-mint-500/10 border border-mint-500/20 text-brand-mint font-medium">
                   {sk}
                 </span>
@@ -348,11 +419,11 @@ export const ResultsPage: React.FC = () => {
         <GlassCard variant="standard" className="p-6">
           <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-brand-amber mb-3">
             <AlertTriangle size={16} />
-            <span>Missing Skills ({analysis.missing_skills.length})</span>
+            <span>Missing Skills ({missingSkills.length})</span>
           </div>
           <div className="flex flex-wrap gap-2">
-            {analysis.missing_skills.length > 0 ? (
-              analysis.missing_skills.map((sk) => (
+            {missingSkills.length > 0 ? (
+              missingSkills.map((sk) => (
                 <span key={sk} className="text-xs px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/20 text-brand-amber font-medium">
                   {sk}
                 </span>

@@ -6,6 +6,7 @@ import { Footer } from './components/layout/Footer';
 import { BackgroundAtmosphere } from './components/layout/BackgroundAtmosphere';
 import { CustomCursor } from './components/layout/CustomCursor';
 import { FloatingAssistant } from './components/assistant/FloatingAssistant';
+import { ErrorBoundary } from './components/layout/ErrorBoundary';
 
 import { LandingPage } from './pages/LandingPage';
 import { LoginPage } from './pages/LoginPage';
@@ -50,7 +51,8 @@ export const App: React.FC = () => {
           <Navbar />
           
           <main className="flex-1">
-            <Routes>
+            <ErrorBoundary>
+              <Routes>
               {/* Public Routes */}
               <Route path="/" element={<LandingPage />} />
               <Route path="/login" element={<LoginPage />} />
@@ -150,7 +152,8 @@ export const App: React.FC = () => {
               {/* Catch all fallback */}
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
-          </main>
+          </ErrorBoundary>
+        </main>
 
           <Footer />
           <FloatingAssistant />
