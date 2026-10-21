@@ -4,6 +4,8 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { BackgroundAtmosphere } from './components/layout/BackgroundAtmosphere';
+import { CustomCursor } from './components/layout/CustomCursor';
+import { FloatingAssistant } from './components/assistant/FloatingAssistant';
 
 import { LandingPage } from './pages/LandingPage';
 import { LoginPage } from './pages/LoginPage';
@@ -151,6 +153,8 @@ export const App: React.FC = () => {
           </main>
 
           <Footer />
+          <FloatingAssistant />
+          <CustomCursor />
         </div>
       </Router>
     </AuthProvider>

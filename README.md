@@ -66,6 +66,11 @@
     - 1-click stage progression, client-side CSV / JSON export, and direct integration with AI Mock Interview loops.
     - 1-click "Track Pipeline" button on all job opportunities.
 
+13. **Floating AI Career Assistant**
+    - Omnipresent Liquid Glass floating chat interface available across authenticated routes.
+    - Context-aware recruiter AI answering resume improvements, score explanations, mock questions, and job matching.
+    - Dual mode: live Gemini/OpenAI integration when configured, with high-fidelity deterministic heuristic advice in demo mode.
+
 ---
 
 ## 🏗 Tech Stack

@@ -44,6 +44,7 @@ def create_app(config_class=Config):
     from .routes.interview import interview_bp
     from .routes.career_tools import career_tools_bp
     from .routes.applications import applications_bp
+    from .routes.assistant import assistant_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(resume_bp)
@@ -56,6 +57,11 @@ def create_app(config_class=Config):
     app.register_blueprint(interview_bp)
     app.register_blueprint(career_tools_bp)
     app.register_blueprint(applications_bp)
+    app.register_blueprint(assistant_bp)
+
+    # Convenience alias for /api/chat directly
+    from .routes.assistant import chat as assistant_chat_view
+    app.add_url_rule('/api/chat', 'api_chat_alias', assistant_chat_view, methods=['POST'])
 
     # Friendly root and error handlers
     @app.route('/')

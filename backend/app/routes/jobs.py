@@ -51,7 +51,7 @@ def get_recommendations():
 @auth_required
 def save_job(job_id):
     # Check if job exists in db, otherwise seed it
-    job = Job.query.get(job_id)
+    job = db.session.get(Job, job_id)
     if not job:
         # Check if client sent job payload
         data = request.get_json() or {}

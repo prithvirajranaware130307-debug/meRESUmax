@@ -316,3 +316,163 @@ class AIService:
             'provider': 'deterministic_fallback',
             'is_live_ai': False
         }
+
+    @classmethod
+    def chat_assistant(
+        cls,
+        message: str,
+        target_role: str = 'Software Developer',
+        quality_score: float = None,
+        skills: List[str] = None,
+        missing_skills: List[str] = None
+    ) -> Dict[str, Any]:
+        """
+        Interactive career coach chat assistant.
+        Uses Gemini if configured, then OpenAI, with high-fidelity deterministic fallback.
+        """
+        skills = skills or []
+        missing_skills = missing_skills or []
+        msg_clean = (message or '').strip()
+        lower_msg = msg_clean.lower()
+
+        context_str = (
+            f"Target Role: {target_role}\n"
+            f"Resume Score: {quality_score if quality_score is not None else 'Not yet analyzed'}/100\n"
+            f"Detected Skills: {', '.join(skills[:8]) if skills else 'Not extracted yet'}\n"
+            f"Missing Benchmark Skills: {', '.join(missing_skills[:5]) if missing_skills else 'None identified'}\n"
+        )
+
+        system_instruction = (
+            "You are meRESUmax Career Assistant, an expert technical recruiter and resume strategist. "
+            "Help the candidate optimize their resume, prepare for interviews, understand ATS algorithms, "
+            "and land technical roles. Give direct, actionable, concise advice (under 180 words). "
+            "Use bullet points and concrete examples (e.g., STAR bullet rewrites with quantifiable metrics). "
+            "Never invent fake credentials."
+        )
+
+        # 1. Try Gemini
+        if Config.GEMINI_API_KEY and Config.GEMINI_API_KEY.strip() and not Config.GEMINI_API_KEY.startswith("replace_"):
+            try:
+                model = Config.GEMINI_MODEL or "gemini-2.5-flash"
+                url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={Config.GEMINI_API_KEY}"
+                payload = {
+                    "system_instruction": {"parts": [{"text": system_instruction}]},
+                    "contents": [{"parts": [{"text": f"Context:\n{context_str}\nUser Question: {msg_clean}"}]}],
+                    "generationConfig": {"temperature": 0.4, "maxOutputTokens": 600}
+                }
+                resp = requests.post(url, headers={"Content-Type": "application/json"}, json=payload, timeout=20.0)
+                if resp.status_code == 200:
+                    data = resp.json()
+                    reply = data['candidates'][0]['content']['parts'][0]['text']
+                    return {
+                        'reply': reply.strip(),
+                        'provider': 'google_gemini',
+                        'model': model,
+                        'is_live_ai': True,
+                        'disclaimer': None
+                    }
+            except Exception as e:
+                logger.warning(f"Gemini assistant chat failed, falling back: {e}")
+
+        # 2. Try OpenAI
+        client = cls.get_client()
+        if client:
+            try:
+                response = client.chat.completions.create(
+                    model=Config.OPENAI_MODEL or "gpt-4o-mini",
+                    messages=[
+                        {"role": "system", "content": system_instruction},
+                        {"role": "user", "content": f"Context:\n{context_str}\nUser Question: {msg_clean}"}
+                    ],
+                    max_tokens=500,
+                    temperature=0.4
+                )
+                reply = response.choices[0].message.content
+                return {
+                    'reply': reply.strip(),
+                    'provider': 'openai',
+                    'model': Config.OPENAI_MODEL or 'gpt-4o-mini',
+                    'is_live_ai': True,
+                    'disclaimer': None
+                }
+            except Exception as e:
+                logger.warning(f"OpenAI assistant chat failed, falling back: {e}")
+
+        # 3. Deterministic Heuristic Assistant (Demo Mode)
+        reply = cls._generate_chat_fallback(msg_clean, target_role, quality_score, skills, missing_skills)
+        return {
+            'reply': reply,
+            'provider': 'deterministic_demo',
+            'is_live_ai': False,
+            'disclaimer': 'Demo Mode (Heuristic Engine) - Running locally without external API keys. Configure GEMINI_API_KEY or OPENAI_API_KEY to activate live AI.'
+        }
+
+    @classmethod
+    def _generate_chat_fallback(
+        cls,
+        msg: str,
+        target_role: str,
+        quality_score: float,
+        skills: List[str],
+        missing_skills: List[str]
+    ) -> str:
+        lower = msg.lower()
+        skills_str = ', '.join(skills[:4]) if skills else "Python, React, and SQL"
+        missing_str = ', '.join(missing_skills[:3]) if missing_skills else "Cloud Architecture & Docker"
+
+        if 'improve' in lower or 'resume' in lower or 'bullet' in lower:
+            return (
+                f"### Resume Optimization Strategy for {target_role}\n\n"
+                "To instantly elevate your resume above 85% of applicants:\n"
+                "1. **Use STAR Formatted Bullets**: Frame achievements as (Situation, Task, Action, Result).\n"
+                "   - *Weak*: \"Worked on a website.\"\n"
+                "   - *Improved*: \"Built a responsive React dashboard that reduced manual reporting time by 35% for 20 internal users.\"\n"
+                "2. **Quantify Metrics**: Add numbers (latency reduction, query times, users served, records processed).\n"
+                f"3. **Target High-Impact Skills**: Highlight proficiency in {skills_str} and consider addressing gaps in {missing_str}.\n"
+                "4. **ATS Hygiene**: Keep headers standard (Experience, Projects, Education) without graphical tables."
+            )
+
+        if 'score' in lower or 'explain' in lower or 'audit' in lower:
+            score_text = f"{round(quality_score)}/100" if quality_score is not None else "pending audit"
+            return (
+                f"### How Your Score is Calculated (Current: {score_text})\n\n"
+                "The meRESUmax scoring engine evaluates 5 core dimensions:\n"
+                "• **Section Structure & ATS Readability** (20 pts): Standard headers, contact details, parsing clarity.\n"
+                "• **Technical Skill Density** (20 pts): Depth and categorization of modern frameworks.\n"
+                "• **Measurable Impact & Action Verbs** (25 pts): Quantifiable STAR metrics (%, throughput, volume).\n"
+                f"• **Role Archetype Alignment** (25 pts): Keyword alignment against {target_role} benchmarks.\n"
+                "• **ATS Hygiene** (10 pts): Clean formatting free of unparseable columns or icons.\n\n"
+                "💡 *Tip: To gain 10-15 points immediately, revise 2 project bullet points with hard metrics.*"
+            )
+
+        if 'interview' in lower or 'question' in lower or 'prepare' in lower:
+            return (
+                f"### Technical Interview Preparation for {target_role}\n\n"
+                "Key technical and behavioral focus areas:\n"
+                f"1. **System Design & Architecture**: How would you build a scalable service integrating {skills[0] if skills else 'REST APIs'} with caching?\n"
+                "2. **Performance Optimization**: Walk through how you diagnosed a high-latency query or memory leak in production.\n"
+                "3. **Behavioral (STAR)**: Describe a time you disagreed with a technical design decision and how you reached consensus.\n\n"
+                "👉 *Use our AI Mock Interview Simulator (/interview) to practice answering with instant STAR feedback and voice dictation.*"
+            )
+
+        if 'job' in lower or 'match' in lower or 'find' in lower:
+            return (
+                f"### Career Opportunity Recommendations for {target_role}\n\n"
+                f"Based on your profile with {skills_str}:\n"
+                f"• **Top Job Titles**: Junior/Mid-Level {target_role}, Full Stack Associate, Cloud Applications Engineer.\n"
+                f"• **Target Keywords to Search**: {target_role}, {skills_str}.\n"
+                f"• **Closing Skill Gaps**: Adding {missing_str} will increase your match rate by up to 25%.\n\n"
+                "👉 *Head to the Opportunity Radar (/jobs) to view matching openings and track applications in the Kanban pipeline (/tracker).*"
+            )
+
+        # General helpful recruiter advice
+        return (
+            f"Hello! I am your meRESUmax Career Intelligence Assistant.\n\n"
+            f"I can help you prepare for **{target_role}** roles:\n"
+            "• **\"Improve my resume\"**: Transform passive bullets into quantified STAR bullets.\n"
+            "• **\"Explain my score\"**: Understand heuristic breakdown and how to reach 90+.\n"
+            "• **\"Prepare interview questions\"**: Practice technical and behavioral scenarios.\n"
+            "• **\"Find matching jobs\"**: Identify openings calibrated for your experience level.\n\n"
+            "What would you like to focus on right now?"
+        )
+

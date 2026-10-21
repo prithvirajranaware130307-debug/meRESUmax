@@ -377,6 +377,25 @@ export const api = {
     return result;
   },
 
+  // Floating AI Assistant
+  async sendChatMessage(data: { message: string; target_role?: string; context?: any }): Promise<{
+    reply: string;
+    provider: string;
+    model?: string;
+    is_live_ai: boolean;
+    disclaimer?: string | null;
+  }> {
+    const chatBase = import.meta.env.VITE_AI_CHAT_API_URL || `${API_BASE}/assistant/chat`;
+    const res = await fetch(chatBase, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || 'Failed to send chat message');
+    return result;
+  },
+
   // System Health
   async getHealth(): Promise<any> {
     const res = await fetch(`${API_BASE}/health`);
