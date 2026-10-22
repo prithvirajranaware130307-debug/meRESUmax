@@ -33,6 +33,7 @@ export default {
           amber: '#F59E0B',
           rose: '#EF4444',
           accent: '#2563EB',
+          yellow: '#E8FF47',
         },
       },
       fontFamily: {

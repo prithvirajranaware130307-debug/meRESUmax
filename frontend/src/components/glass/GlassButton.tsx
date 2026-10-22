@@ -27,11 +27,11 @@ export const GlassButton: React.FC<GlassButtonProps> = ({
 
   const variantStyles = {
     primary:
-      'bg-white text-[#090A0E] font-medium border border-white/90 shadow-sm hover:bg-zinc-100 active:scale-[0.98] transition-all',
+      'bg-[#E8FF47] text-[#0A0A0A] font-semibold border border-[#E8FF47] shadow-sm hover:bg-[#F0FF6A] hover:border-[#F0FF6A] active:scale-[0.98] active:bg-[#D4EB3A] transition-all',
     secondary:
-      'bg-[#161922] text-[#F3F4F6] border border-white/10 hover:bg-[#1D212C] hover:border-white/20 shadow-sm active:scale-[0.98] transition-all',
+      'bg-[#E8FF47] text-[#0A0A0A] font-medium border border-[#E8FF47] shadow-sm hover:bg-[#F0FF6A] hover:border-[#F0FF6A] active:scale-[0.98] transition-all',
     ghost:
-      'bg-transparent hover:bg-white/[0.06] text-text-secondary hover:text-white transition-all',
+      'bg-[#E8FF47]/10 text-[#E8FF47] border border-[#E8FF47]/30 hover:bg-[#E8FF47]/20 hover:border-[#E8FF47]/60 transition-all',
     danger:
       'bg-rose-500/10 text-rose-300 border border-rose-500/20 hover:bg-rose-500/20 active:scale-[0.98] transition-all',
   }[variant];
