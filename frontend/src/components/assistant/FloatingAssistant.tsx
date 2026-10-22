@@ -139,27 +139,27 @@ export const FloatingAssistant: React.FC = () => {
       {/* Expanded / Minimized Chat Panel */}
       {isOpen && (
         <div 
-          className={`pointer-events-auto mb-3 w-[370px] sm:w-[420px] max-w-[calc(100vw-2rem)] transition-all duration-300 ease-out origin-bottom-right ${
+          className={`pointer-events-auto mb-3 w-[370px] sm:w-[420px] max-w-[calc(100vw-2rem)] transition-all duration-200 ease-out origin-bottom-right ${
             isMinimized 
-              ? 'h-14 overflow-hidden rounded-2xl liquid-glass border border-white/20 shadow-2xl'
-              : 'h-[520px] max-h-[calc(100vh-6rem)] rounded-3xl liquid-glass-elevated border border-white/25 shadow-2xl flex flex-col overflow-hidden'
+              ? 'h-13 overflow-hidden rounded-xl bg-[#0D0F14]/95 border border-white/10 shadow-elevated'
+              : 'h-[500px] max-h-[calc(100vh-6rem)] rounded-xl bg-[#0D0F14]/95 border border-white/10 shadow-elevated flex flex-col overflow-hidden'
           }`}
           role="dialog"
           aria-label="meRESUmax AI Assistant"
         >
           {/* Header */}
-          <div className="px-4 py-3 bg-white/[0.04] border-b border-white/10 flex items-center justify-between shrink-0">
+          <div className="px-4 py-3 bg-white/[0.02] border-b border-white/[0.08] flex items-center justify-between shrink-0">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-brand-blue to-brand-cyan text-white flex items-center justify-center shadow-glass-sm shrink-0">
-                <Bot size={18} />
+              <div className="w-7 h-7 rounded-lg bg-[#161922] border border-white/10 text-zinc-200 flex items-center justify-center shrink-0">
+                <Bot size={15} />
               </div>
               <div>
-                <div className="text-xs font-bold text-white flex items-center gap-1.5 leading-tight">
-                  <span>meRESUmax AI</span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-mint animate-pulse" />
+                <div className="text-xs font-semibold text-white flex items-center gap-1.5 leading-tight">
+                  <span>Assistant Engine</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                 </div>
-                <div className="text-[10px] text-brand-cyan/80 font-medium">
-                  Career & Resume Coach
+                <div className="text-[10px] text-text-muted font-mono">
+                  ATS & Career Intelligence
                 </div>
               </div>
             </div>
@@ -168,26 +168,26 @@ export const FloatingAssistant: React.FC = () => {
               <button
                 type="button"
                 onClick={clearChat}
-                className="p-1.5 text-text-muted hover:text-white rounded-lg hover:bg-white/10 transition-colors"
+                className="p-1.5 text-text-muted hover:text-white rounded-lg hover:bg-white/[0.06] transition-colors cursor-pointer"
                 title="Clear Conversation"
               >
-                <RotateCcw size={14} />
+                <RotateCcw size={13} />
               </button>
               <button
                 type="button"
                 onClick={() => setIsMinimized(!isMinimized)}
-                className="p-1.5 text-text-muted hover:text-white rounded-lg hover:bg-white/10 transition-colors"
+                className="p-1.5 text-text-muted hover:text-white rounded-lg hover:bg-white/[0.06] transition-colors cursor-pointer"
                 title={isMinimized ? 'Expand Chat' : 'Minimize Chat'}
               >
-                {isMinimized ? <Maximize2 size={14} /> : <Minimize2 size={14} />}
+                {isMinimized ? <Maximize2 size={13} /> : <Minimize2 size={13} />}
               </button>
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="p-1.5 text-text-muted hover:text-rose-400 rounded-lg hover:bg-rose-500/10 transition-colors"
+                className="p-1.5 text-text-muted hover:text-rose-400 rounded-lg hover:bg-rose-500/10 transition-colors cursor-pointer"
                 title="Close Assistant"
               >
-                <X size={15} />
+                <X size={14} />
               </button>
             </div>
           </div>
@@ -195,17 +195,17 @@ export const FloatingAssistant: React.FC = () => {
           {!isMinimized && (
             <>
               {/* Quick Action Chips Bar */}
-              <div className="px-3 py-2 bg-black/20 border-b border-white/5 overflow-x-auto flex gap-1.5 scrollbar-none shrink-0">
+              <div className="px-3 py-2 bg-black/20 border-b border-white/5 overflow-x-auto flex gap-1.5 scrollbar-none shrink-0 font-mono text-[11px]">
                 {QUICK_ACTIONS.map((action, idx) => (
                   <button
                     key={idx}
                     type="button"
                     onClick={() => sendMessage(action)}
                     disabled={isLoading}
-                    className="whitespace-nowrap px-2.5 py-1 rounded-full text-[10px] font-medium bg-white/5 hover:bg-brand-blue/20 text-text-secondary hover:text-white border border-white/10 transition-all shrink-0 flex items-center gap-1 disabled:opacity-50"
+                    className="whitespace-nowrap px-2.5 py-1 rounded bg-[#161922] hover:bg-[#1D212C] text-text-secondary hover:text-white border border-white/10 transition-all shrink-0 flex items-center gap-1 disabled:opacity-50 cursor-pointer text-[10px]"
                   >
                     <span>{action}</span>
-                    <ArrowUpRight size={10} className="text-brand-cyan" />
+                    <ArrowUpRight size={10} className="text-zinc-400" />
                   </button>
                 ))}
               </div>
@@ -218,17 +218,17 @@ export const FloatingAssistant: React.FC = () => {
                     className={`flex gap-2.5 ${m.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
                     {m.sender === 'assistant' && (
-                      <div className="w-6 h-6 rounded-lg bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/30 flex items-center justify-center shrink-0 mt-0.5">
-                        <Sparkles size={12} />
+                      <div className="w-6 h-6 rounded-md bg-[#161922] text-zinc-300 border border-white/10 flex items-center justify-center shrink-0 mt-0.5">
+                        <Sparkles size={11} />
                       </div>
                     )}
 
-                    <div className={`max-w-[85%] space-y-1.5 ${m.sender === 'user' ? 'items-end' : 'items-start'}`}>
+                    <div className={`max-w-[85%] space-y-1 ${m.sender === 'user' ? 'items-end' : 'items-start'}`}>
                       <div
-                        className={`p-3 rounded-2xl relative group ${
+                        className={`p-3 rounded-xl relative group ${
                           m.sender === 'user'
-                            ? 'bg-gradient-to-r from-brand-blue to-brand-cyan text-white rounded-tr-sm shadow-md'
-                            : 'bg-white/[0.06] border border-white/10 text-text-primary rounded-tl-sm'
+                            ? 'bg-white text-[#090A0E] font-medium shadow-sm'
+                            : 'bg-[#161922] border border-white/10 text-text-primary'
                         }`}
                       >
                         <div className="whitespace-pre-wrap select-text">{m.text}</div>
@@ -237,31 +237,30 @@ export const FloatingAssistant: React.FC = () => {
                           <button
                             type="button"
                             onClick={() => copyText(m.id, m.text)}
-                            className="absolute -top-2 right-2 opacity-0 group-hover:opacity-100 p-1 rounded-md bg-black/70 border border-white/20 text-text-secondary hover:text-white transition-opacity"
+                            className="absolute -top-2 right-2 opacity-0 group-hover:opacity-100 p-1 rounded bg-[#090A0E] border border-white/20 text-text-secondary hover:text-white transition-opacity cursor-pointer"
                             title="Copy reply"
                           >
-                            {copiedId === m.id ? <Check size={11} className="text-brand-mint" /> : <Copy size={11} />}
+                            {copiedId === m.id ? <Check size={11} className="text-emerald-400" /> : <Copy size={11} />}
                           </button>
                         )}
                       </div>
 
                       {/* Demo disclaimer badge if message was generated in fallback */}
                       {m.isDemo && (
-                        <div className="text-[10px] text-amber-300 px-2 py-0.5 rounded-md bg-amber-500/10 border border-amber-500/20 inline-flex items-center gap-1.5 font-medium">
+                        <div className="text-[10px] text-amber-300 px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20 inline-flex items-center gap-1.5 font-mono">
                           <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                          <span>Demo assistant mode</span>
-                          {m.disclaimer && <span className="text-amber-300/70 font-normal">• {m.disclaimer}</span>}
+                          <span>Demo Engine Fallback</span>
                         </div>
                       )}
 
-                      <div className={`text-[10px] text-text-muted px-1 ${m.sender === 'user' ? 'text-right' : 'text-left'}`}>
+                      <div className={`text-[10px] font-mono text-text-muted px-1 ${m.sender === 'user' ? 'text-right' : 'text-left'}`}>
                         {m.timestamp}
                       </div>
                     </div>
 
                     {m.sender === 'user' && (
-                      <div className="w-6 h-6 rounded-lg bg-white/10 text-white flex items-center justify-center shrink-0 mt-0.5">
-                        <UserIcon size={12} />
+                      <div className="w-6 h-6 rounded-md bg-white/10 text-white flex items-center justify-center shrink-0 mt-0.5 font-mono text-[10px]">
+                        <UserIcon size={11} />
                       </div>
                     )}
                   </div>
@@ -270,29 +269,29 @@ export const FloatingAssistant: React.FC = () => {
                 {/* Loading indicator */}
                 {isLoading && (
                   <div className="flex gap-2.5 items-center text-text-muted">
-                    <div className="w-6 h-6 rounded-lg bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/30 flex items-center justify-center shrink-0">
-                      <Sparkles size={12} className="animate-spin" />
+                    <div className="w-6 h-6 rounded-md bg-[#161922] text-zinc-300 border border-white/10 flex items-center justify-center shrink-0">
+                      <Sparkles size={11} className="animate-spin" />
                     </div>
-                    <div className="p-3 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center gap-1.5">
-                      <div className="w-2 h-2 rounded-full bg-brand-cyan animate-bounce" style={{ animationDelay: '0ms' }} />
-                      <div className="w-2 h-2 rounded-full bg-brand-blue animate-bounce" style={{ animationDelay: '150ms' }} />
-                      <div className="w-2 h-2 rounded-full bg-purple-400 animate-bounce" style={{ animationDelay: '300ms' }} />
+                    <div className="p-2.5 rounded-lg bg-[#161922] border border-white/10 flex items-center gap-1.5">
+                      <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 animate-bounce" style={{ animationDelay: '0ms' }} />
+                      <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 animate-bounce" style={{ animationDelay: '150ms' }} />
+                      <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 animate-bounce" style={{ animationDelay: '300ms' }} />
                     </div>
                   </div>
                 )}
 
                 {/* Error Banner with Retry */}
                 {error && (
-                  <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 flex items-start justify-between gap-2">
+                  <div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/25 text-rose-300 flex items-start justify-between gap-2 font-mono">
                     <div className="flex items-start gap-2">
-                      <AlertCircle size={15} className="shrink-0 mt-0.5 text-rose-400" />
-                      <div className="text-[11px] leading-tight">{error}</div>
+                      <AlertCircle size={14} className="shrink-0 mt-0.5 text-rose-400" />
+                      <div className="text-[11px] leading-tight font-sans">{error}</div>
                     </div>
                     {lastFailedMessage && (
                       <button
                         type="button"
                         onClick={handleRetry}
-                        className="text-[10px] uppercase font-bold text-white bg-rose-500/30 hover:bg-rose-500/50 px-2 py-1 rounded transition-colors shrink-0"
+                        className="text-[10px] uppercase font-bold text-white bg-rose-500/30 hover:bg-rose-500/50 px-2 py-1 rounded transition-colors shrink-0 cursor-pointer"
                       >
                         Retry
                       </button>
@@ -304,7 +303,7 @@ export const FloatingAssistant: React.FC = () => {
               </div>
 
               {/* Chat Input Bar */}
-              <div className="p-3 bg-white/[0.03] border-t border-white/10 shrink-0">
+              <div className="p-3 bg-black/20 border-t border-white/[0.08] shrink-0">
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
@@ -318,17 +317,17 @@ export const FloatingAssistant: React.FC = () => {
                     value={inputMessage}
                     onChange={(e) => setInputMessage(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder="Ask about your resume, score, or interview..."
+                    placeholder="Ask about resume, score, or interview..."
                     disabled={isLoading}
-                    className="flex-1 bg-black/40 border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white placeholder-text-muted focus:outline-none focus:border-brand-cyan/60 transition-colors"
+                    className="flex-1 bg-[#090A0E] border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-text-muted focus:outline-none focus:border-blue-500 transition-colors"
                   />
                   <button
                     type="submit"
                     disabled={!inputMessage.trim() || isLoading}
-                    className="p-2 rounded-xl bg-gradient-to-r from-brand-blue to-brand-cyan text-white hover:opacity-90 disabled:opacity-40 transition-all shrink-0 shadow-glass-sm"
+                    className="p-2 rounded-lg bg-white text-[#090A0E] hover:bg-zinc-200 disabled:opacity-40 transition-all shrink-0 cursor-pointer"
                     title="Send Message"
                   >
-                    <Send size={15} />
+                    <Send size={14} />
                   </button>
                 </form>
               </div>
@@ -344,25 +343,22 @@ export const FloatingAssistant: React.FC = () => {
           setIsOpen(!isOpen);
           setIsMinimized(false);
         }}
-        className={`pointer-events-auto group relative flex items-center gap-2.5 px-4 py-3 rounded-full liquid-glass-elevated border border-white/25 shadow-2xl transition-all duration-300 ${
-          isOpen ? 'bg-brand-blue/30 border-brand-cyan/40 scale-95' : 'hover:scale-105 hover:border-brand-cyan/50'
+        className={`pointer-events-auto group relative flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#111318]/95 border border-white/12 shadow-card transition-all duration-200 cursor-pointer ${
+          isOpen ? 'bg-[#161922] border-white/20' : 'hover:bg-[#161922] hover:border-white/20'
         }`}
         aria-label="Open AI Career Assistant"
       >
         <div className="relative">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-brand-blue via-brand-cyan to-purple-400 flex items-center justify-center text-white shadow-glow-sm">
-            <Sparkles size={16} className="animate-pulse" />
+          <div className="w-6 h-6 rounded-md bg-[#161922] border border-white/10 flex items-center justify-center text-zinc-200">
+            <Bot size={14} />
           </div>
-          {/* Subtle online pulse */}
-          <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-brand-mint border-2 border-[#0B1020]" />
+          {/* Status dot */}
+          <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400 border border-[#111318]" />
         </div>
 
         <div className="hidden sm:flex flex-col text-left">
-          <span className="text-xs font-bold text-white tracking-tight flex items-center gap-1">
-            AI Assistant
-          </span>
-          <span className="text-[10px] text-text-secondary leading-none">
-            Resume & Careers
+          <span className="text-xs font-semibold text-white tracking-tight flex items-center gap-1">
+            Assistant
           </span>
         </div>
       </button>

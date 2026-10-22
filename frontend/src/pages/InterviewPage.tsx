@@ -266,13 +266,13 @@ export const InterviewPage: React.FC = () => {
   return (
     <div className="pt-24 pb-16 px-4 sm:px-6 max-w-5xl mx-auto space-y-8 animate-fadeIn">
       {/* Header */}
-      <div className="text-center space-y-3">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-cyan/10 border border-brand-cyan/20 text-brand-cyan text-xs font-medium">
-          <BrainCircuit size={14} className="animate-pulse" />
-          <span>Google Gemini Interactive Interview Simulator</span>
+      <div className="max-w-2xl mx-auto text-center space-y-2.5">
+        <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-white/[0.04] border border-white/10 text-xs font-mono text-text-secondary">
+          <BrainCircuit size={13} className="text-zinc-400" />
+          <span>SIMULATOR // MOCK INTERVIEWS</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white">
-          AI Technical & Behavioral <span className="bg-gradient-to-r from-brand-cyan via-brand-blue to-purple-400 bg-clip-text text-transparent">Mock Interview</span>
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white">
+          Technical & Behavioral Mock Interview
         </h1>
         <p className="text-text-secondary text-sm sm:text-base max-w-2xl mx-auto">
           Practice role-tailored technical, architecture, and STAR questions. Receive immediate recruiter-grade scoring, depth metrics, and model answers.
@@ -280,9 +280,9 @@ export const InterviewPage: React.FC = () => {
       </div>
 
       {error && (
-        <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-300 text-sm flex items-center gap-3">
-          <AlertCircle size={18} className="shrink-0" />
-          <span>{error}</span>
+        <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-300 text-sm flex items-center gap-3 font-mono">
+          <AlertCircle size={16} className="shrink-0 text-rose-400" />
+          <span className="font-sans">{error}</span>
         </div>
       )}
 
@@ -291,24 +291,24 @@ export const InterviewPage: React.FC = () => {
         <GlassCard className="p-6 sm:p-8 space-y-6 max-w-2xl mx-auto border-white/10">
           <div className="space-y-4">
             <h2 className="text-xl font-bold text-white flex items-center gap-2">
-              <Compass size={20} className="text-brand-cyan" />
+              <Compass size={18} className="text-zinc-400" />
               <span>Configure Your Interview Simulation</span>
             </h2>
             <p className="text-text-muted text-xs sm:text-sm">
-              Select your targeted career archetype and experience caliber. Gemini will synthesize a rigorous 5-question interview loop.
+              Select your targeted career archetype and experience caliber. The engine will synthesize a rigorous 5-question interview loop.
             </p>
 
             <div className="space-y-2">
-              <label className="text-xs font-semibold uppercase tracking-wider text-text-secondary">
-                Target Role
+              <label className="text-xs font-mono uppercase tracking-wider text-text-secondary">
+                TARGET ROLE
               </label>
               <select
                 value={targetRole}
                 onChange={(e) => setTargetRole(e.target.value)}
-                className="w-full bg-surface-elevated/80 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-brand-cyan/50 transition-colors"
+                className="w-full bg-[#0D0F14] border border-white/10 rounded-lg px-3.5 py-2 text-white text-sm focus:outline-none focus:border-blue-500 transition-colors"
               >
                 {TARGET_ROLES.map(role => (
-                  <option key={role} value={role} className="bg-surface-elevated text-white">
+                  <option key={role} value={role} className="bg-[#111318] text-white">
                     {role}
                   </option>
                 ))}
@@ -316,8 +316,8 @@ export const InterviewPage: React.FC = () => {
             </div>
 
             <div className="space-y-2">
-              <label className="text-xs font-semibold uppercase tracking-wider text-text-secondary">
-                Difficulty Caliber
+              <label className="text-xs font-mono uppercase tracking-wider text-text-secondary">
+                DIFFICULTY CALIBER
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {DIFFICULTY_LEVELS.map(level => (
@@ -325,10 +325,10 @@ export const InterviewPage: React.FC = () => {
                     key={level}
                     type="button"
                     onClick={() => setDifficulty(level)}
-                    className={`py-2 px-3 rounded-xl text-xs font-medium border transition-all ${
+                    className={`py-2 px-3 rounded-lg text-xs font-mono transition-all cursor-pointer ${
                       difficulty === level
-                        ? 'bg-brand-cyan/20 border-brand-cyan text-white shadow-glow-sm'
-                        : 'bg-white/5 border-white/10 text-text-secondary hover:text-white hover:bg-white/10'
+                        ? 'bg-white text-black font-semibold shadow-sm'
+                        : 'bg-[#161922] border border-white/10 text-text-secondary hover:text-white hover:bg-[#1D212C]'
                     }`}
                   >
                     {level}

@@ -200,25 +200,25 @@ export const ResultsPage: React.FC = () => {
       ];
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-28 pb-20 relative z-10">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-24 pb-20 relative z-10">
       {/* Top Breadcrumb & Actions Bar */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
         <div>
-          <Link to="/dashboard" className="inline-flex items-center gap-1.5 text-xs text-text-muted hover:text-white mb-2 transition-colors">
-            <ArrowLeft size={14} /> Back to Command Center
+          <Link to="/dashboard" className="inline-flex items-center gap-1.5 text-xs font-mono text-text-muted hover:text-white mb-2 transition-colors">
+            <ArrowLeft size={13} /> Back to Command Center
           </Link>
           <div className="flex flex-wrap items-center gap-3">
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
               Audit Results: {analysis.target_role}
             </h1>
             {!ai.is_live_ai && (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-300 border border-amber-500/30 shadow-sm">
-                <Sparkles size={12} className="text-amber-400" /> Demo analysis mode
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-mono font-medium bg-amber-500/10 text-amber-300 border border-amber-500/25">
+                <Sparkles size={11} className="text-amber-400" /> Demo Analysis Engine
               </span>
             )}
           </div>
-          <p className="text-xs text-text-secondary mt-1">
-            Document: <span className="text-white font-medium">{analysis.resume_filename}</span> • {analysis.created_at?.slice(0, 10)}
+          <p className="text-xs font-mono text-text-secondary mt-1">
+            DOCUMENT: <span className="text-white font-medium">{analysis.resume_filename}</span> • {analysis.created_at?.slice(0, 10)}
           </p>
         </div>
 
@@ -229,7 +229,7 @@ export const ResultsPage: React.FC = () => {
             rel="noopener noreferrer"
             className="w-full sm:w-auto"
           >
-            <GlassButton variant="primary" size="md" className="w-full sm:w-auto" icon={<Download size={16} />}>
+            <GlassButton variant="primary" size="md" className="w-full sm:w-auto" icon={<Download size={15} />}>
               Download PDF Report
             </GlassButton>
           </a>

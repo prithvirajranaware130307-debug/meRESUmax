@@ -88,14 +88,14 @@ export const JobsPage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-28 pb-20 relative z-10">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-24 pb-20 relative z-10">
       {/* Header */}
-      <div className="text-center max-w-xl mx-auto mb-10">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-glass text-xs font-semibold uppercase tracking-wider text-brand-mint mb-3">
-          <Briefcase size={13} />
-          <span>Opportunity Radar</span>
+      <div className="max-w-xl mb-10">
+        <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-white/[0.04] border border-white/10 text-xs font-mono text-text-secondary mb-3">
+          <Briefcase size={13} className="text-zinc-400" />
+          <span>OPPORTUNITY RADAR</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+        <h1 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
           Explore Tailored Tech Jobs
         </h1>
         <p className="text-text-secondary text-sm mt-2">
@@ -104,16 +104,16 @@ export const JobsPage: React.FC = () => {
       </div>
 
       {/* Provider Status Banner */}
-      <div className="mb-6 p-3 rounded-xl liquid-glass border border-white/10 flex items-center justify-between text-xs text-text-secondary">
+      <div className="mb-6 p-3 rounded-lg bg-[#111318] border border-white/10 flex items-center justify-between text-xs text-text-secondary font-mono">
         <div className="flex items-center gap-2">
-          <div className={`w-2.5 h-2.5 rounded-full ${isLive ? 'bg-brand-mint animate-pulse' : 'bg-brand-amber'}`} />
+          <div className={`w-2 h-2 rounded-full ${isLive ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`} />
           <span>
-            Provider Status: <strong className="text-white">{isLive ? 'Live Adzuna API Stream' : 'Curated Demonstration Database'}</strong>
+            STREAM: <strong className="text-white font-medium">{isLive ? 'Live Adzuna API Stream' : 'Curated Demonstration Database'}</strong>
           </span>
         </div>
         {!isLive && (
           <span className="text-[11px] text-text-muted hidden sm:inline">
-            Connect Adzuna API credentials for live listings
+            Connect Adzuna API credentials for live external feed
           </span>
         )}
       </div>
@@ -127,9 +127,9 @@ export const JobsPage: React.FC = () => {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Job title, keywords, or skills..."
-              className="w-full pl-9 pr-4 py-2 bg-black/40 border border-white/10 rounded-xl text-xs sm:text-sm text-white placeholder-text-muted focus:outline-none focus:border-brand-blue"
+              className="w-full pl-9 pr-4 py-2 bg-[#0D0F14] border border-white/10 rounded-lg text-xs sm:text-sm text-white placeholder-text-muted focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
             />
-            <Search size={15} className="absolute left-3 top-2.5 text-text-muted" />
+            <Search size={14} className="absolute left-3 top-2.5 text-zinc-500" />
           </div>
 
           <div className="relative">
@@ -138,20 +138,20 @@ export const JobsPage: React.FC = () => {
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               placeholder="City, region, or Remote"
-              className="w-full pl-9 pr-4 py-2 bg-black/40 border border-white/10 rounded-xl text-xs sm:text-sm text-white placeholder-text-muted focus:outline-none focus:border-brand-blue"
+              className="w-full pl-9 pr-4 py-2 bg-[#0D0F14] border border-white/10 rounded-lg text-xs sm:text-sm text-white placeholder-text-muted focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
             />
-            <MapPin size={15} className="absolute left-3 top-2.5 text-text-muted" />
+            <MapPin size={14} className="absolute left-3 top-2.5 text-zinc-500" />
           </div>
 
           <div className="flex items-center gap-2">
             <select
               value={jobType}
               onChange={(e) => setJobType(e.target.value)}
-              className="w-full px-3 py-2 bg-black/40 border border-white/10 rounded-xl text-xs sm:text-sm text-white focus:outline-none focus:border-brand-blue cursor-pointer"
+              className="w-full px-3 py-2 bg-[#0D0F14] border border-white/10 rounded-lg text-xs sm:text-sm text-white focus:outline-none focus:border-blue-500 cursor-pointer"
             >
-              <option value="all" className="bg-[#0B1020]">All Types</option>
-              <option value="full-time" className="bg-[#0B1020]">Full-Time</option>
-              <option value="internship" className="bg-[#0B1020]">Internships</option>
+              <option value="all" className="bg-[#111318]">All Types</option>
+              <option value="full-time" className="bg-[#111318]">Full-Time</option>
+              <option value="internship" className="bg-[#111318]">Internships</option>
             </select>
             <GlassButton type="submit" variant="primary" size="sm">
               Search

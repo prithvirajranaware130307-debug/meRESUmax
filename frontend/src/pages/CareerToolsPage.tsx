@@ -109,12 +109,12 @@ export const CareerToolsPage: React.FC = () => {
     <div className="pt-24 pb-16 px-4 sm:px-6 max-w-5xl mx-auto space-y-8 animate-fadeIn">
       {/* Header */}
       <div className="text-center space-y-3">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-medium">
-          <Sparkles size={14} />
-          <span>AI Application Accelerators</span>
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#161922] border border-white/10 text-[#E6EDF3] text-xs font-mono tracking-wide">
+          <Sparkles size={13} className="text-[#8B949E]" />
+          <span>APPLICATION ACCELERATORS</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white">
-          Cover Letter & <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-brand-cyan bg-clip-text text-transparent">LinkedIn Optimizer</span>
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white">
+          Cover Letter & <span className="text-[#8B949E]">LinkedIn Optimizer</span>
         </h1>
         <p className="text-text-secondary text-sm sm:text-base max-w-2xl mx-auto">
           Craft high-converting, ATS-tailored cover letters and recruiter-magnet LinkedIn headlines in seconds using Gemini AI.

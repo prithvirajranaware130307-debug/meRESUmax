@@ -20,36 +20,34 @@ export const GlassButton: React.FC<GlassButtonProps> = ({
   ...props
 }) => {
   const sizeStyles = {
-    sm: 'px-3 py-1.5 text-xs rounded-xl gap-1.5',
-    md: 'px-5 py-2.5 text-sm rounded-xl gap-2',
-    lg: 'px-7 py-3.5 text-base rounded-2xl gap-2.5 font-medium',
+    sm: 'px-3 py-1.5 text-xs rounded-lg gap-1.5',
+    md: 'px-4 py-2 text-sm rounded-lg gap-2',
+    lg: 'px-6 py-2.5 text-sm sm:text-base rounded-xl gap-2.5 font-medium',
   }[size];
 
   const variantStyles = {
     primary:
-      'bg-gradient-to-r from-brand-blue/80 via-brand-cyan/80 to-brand-violet/80 text-white border border-white/30 shadow-glass-sm hover:brightness-110 active:scale-[0.98] shadow-glow-blue',
+      'bg-white text-[#090A0E] font-medium border border-white/90 shadow-sm hover:bg-zinc-100 active:scale-[0.98] transition-all',
     secondary:
-      'liquid-glass text-text-primary hover:bg-white/[0.12] hover:border-white/25 active:scale-[0.98]',
+      'bg-[#161922] text-[#F3F4F6] border border-white/10 hover:bg-[#1D212C] hover:border-white/20 shadow-sm active:scale-[0.98] transition-all',
     ghost:
-      'bg-transparent hover:bg-white/[0.08] text-text-secondary hover:text-white',
+      'bg-transparent hover:bg-white/[0.06] text-text-secondary hover:text-white transition-all',
     danger:
-      'bg-rose-500/20 text-rose-300 border border-rose-500/30 hover:bg-rose-500/30 active:scale-[0.98]',
+      'bg-rose-500/10 text-rose-300 border border-rose-500/20 hover:bg-rose-500/20 active:scale-[0.98] transition-all',
   }[variant];
 
   return (
     <button
       disabled={disabled || isLoading}
-      className={`inline-flex items-center justify-center font-medium transition-all duration-200 select-none disabled:opacity-50 disabled:pointer-events-none relative overflow-hidden group ${sizeStyles} ${variantStyles} ${className}`}
+      className={`inline-flex items-center justify-center font-medium select-none disabled:opacity-45 disabled:pointer-events-none relative transition-all duration-200 cursor-pointer group ${sizeStyles} ${variantStyles} ${className}`}
       {...props}
     >
-      {/* Specular inner light */}
-      <span className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none" />
       {isLoading ? (
-        <Loader2 className="animate-spin" size={size === 'sm' ? 14 : size === 'lg' ? 20 : 16} />
+        <Loader2 className="animate-spin" size={size === 'sm' ? 14 : size === 'lg' ? 18 : 16} />
       ) : (
-        icon && <span className="transition-transform duration-200 group-hover:scale-105">{icon}</span>
+        icon && <span className="transition-transform duration-200 group-hover:scale-105 shrink-0">{icon}</span>
       )}
-      <span>{children}</span>
+      <span className="truncate">{children}</span>
     </button>
   );
 };

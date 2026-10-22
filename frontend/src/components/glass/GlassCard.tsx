@@ -17,24 +17,21 @@ export const GlassCard: React.FC<GlassCardProps> = ({
   ...props
 }) => {
   const baseVariant = 
-    variant === 'elevated' ? 'liquid-glass-elevated' :
-    variant === 'subtle' ? 'bg-white/[0.03] backdrop-blur-md border border-white/10' :
-    'liquid-glass';
+    variant === 'elevated' 
+      ? 'bg-[#161922]/95 border border-white/[0.10] shadow-card' 
+      : variant === 'subtle' 
+        ? 'bg-white/[0.025] border border-white/[0.06]' 
+        : 'bg-[#111318]/90 border border-white/[0.08] shadow-sm';
 
-  const glowStyles = {
-    none: '',
-    blue: 'shadow-glow-blue',
-    cyan: 'shadow-glow-cyan',
-    violet: 'shadow-glow-violet',
-  }[glow];
+  const interactiveStyles = interactive 
+    ? 'hover:border-white/[0.18] hover:bg-[#151821] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer' 
+    : '';
 
   return (
     <div
-      className={`rounded-2xl relative overflow-hidden transition-all duration-300 ${baseVariant} ${interactive ? 'liquid-glass-interactive cursor-pointer' : ''} ${glowStyles} ${className}`}
+      className={`rounded-xl relative overflow-hidden transition-all duration-200 ${baseVariant} ${interactiveStyles} ${className}`}
       {...props}
     >
-      {/* Soft inner reflection specular gradient */}
-      <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none" />
       {children}
     </div>
   );

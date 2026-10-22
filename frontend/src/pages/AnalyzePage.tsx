@@ -120,35 +120,35 @@ export const AnalyzePage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-28 pb-20 relative z-10">
-      <div className="text-center max-w-xl mx-auto mb-10">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-glass text-xs font-semibold uppercase tracking-wider text-brand-cyan mb-3">
-          <Sparkles size={13} />
-          <span>Intelligent Resume Audit</span>
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-24 pb-20 relative z-10">
+      <div className="max-w-xl mb-10">
+        <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-white/[0.04] border border-white/10 text-xs font-mono text-text-secondary mb-3">
+          <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+          <span>ATS AUDIT ENGINE</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+        <h1 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
           Analyze Your Resume
         </h1>
         <p className="text-text-secondary text-sm mt-2">
-          Upload your resume in PDF or DOCX format for deep ATS analysis, skill matching, and actionable STAR rewrites.
+          Upload your resume in PDF or DOCX format for transparent heuristic scoring, skill gap identification, and STAR rewrites.
         </p>
       </div>
 
-      <GlassCard variant="elevated" className="p-6 sm:p-8 border border-white/20 shadow-glass-lg">
+      <GlassCard variant="elevated" className="p-6 sm:p-8 border border-white/[0.12] shadow-elevated">
         {error && (
-          <div className="mb-6 p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="mb-6 p-4 rounded-lg bg-rose-500/10 border border-rose-500/25 text-rose-300 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 font-mono">
             <div className="flex items-center gap-2.5">
-              <AlertCircle size={18} className="shrink-0 text-rose-400" />
-              <span className="leading-relaxed">{error}</span>
+              <AlertCircle size={16} className="shrink-0 text-rose-400" />
+              <span className="leading-relaxed font-sans">{error}</span>
             </div>
             <div className="flex items-center gap-2 shrink-0">
               <button
                 type="button"
                 onClick={handleStartAnalysis}
                 disabled={!selectedFile || isProcessing}
-                className="px-3 py-1.5 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 text-xs font-semibold flex items-center gap-1.5 transition-colors"
+                className="px-2.5 py-1 rounded bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
               >
-                <RotateCcw size={13} />
+                <RotateCcw size={12} />
                 <span>Retry</span>
               </button>
             </div>
@@ -157,18 +157,13 @@ export const AnalyzePage: React.FC = () => {
 
         {isProcessing ? (
           /* Processing State Visualizer */
-          <div className="py-14 flex flex-col items-center justify-center text-center space-y-6">
-            <div className="relative">
-              <div className="w-20 h-20 rounded-full border-2 border-brand-cyan/20 border-t-brand-cyan animate-spin" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Sparkles size={24} className="text-brand-cyan animate-pulse" />
-              </div>
-            </div>
-            <div className="space-y-2 max-w-md">
-              <h3 className="text-lg font-bold text-white tracking-tight">Analyzing Resume Potential</h3>
-              <p className="text-xs text-brand-cyan font-mono animate-pulse">{processingStage}</p>
+          <div className="py-14 flex flex-col items-center justify-center text-center space-y-5">
+            <div className="w-10 h-10 rounded-full border-2 border-white/10 border-t-white animate-spin" />
+            <div className="space-y-1.5 max-w-md">
+              <h3 className="text-base font-semibold text-white tracking-tight">Running Document Audit</h3>
+              <p className="text-xs text-blue-400 font-mono">{processingStage}</p>
               <p className="text-[11px] text-text-muted mt-2">
-                Running heuristic parser, role skills benchmark, and intelligence feedback.
+                Running heuristic parser, role taxonomy benchmark, and intelligence feedback.
               </p>
             </div>
           </div>
@@ -176,8 +171,8 @@ export const AnalyzePage: React.FC = () => {
           <div className="space-y-6">
             {/* File Dropzone */}
             <div>
-              <label className="block text-xs font-semibold text-text-secondary uppercase tracking-wider mb-2">
-                1. Upload Resume Document (PDF or DOCX)
+              <label className="block text-xs font-mono text-text-secondary uppercase tracking-wider mb-2">
+                01 // UPLOAD DOCUMENT (PDF OR DOCX)
               </label>
 
               {!selectedFile ? (
@@ -186,10 +181,10 @@ export const AnalyzePage: React.FC = () => {
                   onDragLeave={handleDragLeave}
                   onDrop={handleDrop}
                   onClick={() => !isProcessing && fileInputRef.current?.click()}
-                  className={`border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all duration-200 ${
+                  className={`border border-dashed rounded-xl p-8 text-center cursor-pointer transition-all duration-200 ${
                     isDragging
-                      ? 'border-brand-cyan bg-brand-cyan/10 shadow-glow-cyan'
-                      : 'border-white/15 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/25'
+                      ? 'border-blue-500 bg-blue-500/5'
+                      : 'border-white/15 bg-white/[0.015] hover:bg-white/[0.035] hover:border-white/25'
                   }`}
                 >
                   <input
@@ -200,28 +195,28 @@ export const AnalyzePage: React.FC = () => {
                     disabled={isProcessing}
                     onChange={(e) => e.target.files?.[0] && handleFileChange(e.target.files[0])}
                   />
-                  <div className="w-12 h-12 rounded-xl bg-brand-blue/20 text-brand-cyan flex items-center justify-center mx-auto mb-3 border border-brand-blue/30 shadow-glass-sm">
-                    <FileUp size={22} />
+                  <div className="w-10 h-10 rounded-lg bg-[#161922] text-zinc-300 flex items-center justify-center mx-auto mb-3 border border-white/10">
+                    <FileUp size={18} />
                   </div>
                   <div className="text-sm font-semibold text-white mb-1">
                     Click to browse or drag and drop your file here
                   </div>
-                  <div className="text-xs text-text-muted">
+                  <div className="text-xs text-text-muted font-mono">
                     Supports PDF and DOCX files up to 16 MB.
                   </div>
                 </div>
               ) : (
                 /* Selected File Preview Box */
-                <div className="p-4 rounded-xl bg-white/[0.05] border border-white/15 flex items-center justify-between">
+                <div className="p-4 rounded-xl bg-[#161922] border border-white/10 flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-brand-cyan/20 text-brand-cyan flex items-center justify-center font-bold text-xs uppercase border border-brand-cyan/30">
+                    <div className="w-9 h-9 rounded-lg bg-[#0D0F14] text-zinc-200 flex items-center justify-center font-bold text-xs uppercase font-mono border border-white/10">
                       {selectedFile.name.split('.').pop()}
                     </div>
                     <div>
                       <div className="text-sm font-semibold text-white truncate max-w-xs sm:max-w-md">
                         {selectedFile.name}
                       </div>
-                      <div className="text-xs text-text-muted">
+                      <div className="text-xs text-text-muted font-mono">
                         {(selectedFile.size / 1024).toFixed(1)} KB • Ready for audit
                       </div>
                     </div>
@@ -229,10 +224,10 @@ export const AnalyzePage: React.FC = () => {
                   <button
                     onClick={() => !isProcessing && setSelectedFile(null)}
                     disabled={isProcessing}
-                    className="p-2 rounded-lg text-text-muted hover:text-rose-400 hover:bg-rose-500/10 transition-colors disabled:opacity-40"
+                    className="p-1.5 rounded-lg text-text-muted hover:text-rose-400 hover:bg-rose-500/10 transition-colors disabled:opacity-40 cursor-pointer"
                     title="Remove file"
                   >
-                    <X size={18} />
+                    <X size={16} />
                   </button>
                 </div>
               )}
@@ -241,18 +236,18 @@ export const AnalyzePage: React.FC = () => {
             {/* Target Role Selector */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold text-text-secondary uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                  <Target size={14} className="text-brand-blue" />
-                  <span>2. Target Role Archetype</span>
+                <label className="block text-xs font-mono text-text-secondary uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                  <Target size={13} className="text-zinc-400" />
+                  <span>02 // TARGET ROLE ARCHETYPE</span>
                 </label>
                 <select
                   value={targetRole}
                   onChange={(e) => setTargetRole(e.target.value)}
                   disabled={isProcessing}
-                  className="w-full px-4 py-2.5 bg-black/40 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all cursor-pointer disabled:opacity-50"
+                  className="w-full px-3.5 py-2.5 bg-[#0D0F14] border border-white/10 rounded-lg text-sm text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all cursor-pointer disabled:opacity-50"
                 >
                   {TARGET_ROLES.map((role) => (
-                    <option key={role} value={role} className="bg-[#0B1020]">
+                    <option key={role} value={role} className="bg-[#111318]">
                       {role}
                     </option>
                   ))}
@@ -261,8 +256,8 @@ export const AnalyzePage: React.FC = () => {
 
               {targetRole === 'Custom Role' && (
                 <div>
-                  <label className="block text-xs font-semibold text-text-secondary uppercase tracking-wider mb-2">
-                    Specify Custom Title
+                  <label className="block text-xs font-mono text-text-secondary uppercase tracking-wider mb-2">
+                    CUSTOM ROLE TITLE
                   </label>
                   <input
                     type="text"
@@ -270,7 +265,7 @@ export const AnalyzePage: React.FC = () => {
                     onChange={(e) => setCustomRoleText(e.target.value)}
                     disabled={isProcessing}
                     placeholder="e.g. Solutions Architect"
-                    className="w-full px-4 py-2.5 bg-black/40 border border-white/10 rounded-xl text-sm text-white placeholder-text-muted focus:outline-none focus:border-brand-blue disabled:opacity-50"
+                    className="w-full px-3.5 py-2.5 bg-[#0D0F14] border border-white/10 rounded-lg text-sm text-white placeholder-text-muted focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 disabled:opacity-50"
                   />
                 </div>
               )}
@@ -278,20 +273,20 @@ export const AnalyzePage: React.FC = () => {
 
             {/* Optional Custom Job Description */}
             <div>
-              <label className="block text-xs font-semibold text-text-secondary uppercase tracking-wider mb-2 flex items-center justify-between">
+              <label className="block text-xs font-mono text-text-secondary uppercase tracking-wider mb-2 flex items-center justify-between">
                 <span className="flex items-center gap-1.5">
-                  <AlignLeft size={14} className="text-brand-cyan" />
-                  <span>3. Paste Target Job Description (Optional)</span>
+                  <AlignLeft size={13} className="text-zinc-400" />
+                  <span>03 // JOB DESCRIPTION (OPTIONAL)</span>
                 </span>
-                <span className="text-[11px] text-text-muted">For tailored match scoring</span>
+                <span className="text-[10px] text-text-muted">For tailored match scoring</span>
               </label>
               <textarea
                 value={jobDescription}
                 onChange={(e) => setJobDescription(e.target.value)}
                 disabled={isProcessing}
-                placeholder="Paste the full job description or key responsibilities here to calculate precise keyword alignment..."
+                placeholder="Paste the target job description or core responsibilities here to evaluate precise skill overlap..."
                 rows={4}
-                className="w-full p-3.5 bg-black/40 border border-white/10 rounded-xl text-xs sm:text-sm text-white placeholder-text-muted focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all disabled:opacity-50"
+                className="w-full p-3 bg-[#0D0F14] border border-white/10 rounded-lg text-xs sm:text-sm text-white placeholder-text-muted focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all disabled:opacity-50"
               />
             </div>
 
@@ -304,15 +299,15 @@ export const AnalyzePage: React.FC = () => {
                 disabled={!selectedFile || isProcessing}
                 isLoading={isProcessing}
                 className="w-full"
-                icon={<Sparkles size={18} />}
+                icon={<ArrowRight size={16} />}
               >
                 Run Resume Intelligence Audit
               </GlassButton>
             </div>
 
-            <div className="flex items-center justify-center gap-2 text-xs text-text-muted pt-1">
-              <ShieldCheck size={14} className="text-brand-mint" />
-              <span>Uploaded documents are processed in isolated private storage.</span>
+            <div className="flex items-center justify-center gap-2 text-xs text-text-muted pt-1 font-mono">
+              <ShieldCheck size={13} className="text-emerald-400" />
+              <span>Isolated candidate environment. Zero retention leakage.</span>
             </div>
           </div>
         )}

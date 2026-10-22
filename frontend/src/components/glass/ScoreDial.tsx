@@ -14,7 +14,7 @@ export const ScoreDial: React.FC<ScoreDialProps> = ({
   score,
   maxScore = 100,
   size = 140,
-  strokeWidth = 10,
+  strokeWidth = 8,
   label = 'Score',
   sublabel = '',
   colorScheme = 'dynamic',
@@ -25,32 +25,24 @@ export const ScoreDial: React.FC<ScoreDialProps> = ({
   const progress = (normalizedScore / maxScore) * circumference;
   const strokeDashoffset = circumference - progress;
 
-  let strokeColor = '#80AFFF';
-  let glowColor = 'rgba(128, 175, 255, 0.4)';
+  let strokeColor = '#3B82F6';
   
   if (colorScheme === 'dynamic') {
     if (normalizedScore >= 80) {
-      strokeColor = '#91F5CD'; // Mint
-      glowColor = 'rgba(145, 245, 205, 0.4)';
+      strokeColor = '#10B981'; // Emerald
     } else if (normalizedScore >= 60) {
-      strokeColor = '#76E4F7'; // Cyan
-      glowColor = 'rgba(118, 228, 247, 0.4)';
+      strokeColor = '#3B82F6'; // Cobalt
     } else if (normalizedScore >= 40) {
-      strokeColor = '#FFD38A'; // Amber
-      glowColor = 'rgba(255, 211, 138, 0.4)';
+      strokeColor = '#F59E0B'; // Amber
     } else {
-      strokeColor = '#FFA2A2'; // Rose
-      glowColor = 'rgba(255, 162, 162, 0.4)';
+      strokeColor = '#EF4444'; // Crimson
     }
   } else if (colorScheme === 'cyan') {
-    strokeColor = '#76E4F7';
-    glowColor = 'rgba(118, 228, 247, 0.4)';
+    strokeColor = '#06B6D4';
   } else if (colorScheme === 'mint') {
-    strokeColor = '#91F5CD';
-    glowColor = 'rgba(145, 245, 205, 0.4)';
+    strokeColor = '#10B981';
   } else if (colorScheme === 'amber') {
-    strokeColor = '#FFD38A';
-    glowColor = 'rgba(255, 211, 138, 0.4)';
+    strokeColor = '#F59E0B';
   }
 
   return (
@@ -77,21 +69,20 @@ export const ScoreDial: React.FC<ScoreDialProps> = ({
           strokeLinecap="round"
           fill="transparent"
           style={{
-            transition: 'stroke-dashoffset 1.2s cubic-bezier(0.16, 1, 0.3, 1), stroke 0.5s ease',
-            filter: `drop-shadow(0 0 8px ${glowColor})`,
+            transition: 'stroke-dashoffset 1s cubic-bezier(0.22, 1, 0.36, 1), stroke 0.4s ease',
           }}
         />
       </svg>
       {/* Center content */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-        <span className="text-3xl font-extrabold tracking-tight text-white drop-shadow-sm">
+        <span className="text-3xl font-bold font-mono tracking-tight text-white tabular-nums">
           {score}
         </span>
-        <span className="text-[11px] font-medium text-text-secondary uppercase tracking-wider -mt-0.5">
+        <span className="text-[10px] font-semibold text-text-secondary uppercase tracking-widest mt-0.5">
           {label}
         </span>
         {sublabel && (
-          <span className="text-[10px] text-text-muted mt-0.5">{sublabel}</span>
+          <span className="text-[10px] text-text-muted mt-0.5 max-w-[85%] truncate">{sublabel}</span>
         )}
       </div>
     </div>

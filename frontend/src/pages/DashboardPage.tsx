@@ -44,25 +44,25 @@ export const DashboardPage: React.FC = () => {
   const completedTasksCount = roadmapTasks.filter(t => t.is_completed).length;
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-28 pb-20 relative z-10">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-24 pb-20 relative z-10">
       {/* Personalized Greeting & Top Banner */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
         <div>
-          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-brand-cyan mb-1">
-            <Sparkles size={14} />
-            <span>AI Career Command Center</span>
+          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-text-muted mb-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            <span>COMMAND CENTER // ACTIVE PROFILE</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
             Welcome back, {user?.name || 'Candidate'}
           </h1>
-          <p className="text-xs sm:text-sm text-text-secondary mt-0.5">
-            Targeting: <span className="text-brand-blue font-semibold">{user?.target_role || 'Software Developer'}</span>
+          <p className="text-xs sm:text-sm text-text-secondary mt-0.5 font-mono">
+            TARGET ROLE: <span className="text-white font-medium">{user?.target_role || 'Software Developer'}</span>
           </p>
         </div>
 
         <div className="flex items-center gap-2.5 w-full sm:w-auto">
           <Link to="/analyze" className="w-full sm:w-auto">
-            <GlassButton variant="primary" size="md" className="w-full sm:w-auto" icon={<FileUp size={16} />}>
+            <GlassButton variant="primary" size="md" className="w-full sm:w-auto" icon={<FileUp size={15} />}>
               Analyze New Resume
             </GlassButton>
           </Link>
@@ -81,8 +81,8 @@ export const DashboardPage: React.FC = () => {
               colorScheme="dynamic" 
               size={120} 
             />
-            <div className="mt-2 text-xs text-text-muted">
-              {latestAnalysis.quality_score >= 80 ? 'Exceptional Structure' : 'Good Foundation'}
+            <div className="mt-2 text-xs font-mono text-text-muted">
+              {latestAnalysis.quality_score >= 80 ? 'Competitive Tier-1' : 'Solid Base'}
             </div>
           </GlassCard>
 
@@ -92,55 +92,55 @@ export const DashboardPage: React.FC = () => {
               score={Math.round(latestAnalysis.job_match_score)} 
               label="Role Match" 
               sublabel={latestAnalysis.target_role} 
-              colorScheme="mint" 
+              colorScheme="cyan" 
               size={120} 
             />
-            <div className="mt-2 text-xs text-brand-mint font-medium">
-              {latestAnalysis.matched_skills.length} matching skills
+            <div className="mt-2 text-xs font-mono text-emerald-400">
+              {latestAnalysis.matched_skills.length} skills verified
             </div>
           </GlassCard>
 
           {/* Key Skill Gap Card */}
           <GlassCard variant="elevated" className="p-5 flex flex-col justify-between md:col-span-2">
             <div>
-              <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-text-secondary mb-3">
-                <span className="flex items-center gap-1.5 text-brand-amber">
-                  <AlertTriangle size={14} />
-                  <span>Top Priority Skill Gaps</span>
+              <div className="flex items-center justify-between text-xs font-mono uppercase tracking-wider text-text-secondary mb-3">
+                <span className="flex items-center gap-1.5 text-amber-300">
+                  <AlertTriangle size={13} />
+                  <span>Priority Skill Gaps</span>
                 </span>
-                <span className="text-text-muted text-[11px]">{latestAnalysis.missing_skills.length} identified</span>
+                <span className="text-text-muted text-[11px]">{latestAnalysis.missing_skills.length} detected</span>
               </div>
               <div className="flex flex-wrap gap-1.5 mb-3">
                 {latestAnalysis.missing_skills.slice(0, 6).map((sk) => (
-                  <span key={sk} className="text-xs px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/20 text-brand-amber font-medium">
+                  <span key={sk} className="text-xs font-mono px-2.5 py-0.5 rounded bg-[#0D0F14] border border-amber-500/20 text-amber-300">
                     {sk}
                   </span>
                 ))}
               </div>
               <p className="text-xs text-text-secondary leading-relaxed">
-                Adding these technologies to your projects will directly increase your match percentage for {latestAnalysis.target_role}.
+                Incorporating these technologies into your projects will directly increase your match percentage for {latestAnalysis.target_role}.
               </p>
             </div>
-            <div className="pt-3 border-t border-white/5 flex items-center justify-between">
-              <Link to={`/results/${latestAnalysis.id}`} className="text-xs text-brand-cyan hover:underline flex items-center gap-1 font-medium">
-                View Full Analysis Breakdown <ArrowRight size={12} />
+            <div className="pt-3 border-t border-white/[0.06] flex items-center justify-between">
+              <Link to={`/results/${latestAnalysis.id}`} className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1 font-medium font-mono">
+                View Full Audit Breakdown <ArrowRight size={12} />
               </Link>
             </div>
           </GlassCard>
         </div>
       ) : (
         /* Empty State */
-        <GlassCard variant="elevated" className="p-8 text-center mb-8 border border-brand-blue/30 shadow-glow-blue">
+        <GlassCard variant="elevated" className="p-8 text-center mb-8 border border-white/10">
           <div className="max-w-md mx-auto space-y-4">
-            <div className="w-12 h-12 rounded-2xl bg-brand-blue/20 text-brand-cyan flex items-center justify-center mx-auto border border-brand-blue/30">
-              <FileUp size={24} />
+            <div className="w-10 h-10 rounded-lg bg-[#161922] text-zinc-300 flex items-center justify-center mx-auto border border-white/10">
+              <FileUp size={20} />
             </div>
-            <h2 className="text-xl font-bold text-white">No resume analysis on record yet</h2>
+            <h2 className="text-lg font-bold text-white">No resume audit on record yet</h2>
             <p className="text-xs text-text-secondary leading-relaxed">
               Upload your PDF or Word resume to receive transparent quality scores, skill gap audits, and matched job openings.
             </p>
             <Link to="/analyze">
-              <GlassButton variant="primary" size="md" icon={<Sparkles size={16} />}>
+              <GlassButton variant="primary" size="md" icon={<ArrowRight size={15} />}>
                 Upload & Analyze Resume Now
               </GlassButton>
             </Link>
@@ -151,89 +151,89 @@ export const DashboardPage: React.FC = () => {
       {/* AI Career Acceleration Suite Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <Link to="/interview" className="group">
-          <GlassCard className="p-5 h-full border-purple-500/20 bg-gradient-to-br from-surface-card to-purple-950/20 hover:border-purple-500/40 transition-all flex flex-col justify-between">
+          <GlassCard className="p-5 h-full bg-[#161922] border-white/10 hover:border-white/20 transition-all flex flex-col justify-between">
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
-                <Mic size={20} />
+              <div className="w-8 h-8 rounded-lg bg-[#0D0F14] border border-white/10 flex items-center justify-center text-zinc-300 group-hover:scale-105 transition-transform">
+                <Mic size={16} />
               </div>
               <div>
-                <h3 className="text-sm font-bold text-white group-hover:text-purple-300 transition-colors">
+                <h3 className="text-sm font-semibold text-white group-hover:text-zinc-200 transition-colors">
                   AI Mock Interview
                 </h3>
                 <p className="text-xs text-text-muted mt-1 leading-relaxed">
-                  Interactive voice or text simulation evaluated with STAR methodology and technical depth scoring.
+                  Interactive simulation evaluated with STAR methodology and technical depth scoring.
                 </p>
               </div>
             </div>
-            <div className="pt-3 mt-3 border-t border-white/5 flex items-center justify-between text-xs text-purple-300 font-medium">
-              <span>Start Loop</span>
-              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+            <div className="pt-3 mt-3 border-t border-white/[0.06] flex items-center justify-between text-xs font-mono text-zinc-400 group-hover:text-white transition-colors">
+              <span>Start Session</span>
+              <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
             </div>
           </GlassCard>
         </Link>
 
         <Link to="/tools" className="group">
-          <GlassCard className="p-5 h-full border-blue-500/20 bg-gradient-to-br from-surface-card to-blue-950/20 hover:border-blue-500/40 transition-all flex flex-col justify-between">
+          <GlassCard className="p-5 h-full bg-[#161922] border-white/10 hover:border-white/20 transition-all flex flex-col justify-between">
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
-                <Wand2 size={20} />
+              <div className="w-8 h-8 rounded-lg bg-[#0D0F14] border border-white/10 flex items-center justify-center text-zinc-300 group-hover:scale-105 transition-transform">
+                <Wand2 size={16} />
               </div>
               <div>
-                <h3 className="text-sm font-bold text-white group-hover:text-blue-300 transition-colors">
+                <h3 className="text-sm font-semibold text-white group-hover:text-zinc-200 transition-colors">
                   Cover Letter & LinkedIn
                 </h3>
                 <p className="text-xs text-text-muted mt-1 leading-relaxed">
-                  Generate company-tailored ATS cover letters and recruiter-magnet LinkedIn headlines in seconds.
+                  Generate company-tailored ATS cover letters and recruiter-aligned LinkedIn headlines in seconds.
                 </p>
               </div>
             </div>
-            <div className="pt-3 mt-3 border-t border-white/5 flex items-center justify-between text-xs text-blue-300 font-medium">
+            <div className="pt-3 mt-3 border-t border-white/[0.06] flex items-center justify-between text-xs font-mono text-zinc-400 group-hover:text-white transition-colors">
               <span>Open Tools</span>
-              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
             </div>
           </GlassCard>
         </Link>
 
         <Link to="/builder" className="group">
-          <GlassCard className="p-5 h-full border-brand-cyan/20 bg-gradient-to-br from-surface-card to-cyan-950/20 hover:border-brand-cyan/40 transition-all flex flex-col justify-between">
+          <GlassCard className="p-5 h-full bg-[#161922] border-white/10 hover:border-white/20 transition-all flex flex-col justify-between">
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/20 flex items-center justify-center text-brand-cyan group-hover:scale-105 transition-transform">
-                <Layout size={20} />
+              <div className="w-8 h-8 rounded-lg bg-[#0D0F14] border border-white/10 flex items-center justify-center text-zinc-300 group-hover:scale-105 transition-transform">
+                <Layout size={16} />
               </div>
               <div>
-                <h3 className="text-sm font-bold text-white group-hover:text-brand-cyan transition-colors">
-                  Live ATS Resume Builder
+                <h3 className="text-sm font-semibold text-white group-hover:text-zinc-200 transition-colors">
+                  Live Resume Builder
                 </h3>
                 <p className="text-xs text-text-muted mt-1 leading-relaxed">
-                  Draft, customize, and export recruiter-approved resumes with live ATS health scoring and print PDF.
+                  Draft, customize, and export recruiter-approved resumes with live ATS health scoring.
                 </p>
               </div>
             </div>
-            <div className="pt-3 mt-3 border-t border-white/5 flex items-center justify-between text-xs text-brand-cyan font-medium">
+            <div className="pt-3 mt-3 border-t border-white/[0.06] flex items-center justify-between text-xs font-mono text-zinc-400 group-hover:text-white transition-colors">
               <span>Launch Builder</span>
-              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
             </div>
           </GlassCard>
         </Link>
 
         <Link to="/tracker" className="group">
-          <GlassCard className="p-5 h-full border-brand-mint/20 bg-gradient-to-br from-surface-card to-emerald-950/20 hover:border-brand-mint/40 transition-all flex flex-col justify-between">
+          <GlassCard className="p-5 h-full bg-[#161922] border-white/10 hover:border-white/20 transition-all flex flex-col justify-between">
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-brand-mint/10 border border-brand-mint/20 flex items-center justify-center text-brand-mint group-hover:scale-105 transition-transform">
-                <Kanban size={20} />
+              <div className="w-8 h-8 rounded-lg bg-[#0D0F14] border border-white/10 flex items-center justify-center text-zinc-300 group-hover:scale-105 transition-transform">
+                <Kanban size={16} />
               </div>
               <div>
-                <h3 className="text-sm font-bold text-white group-hover:text-brand-mint transition-colors">
+                <h3 className="text-sm font-semibold text-white group-hover:text-zinc-200 transition-colors">
                   Application Tracker
                 </h3>
                 <p className="text-xs text-text-muted mt-1 leading-relaxed">
-                  Interactive Kanban board to track interview rounds, offer stages, and follow-up reminders.
+                  Interactive Kanban board to track interview rounds, offer stages, and follow-ups.
                 </p>
               </div>
             </div>
-            <div className="pt-3 mt-3 border-t border-white/5 flex items-center justify-between text-xs text-brand-mint font-medium">
+            <div className="pt-3 mt-3 border-t border-white/[0.06] flex items-center justify-between text-xs font-mono text-zinc-400 group-hover:text-white transition-colors">
               <span>View Pipeline</span>
-              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
             </div>
           </GlassCard>
         </Link>

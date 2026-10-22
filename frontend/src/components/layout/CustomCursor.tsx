@@ -49,11 +49,11 @@ export const CustomCursor: React.FC = () => {
 
   return (
     <div className="fixed inset-0 pointer-events-none z-[9999] overflow-hidden">
-      {/* Outer ambient glow ring */}
+      {/* Outer precision ring */}
       <div
-        className="fixed top-0 left-0 w-8 h-8 -ml-4 -mt-4 rounded-full border border-brand-cyan/40 bg-brand-cyan/10 transition-transform duration-150 ease-out will-change-transform shadow-glow-sm"
+        className="fixed top-0 left-0 w-7 h-7 -ml-3.5 -mt-3.5 rounded-full border border-white/30 bg-white/[0.04] transition-transform duration-150 ease-out will-change-transform"
         style={{
-          transform: `translate3d(${position.x}px, ${position.y}px, 0) scale(${isPointer ? 1.6 : 1})`,
+          transform: `translate3d(${position.x}px, ${position.y}px, 0) scale(${isPointer ? 1.5 : 1})`,
         }}
       />
       {/* Center pinpoint */}
