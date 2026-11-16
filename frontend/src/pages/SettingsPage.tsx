@@ -87,13 +87,13 @@ export const SettingsPage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 space-y-1.5">
+            <div className="p-4 rounded-xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 space-y-1.5">
               <div className="text-xs font-semibold text-slate-900 dark:text-white flex items-center justify-between">
                 <span>AI Intelligence Engine</span>
                 <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
                   healthData?.ai_service?.configured 
-                    ? 'bg-emerald-500/10 text-emerald-400' 
-                    : 'bg-amber-500/10 text-amber-400'
+                    ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400' 
+                    : 'bg-amber-500/10 text-amber-700 dark:text-amber-400'
                 }`}>
                   {healthData?.ai_service?.configured 
                     ? (healthData?.ai_service?.provider || 'Live AI Engine') 
@@ -105,13 +105,13 @@ export const SettingsPage: React.FC = () => {
               </p>
             </div>
 
-            <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 space-y-1.5">
+            <div className="p-4 rounded-xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 space-y-1.5">
               <div className="text-xs font-semibold text-slate-900 dark:text-white flex items-center justify-between">
                 <span>Job Recommendation Stream</span>
                 <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
                   healthData?.job_service?.configured 
-                    ? 'bg-emerald-500/10 text-emerald-400' 
-                    : 'bg-amber-500/10 text-amber-400'
+                    ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400' 
+                    : 'bg-amber-500/10 text-amber-700 dark:text-amber-400'
                 }`}>
                   {healthData?.job_service?.configured ? 'Live JSearch' : 'Curated Demo Engine'}
                 </span>
@@ -126,20 +126,20 @@ export const SettingsPage: React.FC = () => {
         {/* Privacy & Document Security */}
         <GlassCard variant="standard" className="p-6">
           <h2 className="text-sm font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
-            <Lock size={16} className="text-emerald-400" />
+            <Lock size={16} className="text-emerald-600 dark:text-emerald-400" />
             <span>Privacy & Storage Compliance</span>
           </h2>
           <ul className="space-y-2 text-xs text-text-secondary">
             <li className="flex items-center gap-2">
-              <CheckCircle2 size={14} className="text-emerald-400" />
+              <CheckCircle2 size={14} className="text-emerald-600 dark:text-emerald-400" />
               <span>Resumes are stored with random UUID hashes in isolated private storage.</span>
             </li>
             <li className="flex items-center gap-2">
-              <CheckCircle2 size={14} className="text-emerald-400" />
+              <CheckCircle2 size={14} className="text-emerald-600 dark:text-emerald-400" />
               <span>Password hashes use modern cryptographic PBKDF2 / SHA-256 salts.</span>
             </li>
             <li className="flex items-center gap-2">
-              <CheckCircle2 size={14} className="text-emerald-400" />
+              <CheckCircle2 size={14} className="text-emerald-600 dark:text-emerald-400" />
               <span>Zero third-party advertisement trackers or tracking pixels enabled.</span>
             </li>
           </ul>
@@ -147,7 +147,7 @@ export const SettingsPage: React.FC = () => {
 
         {/* Danger Zone: Account Deletion */}
         <GlassCard variant="standard" className="p-6 border border-rose-500/20 bg-rose-500/[0.02]">
-          <h2 className="text-sm font-bold text-rose-300 mb-2 flex items-center gap-2">
+          <h2 className="text-sm font-bold text-rose-600 dark:text-rose-300 mb-2 flex items-center gap-2">
             <ShieldAlert size={16} />
             <span>Danger Zone</span>
           </h2>

@@ -74,15 +74,15 @@ export const LandingPage: React.FC = () => {
           {/* Trust Matrix Badges */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-y-2 gap-x-6 text-xs text-text-muted font-mono pt-4 border-t border-slate-200 dark:border-white/[0.08] w-full">
             <div className="flex items-center gap-2">
-              <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />
+              <CheckCircle2 size={13} className="text-emerald-600 dark:text-emerald-400 shrink-0" />
               <span>16 MB PDF & DOCX Ingestion</span>
             </div>
             <div className="flex items-center gap-2">
-              <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />
+              <CheckCircle2 size={13} className="text-emerald-600 dark:text-emerald-400 shrink-0" />
               <span>5-Dimensional ATS Heuristics</span>
             </div>
             <div className="flex items-center gap-2 col-span-2 sm:col-span-1">
-              <ShieldCheck size={13} className="text-emerald-400 shrink-0" />
+              <ShieldCheck size={13} className="text-emerald-600 dark:text-emerald-400 shrink-0" />
               <span>Zero Document Training Leaks</span>
             </div>
           </div>
@@ -90,7 +90,7 @@ export const LandingPage: React.FC = () => {
 
         {/* 2. REALISTIC PRODUCT WORKSPACE PREVIEW */}
         <div className="mt-14 max-w-6xl mx-auto relative">
-          <GlassCard variant="elevated" className="p-0 border border-white/[0.12] shadow-elevated overflow-hidden">
+          <GlassCard variant="elevated" className="p-0 border border-slate-200 dark:border-white/[0.12] shadow-elevated overflow-hidden">
             {/* Terminal Window Header Bar */}
             <div className="flex items-center justify-between px-4 sm:px-6 py-3 bg-slate-100 dark:bg-[#0D0F14] border-b border-slate-200 dark:border-white/[0.08]">
               <div className="flex items-center gap-2">
@@ -101,7 +101,7 @@ export const LandingPage: React.FC = () => {
                   audit_preview.json • Software Developer Archetype
                 </span>
               </div>
-              <div className="flex items-center gap-2 font-mono text-[11px] text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded border border-emerald-500/20">
+              <div className="flex items-center gap-2 font-mono text-[11px] text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded border border-emerald-500/20">
                 <span>PARSED & VERIFIED</span>
               </div>
             </div>
@@ -111,9 +111,9 @@ export const LandingPage: React.FC = () => {
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                 {/* Score Dial & Category Breakdown (5 Cols) */}
                 <div className="lg:col-span-5 p-5 rounded-xl bg-white dark:bg-[#161922] border border-slate-200 dark:border-white/[0.08] shadow-sm flex flex-col justify-between">
-                  <div className="flex items-center justify-between pb-3 border-b border-white/5">
+                  <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-white/5">
                     <span className="text-xs font-mono uppercase tracking-wider text-text-secondary">Quality Index</span>
-                    <span className="text-xs font-mono text-emerald-400 font-semibold">Tier 1 • Top 14%</span>
+                    <span className="text-xs font-mono text-emerald-700 dark:text-emerald-400 font-semibold">Tier 1 • Top 14%</span>
                   </div>
 
                   <div className="py-6 flex items-center justify-center">
@@ -171,17 +171,17 @@ export const LandingPage: React.FC = () => {
                   <div className="p-5 rounded-xl bg-white dark:bg-[#161922] border border-slate-200 dark:border-white/[0.08] shadow-sm">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-2">
-                        <Briefcase size={14} className="text-blue-400" />
+                        <Briefcase size={14} className="text-blue-600 dark:text-blue-400" />
                         <span className="text-xs font-mono uppercase tracking-wider text-text-secondary">
                           Matched Opportunity
                         </span>
                       </div>
-                      <span className="text-xs font-mono font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                      <span className="text-xs font-mono font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
                         92% Role Fit
                       </span>
                     </div>
 
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mt-3 pt-3 border-t border-white/5">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mt-3 pt-3 border-t border-slate-200 dark:border-white/5">
                       <div>
                         <div className="text-sm font-semibold text-slate-900 dark:text-white">Full Stack Software Engineer</div>
                         <div className="text-xs text-text-secondary mt-0.5">AuraCloud Technologies • Bangalore (Hybrid)</div>
@@ -214,10 +214,10 @@ export const LandingPage: React.FC = () => {
           {/* Bento Item 1: Scoring Architecture (Span 7) */}
           <GlassCard variant="standard" className="md:col-span-7 p-6 sm:p-8 flex flex-col justify-between">
             <div>
-              <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center mb-4">
+              <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-4">
                 <Cpu size={16} />
               </div>
-              <div className="text-xs font-mono text-blue-400 uppercase tracking-wider mb-1">01 // HEURISTIC EVALUATION</div>
+              <div className="text-xs font-mono text-blue-600 dark:text-blue-400 uppercase tracking-wider mb-1">01 // HEURISTIC EVALUATION</div>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight mb-2">
                 Deterministic 5-Dimensional Quality Index
               </h3>
@@ -230,7 +230,7 @@ export const LandingPage: React.FC = () => {
             <div className="p-4 rounded-lg bg-slate-100 dark:bg-[#161922] border border-slate-200 dark:border-white/5 font-mono text-xs space-y-2">
               <div className="flex justify-between text-text-muted">
                 <span>SCORING ENGINE</span>
-                <span className="text-emerald-400">100% EXPLAINABLE</span>
+                <span className="text-emerald-600 dark:text-emerald-400">100% EXPLAINABLE</span>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 pt-1 text-[11px]">
                 <div className="p-2 rounded bg-white dark:bg-[#0D0F14] text-center border border-slate-200 dark:border-white/5 shadow-2xs">
@@ -260,10 +260,10 @@ export const LandingPage: React.FC = () => {
           {/* Bento Item 2: STAR Rewriter (Span 5) */}
           <GlassCard variant="standard" className="md:col-span-5 p-6 sm:p-8 flex flex-col justify-between">
             <div>
-              <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mb-4">
+              <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-4">
                 <Zap size={16} />
               </div>
-              <div className="text-xs font-mono text-emerald-400 uppercase tracking-wider mb-1">02 // STAR REWRITING</div>
+              <div className="text-xs font-mono text-emerald-700 dark:text-emerald-400 uppercase tracking-wider mb-1">02 // STAR REWRITING</div>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight mb-2">
                 Action-Verb & Impact Structuring
               </h3>
@@ -273,7 +273,7 @@ export const LandingPage: React.FC = () => {
             </div>
 
             <div className="p-3.5 rounded-lg bg-slate-100 dark:bg-[#161922] border border-slate-200 dark:border-white/5 space-y-2.5 font-mono text-xs">
-              <div className="text-[11px] text-rose-400 line-through opacity-75">
+              <div className="text-[11px] text-rose-600 dark:text-rose-400 line-through opacity-75">
                 - Worked on backend APIs and fixed some database bugs.
               </div>
               <div className="text-[11px] text-emerald-600 dark:text-emerald-400 pt-1 border-t border-slate-200 dark:border-white/5 font-medium">
@@ -285,10 +285,10 @@ export const LandingPage: React.FC = () => {
           {/* Bento Item 3: Role Archetype Benchmarking (Span 5) */}
           <GlassCard variant="standard" className="md:col-span-5 p-6 sm:p-8 flex flex-col justify-between">
             <div>
-              <div className="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center mb-4">
+              <div className="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-600 dark:text-purple-400 flex items-center justify-center mb-4">
                 <Layers size={16} />
               </div>
-              <div className="text-xs font-mono text-purple-400 uppercase tracking-wider mb-1">03 // TAXONOMY MATCH</div>
+              <div className="text-xs font-mono text-purple-700 dark:text-purple-400 uppercase tracking-wider mb-1">03 // TAXONOMY MATCH</div>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight mb-2">
                 Industry Role Benchmarks
               </h3>
@@ -309,10 +309,10 @@ export const LandingPage: React.FC = () => {
           {/* Bento Item 4: Career Roadmap & Milestones (Span 7) */}
           <GlassCard variant="standard" className="md:col-span-7 p-6 sm:p-8 flex flex-col justify-between">
             <div>
-              <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center mb-4">
+              <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-4">
                 <Compass size={16} />
               </div>
-              <div className="text-xs font-mono text-amber-400 uppercase tracking-wider mb-1">04 // TRAJECTORY BUILDER</div>
+              <div className="text-xs font-mono text-amber-700 dark:text-amber-400 uppercase tracking-wider mb-1">04 // TRAJECTORY BUILDER</div>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight mb-2">
                 Personalized Skill Gap Roadmaps
               </h3>
@@ -395,9 +395,9 @@ export const LandingPage: React.FC = () => {
                 >
                   <span>{faq.q}</span>
                   {isOpen ? (
-                    <ChevronUp size={16} className="text-zinc-400 shrink-0" />
+                    <ChevronUp size={16} className="text-slate-500 dark:text-zinc-400 shrink-0" />
                   ) : (
-                    <ChevronDown size={16} className="text-zinc-500 shrink-0" />
+                    <ChevronDown size={16} className="text-slate-400 dark:text-zinc-400 shrink-0" />
                   )}
                 </button>
                 {isOpen && (

@@ -209,7 +209,7 @@ export const FloatingAssistant: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="p-1.5 text-text-muted hover:text-rose-400 rounded-lg hover:bg-rose-500/10 transition-colors cursor-pointer"
+                className="p-1.5 text-text-muted hover:text-rose-600 dark:hover:text-rose-400 rounded-lg hover:bg-rose-500/10 transition-colors cursor-pointer"
                 title="Close Assistant"
                 aria-label="Close Assistant"
               >
@@ -231,7 +231,7 @@ export const FloatingAssistant: React.FC = () => {
                     className="whitespace-nowrap px-2.5 py-1 rounded-md bg-white hover:bg-slate-50 dark:bg-[#161922] dark:hover:bg-[#1D212C] text-slate-700 hover:text-slate-900 dark:text-text-secondary dark:hover:text-white border border-slate-300 dark:border-white/10 transition-all shrink-0 flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer text-[10px] shadow-xs"
                   >
                     <span>{action}</span>
-                    <ArrowUpRight size={10} className="text-zinc-400" />
+                    <ArrowUpRight size={10} className="text-slate-400 dark:text-zinc-400" />
                   </button>
                 ))}
               </div>
@@ -267,15 +267,15 @@ export const FloatingAssistant: React.FC = () => {
                             title="Copy reply"
                             aria-label="Copy reply"
                           >
-                            {copiedId === m.id ? <Check size={11} className="text-emerald-400" /> : <Copy size={11} />}
+                            {copiedId === m.id ? <Check size={11} className="text-emerald-600 dark:text-emerald-400" /> : <Copy size={11} />}
                           </button>
                         )}
                       </div>
 
                       {/* Fallback demo mode badge shown ONLY ONCE per conversation */}
                       {idx === firstDemoIndex && (
-                        <div className="text-[10px] text-amber-300 px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20 inline-flex items-center gap-1.5 font-mono">
-                          <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                        <div className="text-[10px] text-amber-700 dark:text-amber-300 px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20 inline-flex items-center gap-1.5 font-mono">
+                          <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400" />
                           <span>Demo Engine Fallback (Deterministic Mode)</span>
                         </div>
                       )}
@@ -296,8 +296,8 @@ export const FloatingAssistant: React.FC = () => {
                 {/* Loading State Indicator */}
                 {isLoading && (
                   <div className="flex gap-2.5 items-center text-text-muted">
-                    <div className="w-6 h-6 rounded-md bg-[#161922] text-zinc-300 border border-white/10 flex items-center justify-center shrink-0">
-                      <Sparkles size={11} className="animate-spin text-blue-400" />
+                    <div className="w-6 h-6 rounded-md bg-slate-200 dark:bg-[#161922] text-slate-700 dark:text-zinc-300 border border-slate-300 dark:border-white/10 flex items-center justify-center shrink-0">
+                      <Sparkles size={11} className="animate-spin text-blue-600 dark:text-blue-400" />
                     </div>
                     <div className="p-2.5 rounded-lg bg-slate-100 dark:bg-[#161922] border border-slate-200 dark:border-white/10 flex items-center gap-1.5">
                       <div className="w-1.5 h-1.5 rounded-full bg-slate-500 dark:bg-zinc-400 animate-bounce" style={{ animationDelay: '0ms' }} />
@@ -310,9 +310,9 @@ export const FloatingAssistant: React.FC = () => {
 
                 {/* Error Banner with Retry */}
                 {error && (
-                  <div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/25 text-rose-300 flex items-start justify-between gap-2 font-mono">
+                  <div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/25 text-rose-700 dark:text-rose-300 flex items-start justify-between gap-2 font-mono">
                     <div className="flex items-start gap-2">
-                      <AlertCircle size={14} className="shrink-0 mt-0.5 text-rose-400" />
+                      <AlertCircle size={14} className="shrink-0 mt-0.5 text-rose-600 dark:text-rose-400" />
                       <div className="text-[11px] leading-tight font-sans">{error}</div>
                     </div>
                     {lastFailedMessage && (
@@ -380,11 +380,11 @@ export const FloatingAssistant: React.FC = () => {
         aria-expanded={isOpen}
       >
         <div className="relative">
-          <div className="w-6 h-6 rounded-md bg-[#161922] border border-white/10 flex items-center justify-center text-zinc-200">
+          <div className="w-6 h-6 rounded-md bg-slate-100 dark:bg-[#161922] border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-700 dark:text-zinc-200">
             <Bot size={14} />
           </div>
           {/* Status dot */}
-          <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400 border border-[#111318]" />
+          <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400 border border-white dark:border-[#111318]" />
         </div>
 
         <div className="hidden sm:flex flex-col text-left">

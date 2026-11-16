@@ -331,7 +331,7 @@ export const Navbar: React.FC = () => {
                 onClick={handleLogout}
                 title="Log Out"
                 aria-label="Log Out"
-                className="p-1.5 rounded-lg text-text-secondary hover:text-rose-400 hover:bg-rose-500/10 border border-transparent hover:border-rose-500/20 transition-all cursor-pointer"
+                className="p-1.5 rounded-lg text-text-secondary hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-500/10 border border-transparent hover:border-rose-500/20 transition-all cursor-pointer"
               >
                 <LogOut size={15} />
               </button>
@@ -512,7 +512,7 @@ export const Navbar: React.FC = () => {
               <button
                 type="button"
                 onClick={handleLogout}
-                className="px-3 py-2 text-sm font-medium rounded-lg text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 flex items-center gap-2.5 text-left transition-colors cursor-pointer"
+                className="px-3 py-2 text-sm font-medium rounded-lg text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 hover:bg-rose-500/10 flex items-center gap-2.5 text-left transition-colors cursor-pointer"
               >
                 <LogOut size={16} className="shrink-0" />
                 <span>Log Out</span>

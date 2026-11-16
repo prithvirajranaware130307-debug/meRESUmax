@@ -118,8 +118,8 @@ export const RegisterPage: React.FC = () => {
           </div>
 
           {error && (
-            <div className="mb-5 p-3 rounded-lg bg-rose-500/10 border border-rose-500/25 text-rose-300 text-xs flex items-start gap-2.5 font-mono">
-              <AlertCircle size={15} className="shrink-0 mt-0.5 text-rose-400" />
+            <div className="mb-5 p-3 rounded-lg bg-rose-500/10 border border-rose-500/25 text-rose-700 dark:text-rose-300 text-xs flex items-start gap-2.5 font-mono">
+              <AlertCircle size={15} className="shrink-0 mt-0.5 text-rose-600 dark:text-rose-400" />
               <div className="font-sans leading-tight">
                 <span>{error}</span>
                 {error.includes('already exists') && (
@@ -158,7 +158,7 @@ export const RegisterPage: React.FC = () => {
                 <User size={15} className="absolute left-3 top-2.5 text-slate-400 dark:text-zinc-500 pointer-events-none" />
               </div>
               {fieldErrors.name && (
-                <p className="mt-1 text-[11px] text-rose-400 font-mono flex items-center gap-1">
+                <p className="mt-1 text-[11px] text-rose-600 dark:text-rose-400 font-mono flex items-center gap-1">
                   <span>&bull;</span> {fieldErrors.name}
                 </p>
               )}
@@ -188,7 +188,7 @@ export const RegisterPage: React.FC = () => {
                 <Mail size={15} className="absolute left-3 top-2.5 text-slate-400 dark:text-zinc-500 pointer-events-none" />
               </div>
               {fieldErrors.email && (
-                <p className="mt-1 text-[11px] text-rose-400 font-mono flex items-center gap-1">
+                <p className="mt-1 text-[11px] text-rose-600 dark:text-rose-400 font-mono flex items-center gap-1">
                   <span>&bull;</span> {fieldErrors.email}
                 </p>
               )}
@@ -222,7 +222,7 @@ export const RegisterPage: React.FC = () => {
                 <Briefcase size={15} className="absolute left-3 top-2.5 text-slate-400 dark:text-zinc-500 pointer-events-none" />
               </div>
               {fieldErrors.targetRole && (
-                <p className="mt-1 text-[11px] text-rose-400 font-mono flex items-center gap-1">
+                <p className="mt-1 text-[11px] text-rose-600 dark:text-rose-400 font-mono flex items-center gap-1">
                   <span>&bull;</span> {fieldErrors.targetRole}
                 </p>
               )}
@@ -252,7 +252,7 @@ export const RegisterPage: React.FC = () => {
                 <Lock size={15} className="absolute left-3 top-2.5 text-slate-400 dark:text-zinc-500 pointer-events-none" />
               </div>
               {fieldErrors.password ? (
-                <p className="mt-1 text-[11px] text-rose-400 font-mono flex items-center gap-1">
+                <p className="mt-1 text-[11px] text-rose-600 dark:text-rose-400 font-mono flex items-center gap-1">
                   <span>&bull;</span> {fieldErrors.password}
                 </p>
               ) : (

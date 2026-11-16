@@ -166,7 +166,7 @@ html.light select {
 
 html.light input::placeholder,
 html.light textarea::placeholder {
-  color: #94A3B8;
+  color: #64748B;
 }
 
 /* Select options */

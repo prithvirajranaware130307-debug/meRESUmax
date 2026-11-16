@@ -109,7 +109,7 @@ export const RoadmapPage: React.FC = () => {
           <span>Overall Milestone Completion: {completedCount} / {tasks.length} Completed</span>
           <span className="text-brand-mint text-sm font-bold">{progressPercent}%</span>
         </div>
-        <div className="w-full h-2.5 bg-white/5 rounded-full overflow-hidden border border-white/10">
+        <div className="w-full h-2.5 bg-slate-200 dark:bg-white/5 rounded-full overflow-hidden border border-slate-300 dark:border-white/10">
           <div 
             className="h-full bg-gradient-to-r from-brand-blue via-brand-cyan to-brand-mint rounded-full transition-all duration-500"
             style={{ width: `${progressPercent}%` }}
@@ -119,15 +119,15 @@ export const RoadmapPage: React.FC = () => {
 
       {/* Error state with retry */}
       {error && (
-        <div className="mb-6 p-4 rounded-lg bg-rose-500/10 border border-rose-500/25 text-rose-300 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 font-mono">
+        <div className="mb-6 p-4 rounded-lg bg-rose-500/10 border border-rose-500/25 text-rose-700 dark:text-rose-300 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 font-mono">
           <div className="flex items-center gap-2.5">
-            <AlertCircle size={16} className="shrink-0 text-rose-400" />
+            <AlertCircle size={16} className="shrink-0 text-rose-600 dark:text-rose-400" />
             <span className="font-sans leading-relaxed">{error}</span>
           </div>
           <button
             type="button"
             onClick={fetchTasks}
-            className="px-3 py-1.5 rounded-md bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shrink-0"
+            className="px-3 py-1.5 rounded-md bg-rose-500/20 hover:bg-rose-500/30 text-rose-700 dark:text-rose-200 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shrink-0"
           >
             <RotateCcw size={12} />
             <span>Retry</span>
@@ -186,13 +186,13 @@ export const RoadmapPage: React.FC = () => {
           <div className="text-xs text-text-secondary">Loading milestones...</div>
         </div>
       ) : tasks.length > 0 ? (
-        <div className="space-y-4 relative before:absolute before:inset-0 before:left-5 before:w-0.5 before:bg-white/10">
+        <div className="space-y-4 relative before:absolute before:inset-0 before:left-5 before:w-0.5 before:bg-slate-300 dark:before:bg-white/10">
           {tasks.map((task, index) => {
             const isDone = task.is_completed;
             const priorityColor = 
-              task.priority === 'high' ? 'text-rose-400 bg-rose-500/10 border-rose-500/20' :
-              task.priority === 'medium' ? 'text-brand-amber bg-amber-500/10 border-amber-500/20' :
-              'text-brand-cyan bg-cyan-500/10 border-cyan-500/20';
+              task.priority === 'high' ? 'text-rose-600 dark:text-rose-400 bg-rose-500/10 border-rose-500/20' :
+              task.priority === 'medium' ? 'text-amber-700 dark:text-brand-amber bg-amber-500/10 border-amber-500/20' :
+              'text-cyan-700 dark:text-brand-cyan bg-cyan-500/10 border-cyan-500/20';
 
             return (
               <div key={task.id} className="relative flex items-start gap-4 pl-12 group">
@@ -200,7 +200,7 @@ export const RoadmapPage: React.FC = () => {
                 <button
                   onClick={() => handleToggleTask(task)}
                   className={`absolute left-2.5 top-3 w-5 h-5 rounded-full flex items-center justify-center transition-all bg-white dark:bg-[#070912] border ${
-                    isDone ? 'border-brand-mint text-brand-mint shadow-glow-mint' : 'border-white/20 text-text-muted hover:border-white/50'
+                    isDone ? 'border-brand-mint text-brand-mint shadow-glow-mint' : 'border-slate-300 dark:border-white/20 text-text-muted hover:border-slate-400 dark:hover:border-white/50'
                   }`}
                   title={isDone ? 'Mark Incomplete' : 'Mark Completed'}
                 >
@@ -210,7 +210,7 @@ export const RoadmapPage: React.FC = () => {
                 {/* Milestone Card */}
                 <GlassCard 
                   variant="standard" 
-                  className={`p-4 sm:p-5 flex-1 transition-all ${isDone ? 'opacity-70 bg-white/[0.02]' : 'hover:border-white/25'}`}
+                  className={`p-4 sm:p-5 flex-1 transition-all ${isDone ? 'opacity-70 bg-white/[0.02]' : 'hover:border-slate-300 dark:hover:border-white/25'}`}
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex-1">
@@ -234,7 +234,7 @@ export const RoadmapPage: React.FC = () => {
 
                     <button
                       onClick={() => handleDeleteTask(task.id)}
-                      className="p-1.5 rounded-lg text-text-muted hover:text-rose-400 hover:bg-rose-500/10 transition-colors"
+                      className="p-1.5 rounded-lg text-text-muted hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-500/10 transition-colors"
                       title="Remove task"
                     >
                       <Trash2 size={14} />

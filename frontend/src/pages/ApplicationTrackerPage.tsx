@@ -40,10 +40,10 @@ const COLUMNS: ColumnConfig[] = [
   {
     id: 'interviewing',
     title: 'Interviewing',
-    badgeColor: 'text-purple-400 bg-purple-500/10 border-purple-500/20',
+    badgeColor: 'text-purple-700 dark:text-purple-300 bg-purple-500/10 border-purple-500/20',
     borderColor: 'border-purple-500/20 hover:border-purple-500/40',
     headerGlow: 'from-purple-500/10 to-transparent',
-    icon: <Mic size={16} className="text-purple-400" />
+    icon: <Mic size={16} className="text-purple-600 dark:text-purple-400" />
   },
   {
     id: 'offer',
@@ -56,9 +56,9 @@ const COLUMNS: ColumnConfig[] = [
   {
     id: 'rejected',
     title: 'Archived / Rejected',
-    badgeColor: 'text-text-muted bg-white/5 border-white/10',
-    borderColor: 'border-white/10 hover:border-white/20',
-    headerGlow: 'from-white/5 to-transparent',
+    badgeColor: 'text-text-muted bg-slate-100 dark:bg-white/5 border-slate-300 dark:border-white/10',
+    borderColor: 'border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20',
+    headerGlow: 'from-slate-200/40 dark:from-white/5 to-transparent',
     icon: <AlertCircle size={16} className="text-text-muted" />
   }
 ];
@@ -294,11 +294,11 @@ export const ApplicationTrackerPage: React.FC = () => {
   const getPriorityBadge = (priority: ApplicationPriority) => {
     switch (priority) {
       case 'high':
-        return <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/30">High</span>;
+        return <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/30">High</span>;
       case 'medium':
-        return <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/30">Medium</span>;
+        return <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/30">Medium</span>;
       case 'low':
-        return <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/30">Low</span>;
+        return <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/30">Low</span>;
     }
   };
 
@@ -337,7 +337,7 @@ export const ApplicationTrackerPage: React.FC = () => {
             </GlassButton>
           )}
 
-          <div className="flex items-center rounded-xl bg-white/5 border border-white/10 p-0.5">
+          <div className="flex items-center rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 p-0.5">
             <button
               onClick={() => setViewMode('kanban')}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
@@ -366,7 +366,7 @@ export const ApplicationTrackerPage: React.FC = () => {
 
       {/* KPI Metric Strip */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <GlassCard variant="standard" className="p-4 flex items-center gap-3.5 border-white/10">
+        <GlassCard variant="standard" className="p-4 flex items-center gap-3.5 border-slate-200 dark:border-white/10">
           <div className="w-11 h-11 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-brand-cyan">
             <Layers size={20} />
           </div>
@@ -377,7 +377,7 @@ export const ApplicationTrackerPage: React.FC = () => {
         </GlassCard>
 
         <GlassCard variant="standard" className="p-4 flex items-center gap-3.5 border-purple-500/20">
-          <div className="w-11 h-11 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
+          <div className="w-11 h-11 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-600 dark:text-purple-400">
             <Mic size={20} />
           </div>
           <div>
@@ -414,16 +414,16 @@ export const ApplicationTrackerPage: React.FC = () => {
       {upcomingInterviews.length > 0 && (
         <div className="mb-8 p-4 rounded-2xl liquid-glass border border-purple-500/30 bg-purple-950/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-glow-purple">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-purple-500/20 text-purple-700 dark:text-purple-300 flex items-center justify-center">
               <Calendar size={18} />
             </div>
             <div>
-              <div className="text-xs uppercase font-bold tracking-wider text-purple-300">
+              <div className="text-xs uppercase font-bold tracking-wider text-purple-700 dark:text-purple-300">
                 Upcoming Interview Scheduled
               </div>
               <div className="text-sm font-semibold text-slate-900 dark:text-white">
                 {upcomingInterviews[0].company} - {upcomingInterviews[0].role}
-                <span className="text-purple-300 font-normal ml-2">
+                <span className="text-purple-700 dark:text-purple-300 font-normal ml-2">
                   ({formatInterviewDate(upcomingInterviews[0].interview_date)})
                 </span>
               </div>
@@ -475,14 +475,14 @@ export const ApplicationTrackerPage: React.FC = () => {
             <button
               onClick={handleExportCSV}
               title="Export to CSV"
-              className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-text-muted hover:text-white border border-white/10 transition-colors"
+              className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 text-slate-600 hover:text-slate-900 dark:text-text-muted dark:hover:text-white border border-slate-200 dark:border-white/10 transition-colors"
             >
               <FileSpreadsheet size={15} />
             </button>
             <button
               onClick={handleExportJSON}
               title="Export to JSON"
-              className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-text-muted hover:text-white border border-white/10 transition-colors"
+              className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 text-slate-600 hover:text-slate-900 dark:text-text-muted dark:hover:text-white border border-slate-200 dark:border-white/10 transition-colors"
             >
               <Download size={15} />
             </button>
@@ -493,8 +493,8 @@ export const ApplicationTrackerPage: React.FC = () => {
       {/* Error state if fetch failed */}
       {error && (
         <GlassCard variant="standard" className="p-6 mb-8 border-rose-500/25 bg-rose-500/10 text-center">
-          <div className="flex items-center justify-center gap-2 text-rose-300 font-semibold mb-2">
-            <AlertCircle size={18} className="text-rose-400" />
+          <div className="flex items-center justify-center gap-2 text-rose-700 dark:text-rose-300 font-semibold mb-2">
+            <AlertCircle size={18} className="text-rose-600 dark:text-rose-400" />
             <span>Connection Notice</span>
           </div>
           <p className="text-xs text-text-secondary mb-4 max-w-md mx-auto">{error}</p>
@@ -517,10 +517,10 @@ export const ApplicationTrackerPage: React.FC = () => {
             return (
               <div 
                 key={col.id} 
-                className="flex flex-col rounded-2xl liquid-glass border border-white/10 overflow-hidden min-h-[580px] bg-surface-card/40"
+                className="flex flex-col rounded-2xl liquid-glass border border-slate-200 dark:border-white/10 overflow-hidden min-h-[580px] bg-surface-card/40"
               >
                 {/* Column Header */}
-                <div className={`p-3.5 border-b border-white/5 bg-gradient-to-b ${col.headerGlow} flex items-center justify-between`}>
+                <div className={`p-3.5 border-b border-slate-200 dark:border-white/5 bg-gradient-to-b ${col.headerGlow} flex items-center justify-between`}>
                   <div className="flex items-center gap-2">
                     {col.icon}
                     <h2 className="text-xs font-bold text-slate-900 dark:text-white tracking-wide">{col.title}</h2>
@@ -531,7 +531,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                     </span>
                     <button
                       onClick={() => handleOpenAddModal(col.id)}
-                      className="p-1 rounded-md text-text-muted hover:text-white hover:bg-white/10 transition-colors"
+                      className="p-1 rounded-md text-slate-500 hover:text-slate-900 dark:text-text-muted dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
                       title={`Add to ${col.title}`}
                     >
                       <Plus size={14} />
@@ -542,7 +542,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                 {/* Cards Container */}
                 <div className="p-2.5 flex-1 flex flex-col gap-2.5 overflow-y-auto">
                   {columnApps.length === 0 ? (
-                    <div className="flex-1 flex flex-col items-center justify-center text-center p-6 border-2 border-dashed border-white/5 rounded-xl my-4">
+                    <div className="flex-1 flex flex-col items-center justify-center text-center p-6 border-2 border-dashed border-slate-200 dark:border-white/5 rounded-xl my-4">
                       <p className="text-xs text-text-muted">No applications in this stage</p>
                       <button
                         onClick={() => handleOpenAddModal(col.id)}
@@ -566,14 +566,14 @@ export const ApplicationTrackerPage: React.FC = () => {
                           <div className="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
                             <button
                               onClick={() => handleOpenEditModal(app)}
-                              className="p-1 rounded text-text-muted hover:text-brand-cyan hover:bg-white/5 transition-colors"
+                              className="p-1 rounded text-slate-400 hover:text-brand-cyan dark:text-text-muted dark:hover:text-brand-cyan hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
                               title="Edit application"
                             >
                               <Edit3 size={13} />
                             </button>
                             <button
                               onClick={() => handleDeleteApplication(app.id, app.company)}
-                              className="p-1 rounded text-text-muted hover:text-rose-400 hover:bg-white/5 transition-colors"
+                              className="p-1 rounded text-slate-400 hover:text-rose-600 dark:text-text-muted dark:hover:text-rose-400 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
                               title="Delete"
                             >
                               <Trash2 size={13} />
@@ -607,7 +607,7 @@ export const ApplicationTrackerPage: React.FC = () => {
 
                         {/* Scheduled Interview Alert */}
                         {app.interview_date && (
-                          <div className="mt-2.5 p-2 rounded-xl bg-purple-500/10 border border-purple-500/20 text-[11px] text-purple-300 flex items-center gap-1.5">
+                          <div className="mt-2.5 p-2 rounded-xl bg-purple-500/10 border border-purple-500/20 text-[11px] text-purple-700 dark:text-purple-300 flex items-center gap-1.5">
                             <Calendar size={12} className="shrink-0" />
                             <span className="font-semibold">{formatInterviewDate(app.interview_date)}</span>
                           </div>
@@ -615,25 +615,25 @@ export const ApplicationTrackerPage: React.FC = () => {
 
                         {/* Next Step Note */}
                         {app.next_step && (
-                          <div className="mt-2 text-[11px] text-text-secondary bg-white/5 p-2 rounded-lg border border-white/5">
+                          <div className="mt-2 text-[11px] text-text-secondary bg-slate-100 dark:bg-white/5 p-2 rounded-lg border border-slate-200 dark:border-white/5">
                             <span className="text-slate-900 dark:text-white font-medium">Next: </span>
                             {app.next_step}
                           </div>
                         )}
 
                         {/* Direct Tools Shortcut Links */}
-                        <div className="mt-3 pt-2.5 border-t border-white/5 flex items-center justify-between text-[11px]">
+                        <div className="mt-3 pt-2.5 border-t border-slate-200 dark:border-white/5 flex items-center justify-between text-[11px]">
                           <div className="flex items-center gap-1.5">
                             <button
                               onClick={() => navigate(`/interview?role=${encodeURIComponent(app.role)}`)}
-                              className="p-1 rounded text-text-muted hover:text-purple-300 hover:bg-purple-500/10 transition-colors"
+                              className="p-1 rounded text-text-muted hover:text-purple-600 dark:hover:text-purple-300 hover:bg-purple-500/10 transition-colors"
                               title="Practice Mock Interview"
                             >
                               <Mic size={13} />
                             </button>
                             <button
                               onClick={() => navigate(`/tools?role=${encodeURIComponent(app.role)}&company=${encodeURIComponent(app.company)}`)}
-                              className="p-1 rounded text-text-muted hover:text-blue-300 hover:bg-blue-500/10 transition-colors"
+                              className="p-1 rounded text-text-muted hover:text-blue-600 dark:hover:text-blue-300 hover:bg-blue-500/10 transition-colors"
                               title="Tailor Cover Letter"
                             >
                               <Wand2 size={13} />
@@ -659,7 +659,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                                   const idx = COLUMNS.findIndex(c => c.id === col.id);
                                   if (idx > 0) handleStatusChange(app.id, COLUMNS[idx - 1].id);
                                 }}
-                                className="p-1 rounded bg-white/5 hover:bg-white/10 text-text-muted hover:text-white transition-colors"
+                                className="p-1 rounded bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 text-slate-500 hover:text-slate-900 dark:text-text-muted dark:hover:text-white transition-colors"
                                 title="Move Back"
                               >
                                 <ArrowLeft size={11} />
@@ -672,7 +672,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                                   const idx = COLUMNS.findIndex(c => c.id === col.id);
                                   if (idx < COLUMNS.length - 1) handleStatusChange(app.id, COLUMNS[idx + 1].id);
                                 }}
-                                className="p-1 rounded bg-white/5 hover:bg-white/10 text-text-muted hover:text-white transition-colors"
+                                className="p-1 rounded bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 text-slate-500 hover:text-slate-900 dark:text-text-muted dark:hover:text-white transition-colors"
                                 title="Advance Stage"
                               >
                                 <ArrowRight size={11} />
@@ -693,7 +693,7 @@ export const ApplicationTrackerPage: React.FC = () => {
         <GlassCard variant="standard" className="overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs text-text-secondary">
-              <thead className="border-b border-white/10 bg-white/5 uppercase text-[10px] text-text-muted tracking-wider">
+              <thead className="border-b border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 uppercase text-[10px] text-text-muted tracking-wider">
                 <tr>
                   <th className="py-3 px-4">Company & Role</th>
                   <th className="py-3 px-4">Status</th>
@@ -704,7 +704,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                   <th className="py-3 px-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-slate-200 dark:divide-white/5">
                 {applications.length === 0 ? (
                   <tr>
                     <td colSpan={7} className="py-12 text-center text-text-muted">
@@ -713,7 +713,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                   </tr>
                 ) : (
                   applications.map((app) => (
-                    <tr key={app.id} className="hover:bg-white/5 transition-colors">
+                    <tr key={app.id} className="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
                       <td className="py-3 px-4">
                         <div className="font-bold text-slate-900 dark:text-white text-sm">{app.role}</div>
                         <div className="text-brand-cyan text-xs font-medium">{app.company}</div>
@@ -742,7 +742,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                       </td>
                       <td className="py-3 px-4 max-w-xs">
                         {app.interview_date ? (
-                          <div className="text-purple-300 font-semibold flex items-center gap-1">
+                          <div className="text-purple-700 dark:text-purple-300 font-semibold flex items-center gap-1">
                             <Calendar size={12} />
                             <span>{formatInterviewDate(app.interview_date)}</span>
                           </div>
@@ -754,7 +754,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                         <div className="flex items-center justify-end gap-1.5">
                           <button
                             onClick={() => navigate(`/interview?role=${encodeURIComponent(app.role)}`)}
-                            className="p-1.5 rounded-lg text-text-muted hover:text-purple-300 hover:bg-purple-500/10 transition-colors"
+                            className="p-1.5 rounded-lg text-text-muted hover:text-purple-600 dark:hover:text-purple-300 hover:bg-purple-500/10 transition-colors"
                             title="Mock Interview"
                           >
                             <Mic size={14} />
@@ -768,7 +768,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                           </button>
                           <button
                             onClick={() => handleDeleteApplication(app.id, app.company)}
-                            className="p-1.5 rounded-lg text-text-muted hover:text-rose-400 hover:bg-rose-500/10 transition-colors"
+                            className="p-1.5 rounded-lg text-text-muted hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-500/10 transition-colors"
                             title="Delete"
                           >
                             <Trash2 size={14} />
@@ -788,7 +788,7 @@ export const ApplicationTrackerPage: React.FC = () => {
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-fade-in">
           <GlassCard variant="elevated" className="max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 border-slate-200 dark:border-white/20">
-            <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/10">
+            <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-200 dark:border-white/10">
               <div>
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white">
                   {editingApp ? 'Edit Job Application' : 'Track New Opportunity'}
@@ -799,7 +799,7 @@ export const ApplicationTrackerPage: React.FC = () => {
               </div>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="p-1.5 rounded-xl text-text-muted hover:text-white hover:bg-white/10 transition-colors"
+                className="p-1.5 rounded-xl text-slate-500 hover:text-slate-900 dark:text-text-muted dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
               >
                 <X size={18} />
               </button>
@@ -965,7 +965,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                 />
               </div>
 
-              <div className="pt-3 border-t border-white/10 flex items-center justify-end gap-3">
+              <div className="pt-3 border-t border-slate-200 dark:border-white/10 flex items-center justify-end gap-3">
                 <GlassButton variant="ghost" size="sm" type="button" onClick={() => setIsModalOpen(false)}>
                   Cancel
                 </GlassButton>

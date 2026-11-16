@@ -94,8 +94,8 @@ export const JobsPage: React.FC = () => {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-24 pb-20 relative z-10">
       {/* Header */}
       <div className="max-w-xl mb-10">
-        <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-white/[0.04] border border-white/10 text-xs font-mono text-text-secondary mb-3">
-          <Briefcase size={13} className="text-zinc-400" />
+        <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-slate-100 dark:bg-white/[0.04] border border-slate-200 dark:border-white/10 text-xs font-mono text-text-secondary mb-3">
+          <Briefcase size={13} className="text-slate-500 dark:text-zinc-400" />
           <span>OPPORTUNITY RADAR</span>
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
@@ -132,7 +132,7 @@ export const JobsPage: React.FC = () => {
               placeholder="Job title, keywords, or skills..."
               className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#0D0F14] border border-slate-200 dark:border-white/10 rounded-lg text-xs sm:text-sm text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
             />
-            <Search size={14} className="absolute left-3 top-2.5 text-zinc-500" />
+            <Search size={14} className="absolute left-3 top-2.5 text-slate-400 dark:text-zinc-500" />
           </div>
 
           <div className="relative">
@@ -143,7 +143,7 @@ export const JobsPage: React.FC = () => {
               placeholder="City, region, or Remote"
               className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#0D0F14] border border-slate-200 dark:border-white/10 rounded-lg text-xs sm:text-sm text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
             />
-            <MapPin size={14} className="absolute left-3 top-2.5 text-zinc-500" />
+            <MapPin size={14} className="absolute left-3 top-2.5 text-slate-400 dark:text-zinc-500" />
           </div>
 
           <div className="flex items-center gap-2">
@@ -165,9 +165,9 @@ export const JobsPage: React.FC = () => {
 
       {/* Error state with retry */}
       {error && (
-        <div className="mb-6 p-4 rounded-lg bg-rose-500/10 border border-rose-500/25 text-rose-300 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 font-mono">
+        <div className="mb-6 p-4 rounded-lg bg-rose-500/10 border border-rose-500/25 text-rose-700 dark:text-rose-300 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 font-mono">
           <div className="flex items-center gap-2.5">
-            <AlertCircle size={16} className="shrink-0 text-rose-400" />
+            <AlertCircle size={16} className="shrink-0 text-rose-600 dark:text-rose-400" />
             <span className="font-sans leading-relaxed">{error}</span>
           </div>
           <button

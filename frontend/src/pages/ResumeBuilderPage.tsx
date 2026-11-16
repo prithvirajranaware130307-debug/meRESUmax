@@ -291,7 +291,7 @@ export const ResumeBuilderPage: React.FC = () => {
           </GlassCard>
 
           {/* Contact Details */}
-          <GlassCard className="p-5 space-y-4 border-slate-200 dark:border-slate-200 dark:border-white/10">
+          <GlassCard className="p-5 space-y-4 border-slate-200 dark:border-white/10">
             <h3 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">
               1. Contact Information
             </h3>
@@ -303,7 +303,7 @@ export const ResumeBuilderPage: React.FC = () => {
                   placeholder="e.g. Alex Mercer"
                   value={resume.fullName}
                   onChange={e => setResume({ ...resume, fullName: e.target.value })}
-                  className="w-full bg-slate-50 dark:bg-surface-elevated border border-slate-200 dark:border-slate-200 dark:border-white/10 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-blue"
+                  className="w-full bg-slate-50 dark:bg-surface-elevated border border-slate-200 dark:border-white/10 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-blue"
                 />
               </div>
               <div className="space-y-1">
@@ -313,7 +313,7 @@ export const ResumeBuilderPage: React.FC = () => {
                   placeholder="e.g. alex.mercer@example.com"
                   value={resume.email}
                   onChange={e => setResume({ ...resume, email: e.target.value })}
-                  className="w-full bg-slate-50 dark:bg-surface-elevated border border-slate-200 dark:border-slate-200 dark:border-white/10 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-blue"
+                  className="w-full bg-slate-50 dark:bg-surface-elevated border border-slate-200 dark:border-white/10 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-blue"
                 />
               </div>
               <div className="space-y-1">
@@ -323,7 +323,7 @@ export const ResumeBuilderPage: React.FC = () => {
                   placeholder="e.g. +1 (555) 234-5678"
                   value={resume.phone}
                   onChange={e => setResume({ ...resume, phone: e.target.value })}
-                  className="w-full bg-slate-50 dark:bg-surface-elevated border border-slate-200 dark:border-slate-200 dark:border-white/10 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-blue"
+                  className="w-full bg-slate-50 dark:bg-surface-elevated border border-slate-200 dark:border-white/10 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-blue"
                 />
               </div>
               <div className="space-y-1">
@@ -333,7 +333,7 @@ export const ResumeBuilderPage: React.FC = () => {
                   placeholder="e.g. San Francisco, CA"
                   value={resume.location}
                   onChange={e => setResume({ ...resume, location: e.target.value })}
-                  className="w-full bg-slate-50 dark:bg-surface-elevated border border-slate-200 dark:border-slate-200 dark:border-white/10 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-blue"
+                  className="w-full bg-slate-50 dark:bg-surface-elevated border border-slate-200 dark:border-white/10 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-blue"
                 />
               </div>
               <div className="space-y-1">
@@ -343,7 +343,7 @@ export const ResumeBuilderPage: React.FC = () => {
                   placeholder="e.g. linkedin.com/in/alexmercer"
                   value={resume.linkedin}
                   onChange={e => setResume({ ...resume, linkedin: e.target.value })}
-                  className="w-full bg-slate-50 dark:bg-surface-elevated border border-slate-200 dark:border-slate-200 dark:border-white/10 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-blue"
+                  className="w-full bg-slate-50 dark:bg-surface-elevated border border-slate-200 dark:border-white/10 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-blue"
                 />
               </div>
               <div className="space-y-1">
@@ -353,7 +353,7 @@ export const ResumeBuilderPage: React.FC = () => {
                   placeholder="e.g. github.com/alexmercer"
                   value={resume.github}
                   onChange={e => setResume({ ...resume, github: e.target.value })}
-                  className="w-full bg-slate-50 dark:bg-surface-elevated border border-slate-200 dark:border-slate-200 dark:border-white/10 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-blue"
+                  className="w-full bg-slate-50 dark:bg-surface-elevated border border-slate-200 dark:border-white/10 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-blue"
                 />
               </div>
             </div>
@@ -371,7 +371,7 @@ export const ResumeBuilderPage: React.FC = () => {
               rows={4}
               value={resume.summary}
               onChange={e => setResume({ ...resume, summary: e.target.value })}
-              className="w-full bg-slate-50 dark:bg-surface-elevated border border-slate-200 dark:border-slate-200 dark:border-white/10 rounded-xl p-3 text-xs text-slate-900 dark:text-white resize-y focus:outline-none focus:border-brand-blue leading-relaxed"
+              className="w-full bg-slate-50 dark:bg-surface-elevated border border-slate-200 dark:border-white/10 rounded-xl p-3 text-xs text-slate-900 dark:text-white resize-y focus:outline-none focus:border-brand-blue leading-relaxed"
             />
           </GlassCard>
 
@@ -389,7 +389,7 @@ export const ResumeBuilderPage: React.FC = () => {
                 placeholder="e.g. Docker, GraphQL, Kubernetes"
                 value={newSkill}
                 onChange={e => setNewSkill(e.target.value)}
-                className="flex-1 bg-slate-50 dark:bg-surface-elevated border border-slate-200 dark:border-slate-200 dark:border-white/10 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-blue"
+                className="flex-1 bg-slate-50 dark:bg-surface-elevated border border-slate-200 dark:border-white/10 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-blue"
               />
               <button
                 type="submit"
@@ -402,13 +402,13 @@ export const ResumeBuilderPage: React.FC = () => {
               {resume.skills.map(s => (
                 <span
                   key={s}
-                  className="text-xs px-2.5 py-1 rounded-lg bg-white/5 border border-slate-200 dark:border-white/10 text-text-secondary flex items-center gap-1.5"
+                  className="text-xs px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-text-secondary flex items-center gap-1.5"
                 >
                   <span>{s}</span>
                   <button
                     type="button"
                     onClick={() => removeSkill(s)}
-                    className="hover:text-rose-400 text-text-muted"
+                    className="hover:text-rose-600 dark:hover:text-rose-400 text-text-muted"
                   >
                     ×
                   </button>
@@ -446,7 +446,7 @@ export const ResumeBuilderPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => removeExperience(exp.id)}
-                      className="text-rose-400 hover:text-rose-300 p-1"
+                      className="text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 p-1"
                     >
                       <Trash2 size={13} />
                     </button>
@@ -509,7 +509,7 @@ export const ResumeBuilderPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => removeProject(proj.id)}
-                    className="text-rose-400 p-1"
+                    className="text-rose-600 dark:text-rose-400 p-1"
                   >
                     <Trash2 size={13} />
                   </button>

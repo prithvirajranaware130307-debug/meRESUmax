@@ -71,7 +71,7 @@ export const DashboardPage: React.FC = () => {
 
       {/* Primary Metrics Row */}
       {isLoading ? (
-        <GlassCard variant="elevated" className="p-12 text-center mb-8 border border-white/10 flex flex-col items-center justify-center space-y-3">
+        <GlassCard variant="elevated" className="p-12 text-center mb-8 border border-slate-200 dark:border-white/10 flex flex-col items-center justify-center space-y-3">
           <div className="w-8 h-8 rounded-full border-2 border-brand-cyan/20 border-t-brand-cyan animate-spin" />
           <p className="text-xs font-mono text-text-muted">Loading profile analytics and benchmarks...</p>
         </GlassCard>
@@ -100,7 +100,7 @@ export const DashboardPage: React.FC = () => {
               colorScheme="cyan" 
               size={120} 
             />
-            <div className="mt-2 text-xs font-mono text-emerald-400">
+            <div className="mt-2 text-xs font-mono text-emerald-600 dark:text-emerald-400">
               {latestAnalysis.matched_skills.length} skills verified
             </div>
           </GlassCard>
@@ -109,7 +109,7 @@ export const DashboardPage: React.FC = () => {
           <GlassCard variant="elevated" className="p-5 flex flex-col justify-between md:col-span-2">
             <div>
               <div className="flex items-center justify-between text-xs font-mono uppercase tracking-wider text-text-secondary mb-3">
-                <span className="flex items-center gap-1.5 text-amber-300">
+                <span className="flex items-center gap-1.5 text-amber-600 dark:text-amber-300">
                   <AlertTriangle size={13} />
                   <span>Priority Skill Gaps</span>
                 </span>
@@ -126,8 +126,8 @@ export const DashboardPage: React.FC = () => {
                 Incorporating these technologies into your projects will directly increase your match percentage for {latestAnalysis.target_role}.
               </p>
             </div>
-            <div className="pt-3 border-t border-white/[0.06] flex items-center justify-between">
-              <Link to={`/results/${latestAnalysis.id}`} className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1 font-medium font-mono">
+            <div className="pt-3 border-t border-slate-200 dark:border-white/[0.06] flex items-center justify-between">
+              <Link to={`/results/${latestAnalysis.id}`} className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 flex items-center gap-1 font-medium font-mono">
                 View Full Audit Breakdown <ArrowRight size={12} />
               </Link>
             </div>
@@ -135,7 +135,7 @@ export const DashboardPage: React.FC = () => {
         </div>
       ) : (
         /* Empty State */
-        <GlassCard variant="elevated" className="p-8 text-center mb-8 border border-white/10">
+        <GlassCard variant="elevated" className="p-8 text-center mb-8 border border-slate-200 dark:border-white/10">
           <div className="max-w-md mx-auto space-y-4">
             <div className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-[#161922] text-slate-700 dark:text-zinc-300 flex items-center justify-center mx-auto border border-slate-200 dark:border-white/10">
               <FileUp size={20} />
@@ -370,7 +370,7 @@ export const DashboardPage: React.FC = () => {
                       href={job.url} 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className="text-[11px] text-brand-blue hover:text-white flex items-center gap-1 font-medium"
+                      className="text-[11px] text-brand-blue hover:text-blue-700 dark:hover:text-blue-300 flex items-center gap-1 font-medium"
                     >
                       Apply <ArrowRight size={11} />
                     </a>

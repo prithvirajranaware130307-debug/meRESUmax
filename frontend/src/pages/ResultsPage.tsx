@@ -60,39 +60,39 @@ export const ResultsPage: React.FC = () => {
         {/* Header Skeleton */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
           <div className="space-y-2">
-            <div className="w-36 h-4 bg-white/10 rounded-lg" />
-            <div className="w-72 h-8 bg-white/15 rounded-xl" />
-            <div className="w-48 h-3 bg-white/10 rounded-lg" />
+            <div className="w-36 h-4 bg-slate-200 dark:bg-white/10 rounded-lg" />
+            <div className="w-72 h-8 bg-slate-300 dark:bg-white/15 rounded-xl" />
+            <div className="w-48 h-3 bg-slate-200 dark:bg-white/10 rounded-lg" />
           </div>
           <div className="flex items-center gap-3 w-full sm:w-auto">
-            <div className="w-36 h-10 bg-white/10 rounded-xl" />
-            <div className="w-32 h-10 bg-white/10 rounded-xl" />
+            <div className="w-36 h-10 bg-slate-200 dark:bg-white/10 rounded-xl" />
+            <div className="w-32 h-10 bg-slate-200 dark:bg-white/10 rounded-xl" />
           </div>
         </div>
 
         {/* 3 Score Cards Skeleton */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="h-56 rounded-2xl bg-white/[0.04] border border-white/10 p-6 flex flex-col items-center justify-center space-y-4">
-            <div className="w-28 h-28 rounded-full border-4 border-white/10" />
-            <div className="w-36 h-4 bg-white/10 rounded" />
+          <div className="h-56 rounded-2xl bg-slate-100 dark:bg-white/[0.04] border border-slate-200 dark:border-white/10 p-6 flex flex-col items-center justify-center space-y-4">
+            <div className="w-28 h-28 rounded-full border-4 border-slate-200 dark:border-white/10" />
+            <div className="w-36 h-4 bg-slate-200 dark:bg-white/10 rounded" />
           </div>
-          <div className="h-56 rounded-2xl bg-white/[0.04] border border-white/10 p-6 flex flex-col items-center justify-center space-y-4">
-            <div className="w-28 h-28 rounded-full border-4 border-white/10" />
-            <div className="w-36 h-4 bg-white/10 rounded" />
+          <div className="h-56 rounded-2xl bg-slate-100 dark:bg-white/[0.04] border border-slate-200 dark:border-white/10 p-6 flex flex-col items-center justify-center space-y-4">
+            <div className="w-28 h-28 rounded-full border-4 border-slate-200 dark:border-white/10" />
+            <div className="w-36 h-4 bg-slate-200 dark:bg-white/10 rounded" />
           </div>
-          <div className="h-56 rounded-2xl bg-white/[0.04] border border-white/10 p-6 flex flex-col justify-between">
+          <div className="h-56 rounded-2xl bg-slate-100 dark:bg-white/[0.04] border border-slate-200 dark:border-white/10 p-6 flex flex-col justify-between">
             <div className="space-y-3">
-              <div className="w-24 h-4 bg-white/10 rounded" />
-              <div className="w-full h-16 bg-white/5 rounded-xl" />
+              <div className="w-24 h-4 bg-slate-200 dark:bg-white/10 rounded" />
+              <div className="w-full h-16 bg-slate-200 dark:bg-white/5 rounded-xl" />
             </div>
-            <div className="w-36 h-3 bg-white/10 rounded" />
+            <div className="w-36 h-3 bg-slate-200 dark:bg-white/10 rounded" />
           </div>
         </div>
 
         {/* Category Breakdown Skeleton */}
-        <div className="h-28 rounded-2xl bg-white/[0.03] border border-white/5 p-6 mb-8" />
+        <div className="h-28 rounded-2xl bg-slate-100 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 p-6 mb-8" />
         {/* Sections Skeleton */}
-        <div className="h-64 rounded-2xl bg-white/[0.03] border border-white/5 p-6" />
+        <div className="h-64 rounded-2xl bg-slate-100 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 p-6" />
       </div>
     );
   }
@@ -101,8 +101,8 @@ export const ResultsPage: React.FC = () => {
   if (error || !analysis) {
     return (
       <div className="max-w-md mx-auto pt-36 px-4 text-center">
-        <GlassCard variant="elevated" className="p-8 border border-white/20 shadow-glass-lg">
-          <div className="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center mx-auto mb-4">
+        <GlassCard variant="elevated" className="p-8 border border-slate-200 dark:border-white/20 shadow-glass-lg">
+          <div className="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 flex items-center justify-center mx-auto mb-4">
             <ShieldAlert size={24} />
           </div>
           <h1 className="text-slate-900 dark:text-white text-lg font-bold mb-1.5">Analysis Unavailable</h1>
@@ -212,8 +212,8 @@ export const ResultsPage: React.FC = () => {
               Audit Results: {analysis.target_role}
             </h1>
             {!ai.is_live_ai && (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-mono font-medium bg-amber-500/10 text-amber-300 border border-amber-500/25">
-                <Sparkles size={11} className="text-amber-400" /> Demo Analysis Engine
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-mono font-medium bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/25">
+                <Sparkles size={11} className="text-amber-600 dark:text-amber-400" /> Demo Analysis Engine
               </span>
             )}
           </div>
@@ -282,7 +282,7 @@ export const ResultsPage: React.FC = () => {
               {ai.executive_summary || 'Your resume demonstrates foundational technical abilities. Prioritize closing skill gaps to maximize candidate visibility.'}
             </p>
           </div>
-          <div className="pt-3 border-t border-white/5 flex items-center justify-between text-[11px] text-text-muted">
+          <div className="pt-3 border-t border-slate-200 dark:border-white/5 flex items-center justify-between text-[11px] text-text-muted">
             <span>Engine: {ai.provider === 'google_gemini' ? `Google Gemini (${ai.model || '2.5-flash'})` : 'Deterministic Heuristic Engine'}</span>
             <span className="text-brand-mint font-medium">Explainable Audit</span>
           </div>
@@ -294,12 +294,12 @@ export const ResultsPage: React.FC = () => {
         <h2 className="text-base font-bold text-slate-900 dark:text-white mb-4">Heuristic Category Breakdown</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           {Object.entries(categoryScores).map(([key, item]: [string, any]) => (
-            <div key={key} className="p-4 rounded-xl bg-white/[0.03] border border-white/5 space-y-2">
+            <div key={key} className="p-4 rounded-xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 space-y-2">
               <div className="flex items-center justify-between text-xs font-semibold text-slate-900 dark:text-white">
                 <span className="truncate">{item?.title || key}</span>
                 <span className="text-brand-cyan shrink-0">{item?.score ?? 0}/{item?.max ?? 20}</span>
               </div>
-              <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+              <div className="w-full h-1.5 bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden">
                 <div 
                   className="h-full bg-gradient-to-r from-brand-blue to-brand-cyan rounded-full transition-all duration-500"
                   style={{ width: `${Math.min(100, item?.percentage ?? 0)}%` }}
@@ -314,20 +314,20 @@ export const ResultsPage: React.FC = () => {
       {/* 1. High Priority Fixes Section */}
       <GlassCard variant="standard" className="p-6 mb-8 border border-amber-500/20">
         <div className="flex items-center gap-2 mb-4">
-          <ShieldAlert size={18} className="text-amber-400" />
+          <ShieldAlert size={18} className="text-amber-600 dark:text-amber-400" />
           <h2 className="text-base font-bold text-slate-900 dark:text-white">High Priority Fixes</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {highPriorityFixes.map((fix, idx) => (
-            <div key={idx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 flex flex-col justify-between">
+            <div key={idx} className="p-4 rounded-xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/20 text-amber-300">
+                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/20 text-amber-700 dark:text-amber-300">
                     {fix.priority || 'High'} Priority
                   </span>
                   <span className="text-xs text-text-muted font-mono">#{idx + 1}</span>
                 </div>
-                <div className="text-xs font-semibold text-rose-300 mb-2">
+                <div className="text-xs font-semibold text-rose-700 dark:text-rose-300 mb-2">
                   {fix.issue}
                 </div>
                 <p className="text-xs text-text-secondary leading-relaxed">
@@ -350,15 +350,15 @@ export const ResultsPage: React.FC = () => {
         </div>
         <div className="space-y-4">
           {bulletExamples.map((item, idx) => (
-            <div key={idx} className="p-4 rounded-xl bg-white/[0.03] border border-white/5 space-y-3">
+            <div key={idx} className="p-4 rounded-xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 space-y-3">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
                 {/* Weak */}
                 <div className="p-3 rounded-lg bg-rose-500/5 border border-rose-500/20">
-                  <div className="text-[11px] font-semibold text-rose-400 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                  <div className="text-[11px] font-semibold text-rose-600 dark:text-rose-400 uppercase tracking-wider mb-1 flex items-center gap-1.5">
                     <span className="w-2 h-2 rounded-full bg-rose-500" />
                     <span>Weak / Passive Phrasing</span>
                   </div>
-                  <div className="text-xs sm:text-sm text-rose-200/90 italic">
+                  <div className="text-xs sm:text-sm text-rose-700 dark:text-rose-200/90 italic">
                     "{item.weak}"
                   </div>
                 </div>
@@ -386,7 +386,7 @@ export const ResultsPage: React.FC = () => {
               </div>
 
               {/* Rationale */}
-              <div className="text-[11px] text-brand-cyan/90 pl-1">
+              <div className="text-[11px] text-cyan-700 dark:text-brand-cyan/90 pl-1">
                 <span className="font-semibold text-text-secondary">Rationale:</span> {item.rationale}
               </div>
             </div>
@@ -448,7 +448,7 @@ export const ResultsPage: React.FC = () => {
           </p>
           <div className="space-y-2">
             {atsKeywords.map((kw, i) => (
-              <div key={i} className="text-xs p-2 rounded-lg bg-white/[0.03] border border-white/5 text-brand-cyan flex items-center justify-between">
+              <div key={i} className="text-xs p-2 rounded-lg bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 text-cyan-700 dark:text-brand-cyan flex items-center justify-between">
                 <span>{kw}</span>
                 <button
                   onClick={() => copyToClipboard(kw, `kw-${i}`)}
@@ -470,7 +470,7 @@ export const ResultsPage: React.FC = () => {
           </div>
           <div className="space-y-3">
             {nextSteps.map((step, idx) => (
-              <div key={idx} className="p-3 rounded-lg bg-white/[0.03] border border-white/5 text-xs text-text-secondary flex items-start gap-2.5">
+              <div key={idx} className="p-3 rounded-lg bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 text-xs text-text-secondary flex items-start gap-2.5">
                 <span className="w-5 h-5 rounded-full bg-brand-mint/20 text-brand-mint font-bold flex items-center justify-center shrink-0 mt-0.5 text-[11px]">
                   {idx + 1}
                 </span>
@@ -512,7 +512,7 @@ export const ResultsPage: React.FC = () => {
           </div>
           <div className="space-y-3">
             {ai.interview_prep_tips.map((tip, idx) => (
-              <div key={idx} className="p-3.5 rounded-xl bg-white/[0.03] border border-white/5 text-xs sm:text-sm text-text-secondary flex items-start gap-3">
+              <div key={idx} className="p-3.5 rounded-xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 text-xs sm:text-sm text-text-secondary flex items-start gap-3">
                 <span className="w-5 h-5 rounded-full bg-brand-violet/20 text-brand-violet flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
                   {idx + 1}
                 </span>
@@ -524,7 +524,7 @@ export const ResultsPage: React.FC = () => {
       )}
 
       {/* Bottom Nav Actions */}
-      <div className="flex items-center justify-between pt-4 border-t border-white/10">
+      <div className="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-white/10">
         <Link to="/roadmap">
           <GlassButton variant="primary" icon={<Compass size={16} />}>
             View Career Action Roadmap

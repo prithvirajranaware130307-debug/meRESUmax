@@ -78,15 +78,15 @@ export const ProfilePage: React.FC = () => {
 
       <GlassCard variant="elevated" className="p-6 sm:p-8 border border-slate-200 dark:border-white/20 shadow-glass-lg">
         {savedSuccess && (
-          <div className="mb-6 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs flex items-center gap-2 font-mono">
+          <div className="mb-6 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 dark:text-emerald-400 text-xs flex items-center gap-2 font-mono">
             <CheckCircle2 size={16} />
             <span className="font-sans">Profile details updated successfully!</span>
           </div>
         )}
 
         {error && (
-          <div className="mb-6 p-3 rounded-xl bg-rose-500/10 border border-rose-500/25 text-rose-300 text-xs flex items-center gap-2 font-mono">
-            <AlertCircle size={16} className="text-rose-400 shrink-0" />
+          <div className="mb-6 p-3 rounded-xl bg-rose-500/10 border border-rose-500/25 text-rose-700 dark:text-rose-300 text-xs flex items-center gap-2 font-mono">
+            <AlertCircle size={16} className="text-rose-600 dark:text-rose-400 shrink-0" />
             <span className="font-sans">{error}</span>
           </div>
         )}

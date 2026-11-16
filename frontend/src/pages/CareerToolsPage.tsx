@@ -111,7 +111,7 @@ export const CareerToolsPage: React.FC = () => {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-24 pb-20 relative z-10 space-y-8">
       {/* Header */}
       <div className="max-w-xl">
-        <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-purple-500/10 border border-purple-500/20 text-xs font-mono text-purple-400 dark:text-purple-300 mb-3 font-semibold">
+        <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-purple-500/10 border border-purple-500/30 text-xs font-mono text-purple-700 dark:text-purple-300 mb-3 font-semibold">
           <Sparkles size={13} />
           <span>CAREER SYNTHESIZER</span>
         </div>

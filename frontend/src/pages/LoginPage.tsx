@@ -77,12 +77,12 @@ export const LoginPage: React.FC = () => {
           </div>
 
           {error && (
-            <div className="mb-5 p-3 rounded-lg bg-rose-500/10 border border-rose-500/25 text-rose-300 text-xs flex items-start gap-2.5 font-mono">
-              <AlertCircle size={15} className="shrink-0 mt-0.5 text-rose-400" />
+            <div className="mb-5 p-3 rounded-lg bg-rose-500/10 border border-rose-500/25 text-rose-700 dark:text-rose-300 text-xs flex items-start gap-2.5 font-mono">
+              <AlertCircle size={15} className="shrink-0 mt-0.5 text-rose-600 dark:text-rose-400" />
               <div className="font-sans leading-tight">
                 <span>{error}</span>
                 {error.includes('credentials') && (
-                  <div className="mt-1 font-mono text-[11px] text-zinc-500 dark:text-zinc-400">
+                  <div className="mt-1 font-mono text-[11px] text-slate-600 dark:text-zinc-400">
                     Need a test profile? Try the one-click instant demo below.
                   </div>
                 )}

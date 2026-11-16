@@ -51,14 +51,14 @@ export const CustomCursor: React.FC = () => {
     <div className="fixed inset-0 pointer-events-none z-[9999] overflow-hidden">
       {/* Outer precision ring */}
       <div
-        className="fixed top-0 left-0 w-7 h-7 -ml-3.5 -mt-3.5 rounded-full border border-white/30 bg-white/[0.04] transition-transform duration-150 ease-out will-change-transform"
+        className="fixed top-0 left-0 w-7 h-7 -ml-3.5 -mt-3.5 rounded-full border border-slate-900/30 dark:border-white/30 bg-slate-900/[0.04] dark:bg-white/[0.04] transition-transform duration-150 ease-out will-change-transform"
         style={{
           transform: `translate3d(${position.x}px, ${position.y}px, 0) scale(${isPointer ? 1.5 : 1})`,
         }}
       />
       {/* Center pinpoint */}
       <div
-        className="fixed top-0 left-0 w-1.5 h-1.5 -ml-[3px] -mt-[3px] rounded-full bg-white will-change-transform"
+        className="fixed top-0 left-0 w-1.5 h-1.5 -ml-[3px] -mt-[3px] rounded-full bg-slate-900 dark:bg-white will-change-transform"
         style={{
           transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
         }}

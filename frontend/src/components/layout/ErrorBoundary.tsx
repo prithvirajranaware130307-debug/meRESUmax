@@ -36,7 +36,7 @@ export class ErrorBoundary extends Component<Props, State> {
         <div className="min-h-screen pt-36 pb-20 px-4 flex items-center justify-center relative z-20">
           <div className="w-full max-w-lg">
             <GlassCard variant="elevated" className="p-8 text-center border border-amber-500/30 shadow-glass-lg">
-              <div className="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mx-auto mb-4 text-amber-400">
+              <div className="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mx-auto mb-4 text-amber-600 dark:text-amber-400">
                 <AlertTriangle size={28} />
               </div>
 

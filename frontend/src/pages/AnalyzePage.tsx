@@ -122,7 +122,7 @@ export const AnalyzePage: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-24 pb-20 relative z-10">
       <div className="max-w-xl mb-10">
-        <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-white/[0.04] border border-white/10 text-xs font-mono text-text-secondary mb-3">
+        <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-slate-100 dark:bg-white/[0.04] border border-slate-200 dark:border-white/10 text-xs font-mono text-text-secondary mb-3">
           <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
           <span>ATS AUDIT ENGINE</span>
         </div>
@@ -136,9 +136,9 @@ export const AnalyzePage: React.FC = () => {
 
       <GlassCard variant="elevated" className="p-6 sm:p-8 border border-slate-200 dark:border-white/[0.12] shadow-elevated">
         {error && (
-          <div className="mb-6 p-4 rounded-lg bg-rose-500/10 border border-rose-500/25 text-rose-300 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 font-mono">
+          <div className="mb-6 p-4 rounded-lg bg-rose-500/10 border border-rose-500/25 text-rose-700 dark:text-rose-300 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 font-mono">
             <div className="flex items-center gap-2.5">
-              <AlertCircle size={16} className="shrink-0 text-rose-400" />
+              <AlertCircle size={16} className="shrink-0 text-rose-600 dark:text-rose-400" />
               <span className="leading-relaxed font-sans">{error}</span>
             </div>
             <div className="flex items-center gap-2 shrink-0">
@@ -146,7 +146,7 @@ export const AnalyzePage: React.FC = () => {
                 type="button"
                 onClick={handleStartAnalysis}
                 disabled={!selectedFile || isProcessing}
-                className="px-2.5 py-1 rounded bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+                className="px-2.5 py-1 rounded bg-rose-500/20 hover:bg-rose-500/30 text-rose-700 dark:text-rose-200 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
               >
                 <RotateCcw size={12} />
                 <span>Retry</span>
@@ -158,10 +158,10 @@ export const AnalyzePage: React.FC = () => {
         {isProcessing ? (
           /* Processing State Visualizer */
           <div className="py-14 flex flex-col items-center justify-center text-center space-y-5">
-            <div className="w-10 h-10 rounded-full border-2 border-white/10 border-t-white animate-spin" />
+            <div className="w-10 h-10 rounded-full border-2 border-slate-300 dark:border-white/10 border-t-blue-600 dark:border-t-white animate-spin" />
             <div className="space-y-1.5 max-w-md">
               <h3 className="text-base font-semibold text-slate-900 dark:text-white tracking-tight">Running Document Audit</h3>
-              <p className="text-xs text-blue-400 font-mono">{processingStage}</p>
+              <p className="text-xs text-blue-600 dark:text-blue-400 font-mono">{processingStage}</p>
               <p className="text-[11px] text-text-muted mt-2">
                 Running heuristic parser, role taxonomy benchmark, and intelligence feedback.
               </p>
@@ -224,7 +224,7 @@ export const AnalyzePage: React.FC = () => {
                   <button
                     onClick={() => !isProcessing && setSelectedFile(null)}
                     disabled={isProcessing}
-                    className="p-1.5 rounded-lg text-text-muted hover:text-rose-400 hover:bg-rose-500/10 transition-colors disabled:opacity-40 cursor-pointer"
+                    className="p-1.5 rounded-lg text-text-muted hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-500/10 transition-colors disabled:opacity-40 cursor-pointer"
                     title="Remove file"
                   >
                     <X size={16} />
@@ -237,7 +237,7 @@ export const AnalyzePage: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-mono text-text-secondary uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                  <Target size={13} className="text-zinc-400" />
+                  <Target size={13} className="text-slate-500 dark:text-zinc-400" />
                   <span>02 // TARGET ROLE ARCHETYPE</span>
                 </label>
                 <select
@@ -275,7 +275,7 @@ export const AnalyzePage: React.FC = () => {
             <div>
               <label className="block text-xs font-mono text-text-secondary uppercase tracking-wider mb-2 flex items-center justify-between">
                 <span className="flex items-center gap-1.5">
-                  <AlignLeft size={13} className="text-zinc-400" />
+                  <AlignLeft size={13} className="text-slate-500 dark:text-zinc-400" />
                   <span>03 // JOB DESCRIPTION (OPTIONAL)</span>
                 </span>
                 <span className="text-[10px] text-text-muted">For tailored match scoring</span>
@@ -306,7 +306,7 @@ export const AnalyzePage: React.FC = () => {
             </div>
 
             <div className="flex items-center justify-center gap-2 text-xs text-text-muted pt-1 font-mono">
-              <ShieldCheck size={13} className="text-emerald-400" />
+              <ShieldCheck size={13} className="text-emerald-600 dark:text-emerald-400" />
               <span>Isolated candidate environment. Zero retention leakage.</span>
             </div>
           </div>

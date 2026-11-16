@@ -215,10 +215,10 @@ export const InterviewPage: React.FC = () => {
     : 0;
 
   const getVerdict = (score: number) => {
-    if (score >= 85) return { label: 'Strong Hire Ready', color: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/30' };
+    if (score >= 85) return { label: 'Strong Hire Ready', color: 'text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 border-emerald-500/30' };
     if (score >= 70) return { label: 'Competitive Candidate', color: 'text-brand-cyan bg-brand-cyan/10 border-brand-cyan/30' };
-    if (score >= 55) return { label: 'Moderate Fit – Needs Polish', color: 'text-amber-400 bg-amber-500/10 border-amber-500/30' };
-    return { label: 'Requires Active Practice', color: 'text-rose-400 bg-rose-500/10 border-rose-500/30' };
+    if (score >= 55) return { label: 'Moderate Fit – Needs Polish', color: 'text-amber-700 dark:text-amber-400 bg-amber-500/10 border-amber-500/30' };
+    return { label: 'Requires Active Practice', color: 'text-rose-600 dark:text-rose-400 bg-rose-500/10 border-rose-500/30' };
   };
 
   const copyDebrief = () => {
@@ -267,8 +267,8 @@ export const InterviewPage: React.FC = () => {
     <div className="pt-24 pb-16 px-4 sm:px-6 max-w-5xl mx-auto space-y-8 animate-fadeIn">
       {/* Header */}
       <div className="max-w-2xl mx-auto text-center space-y-2.5">
-        <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-white/[0.04] border border-white/10 text-xs font-mono text-text-secondary">
-          <BrainCircuit size={13} className="text-zinc-400" />
+        <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-slate-100 dark:bg-white/[0.04] border border-slate-200 dark:border-white/10 text-xs font-mono text-text-secondary">
+          <BrainCircuit size={13} className="text-slate-500 dark:text-zinc-400" />
           <span>SIMULATOR // MOCK INTERVIEWS</span>
         </div>
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
@@ -280,18 +280,18 @@ export const InterviewPage: React.FC = () => {
       </div>
 
       {error && (
-        <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-300 text-sm flex items-center gap-3 font-mono">
-          <AlertCircle size={16} className="shrink-0 text-rose-400" />
+        <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-700 dark:text-rose-300 text-sm flex items-center gap-3 font-mono">
+          <AlertCircle size={16} className="shrink-0 text-rose-600 dark:text-rose-400" />
           <span className="font-sans">{error}</span>
         </div>
       )}
 
       {/* 1. SETUP VIEW */}
       {!sessionActive && !sessionCompleted && (
-        <GlassCard className="p-6 sm:p-8 space-y-6 max-w-2xl mx-auto border-white/10">
+        <GlassCard className="p-6 sm:p-8 space-y-6 max-w-2xl mx-auto border-slate-200 dark:border-white/10">
           <div className="space-y-4">
             <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <Compass size={18} className="text-zinc-400" />
+              <Compass size={18} className="text-slate-500 dark:text-zinc-400" />
               <span>Configure Your Interview Simulation</span>
             </h2>
             <p className="text-text-muted text-xs sm:text-sm">
@@ -388,7 +388,7 @@ export const InterviewPage: React.FC = () => {
               </h2>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-xs px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 font-medium">
+              <span className="text-xs px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-700 dark:text-purple-300 font-medium">
                 {questions[currentIndex].category}
               </span>
               <button
@@ -436,13 +436,13 @@ export const InterviewPage: React.FC = () => {
                       onClick={toggleVoiceRecording}
                       className={`text-xs px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all ${
                         isListening
-                          ? 'bg-rose-500/20 border-rose-500 text-rose-300 animate-pulse'
+                          ? 'bg-rose-500/20 border-rose-500 text-rose-700 dark:text-rose-300 animate-pulse'
                           : 'bg-slate-100 dark:bg-white/5 border-slate-200 dark:border-white/10 text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-white/10'
                       }`}
                     >
                       {isListening ? (
                         <>
-                          <MicOff size={14} className="text-rose-400" />
+                          <MicOff size={14} className="text-rose-600 dark:text-rose-400" />
                           <span>Listening... (Click to stop)</span>
                         </>
                       ) : (
@@ -494,7 +494,7 @@ export const InterviewPage: React.FC = () => {
             /* EVALUATION CARD FOR CURRENT QUESTION */
             <div className="space-y-6 animate-fadeIn">
               <GlassCard className="p-6 sm:p-8 space-y-6 border-brand-cyan/30 bg-surface-elevated/80">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-white/10">
                   <div>
                     <span className="text-xs uppercase tracking-wider text-brand-cyan font-bold">
                       Response Evaluation
@@ -504,7 +504,7 @@ export const InterviewPage: React.FC = () => {
                     </h4>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="text-center p-3 rounded-2xl bg-white/5 border border-white/10 min-w-[90px]">
+                    <div className="text-center p-3 rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 min-w-[90px]">
                       <div className="text-2xl font-black text-brand-cyan">
                         {currentEvaluation.overall_score}
                       </div>
@@ -517,20 +517,20 @@ export const InterviewPage: React.FC = () => {
 
                 {/* Metric Dials / Badges */}
                 <div className="grid grid-cols-3 gap-3">
-                  <div className="p-3 rounded-xl bg-white/5 border border-white/5 text-center">
-                    <div className="text-lg font-bold text-purple-300">
+                  <div className="p-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/5 text-center">
+                    <div className="text-lg font-bold text-purple-700 dark:text-purple-300">
                       {currentEvaluation.star_score}/100
                     </div>
                     <div className="text-[10px] text-text-muted uppercase">STAR Structure</div>
                   </div>
-                  <div className="p-3 rounded-xl bg-white/5 border border-white/5 text-center">
-                    <div className="text-lg font-bold text-blue-400">
+                  <div className="p-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/5 text-center">
+                    <div className="text-lg font-bold text-blue-600 dark:text-blue-400">
                       {currentEvaluation.technical_depth}/100
                     </div>
                     <div className="text-[10px] text-text-muted uppercase">Technical Depth</div>
                   </div>
-                  <div className="p-3 rounded-xl bg-white/5 border border-white/5 text-center">
-                    <div className="text-lg font-bold text-emerald-400">
+                  <div className="p-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/5 text-center">
+                    <div className="text-lg font-bold text-emerald-600 dark:text-emerald-400">
                       {currentEvaluation.clarity_score}/100
                     </div>
                     <div className="text-[10px] text-text-muted uppercase">Clarity</div>
@@ -540,7 +540,7 @@ export const InterviewPage: React.FC = () => {
                 {/* Strengths & Improvements */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <h5 className="text-xs font-semibold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+                    <h5 className="text-xs font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
                       <CheckCircle2 size={14} />
                       Key Strengths
                     </h5>
@@ -554,7 +554,7 @@ export const InterviewPage: React.FC = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <h5 className="text-xs font-semibold uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+                    <h5 className="text-xs font-semibold uppercase tracking-wider text-amber-600 dark:text-amber-400 flex items-center gap-1.5">
                       <AlertCircle size={14} />
                       Actionable Improvements
                     </h5>
@@ -618,7 +618,7 @@ export const InterviewPage: React.FC = () => {
 
             {/* Scorecard Hero Numbers */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-xl mx-auto">
-              <div className="p-5 rounded-2xl bg-white/5 border border-white/10 text-center">
+              <div className="p-5 rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-center">
                 <div className="text-4xl font-black text-brand-cyan">
                   {avgOverallScore}
                 </div>
@@ -627,8 +627,8 @@ export const InterviewPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="p-5 rounded-2xl bg-white/5 border border-white/10 text-center">
-                <div className="text-4xl font-black text-purple-400">
+              <div className="p-5 rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-center">
+                <div className="text-4xl font-black text-purple-600 dark:text-purple-400">
                   {avgStarScore}
                 </div>
                 <div className="text-xs uppercase text-text-muted mt-1 font-semibold">
@@ -636,8 +636,8 @@ export const InterviewPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="p-5 rounded-2xl bg-white/5 border border-white/10 text-center">
-                <div className="text-4xl font-black text-blue-400">
+              <div className="p-5 rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-center">
+                <div className="text-4xl font-black text-blue-600 dark:text-blue-400">
                   {avgTechScore}
                 </div>
                 <div className="text-xs uppercase text-text-muted mt-1 font-semibold">
@@ -661,7 +661,7 @@ export const InterviewPage: React.FC = () => {
                 onClick={copyDebrief}
                 className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-text-secondary hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-white/10 text-xs font-semibold flex items-center gap-2 transition-colors"
               >
-                {copied ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
+                {copied ? <Check size={14} className="text-emerald-600 dark:text-emerald-400" /> : <Copy size={14} />}
                 <span>{copied ? 'Copied to Clipboard' : 'Copy Summary'}</span>
               </button>
 
@@ -688,10 +688,10 @@ export const InterviewPage: React.FC = () => {
             <h3 className="text-lg font-bold text-slate-900 dark:text-white">Question-by-Question Breakdown</h3>
             <div className="space-y-4">
               {sessionRecords.map((r, i) => (
-                <GlassCard key={i} className="p-6 space-y-4 border-white/10">
+                <GlassCard key={i} className="p-6 space-y-4 border-slate-200 dark:border-white/10">
                   <div className="flex items-start justify-between gap-4">
                     <div className="space-y-1">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-purple-300 bg-purple-500/10 px-2 py-0.5 rounded-md border border-purple-500/20">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-purple-700 dark:text-purple-300 bg-purple-500/10 px-2 py-0.5 rounded-md border border-purple-500/20">
                         {r.question.category}
                       </span>
                       <h4 className="text-base font-semibold text-slate-900 dark:text-white mt-1">

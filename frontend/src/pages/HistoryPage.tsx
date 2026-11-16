@@ -66,9 +66,9 @@ export const HistoryPage: React.FC = () => {
 
       {/* Error State with retry */}
       {error && (
-        <div className="mb-6 p-4 rounded-lg bg-rose-500/10 border border-rose-500/25 text-rose-300 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 font-mono">
+        <div className="mb-6 p-4 rounded-lg bg-rose-500/10 border border-rose-500/25 text-rose-700 dark:text-rose-300 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 font-mono">
           <div className="flex items-center gap-2.5">
-            <AlertCircle size={16} className="shrink-0 text-rose-400" />
+            <AlertCircle size={16} className="shrink-0 text-rose-600 dark:text-rose-400" />
             <span className="font-sans leading-relaxed">{error}</span>
           </div>
           <button
@@ -92,7 +92,7 @@ export const HistoryPage: React.FC = () => {
           {analyses.map((a) => (
             <GlassCard key={a.id} variant="standard" interactive className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-white/[0.04] border border-white/10 flex flex-col items-center justify-center shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-white/[0.04] border border-slate-200 dark:border-white/10 flex flex-col items-center justify-center shrink-0">
                   <span className="text-base font-bold text-brand-mint">{Math.round(a.quality_score)}</span>
                   <span className="text-[9px] text-text-muted font-mono uppercase tracking-tighter">SCORE</span>
                 </div>
@@ -119,7 +119,7 @@ export const HistoryPage: React.FC = () => {
                   href={api.getReportDownloadUrl(a.id)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-text-secondary hover:text-white transition-colors"
+                  className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 text-slate-600 hover:text-slate-900 dark:text-text-secondary dark:hover:text-white border border-slate-200 dark:border-white/5 transition-colors"
                   title="Download Executive PDF"
                 >
                   <Download size={15} />
@@ -127,7 +127,7 @@ export const HistoryPage: React.FC = () => {
 
                 <button
                   onClick={() => handleDelete(a.id)}
-                  className="p-2 rounded-lg bg-white/5 hover:bg-rose-500/10 text-text-secondary hover:text-rose-400 transition-colors"
+                  className="p-2 rounded-lg bg-slate-100 hover:bg-rose-500/10 dark:bg-white/5 text-slate-600 hover:text-rose-600 dark:text-text-secondary dark:hover:text-rose-400 border border-slate-200 dark:border-white/5 transition-colors"
                   title="Delete Audit"
                 >
                   <Trash2 size={15} />
