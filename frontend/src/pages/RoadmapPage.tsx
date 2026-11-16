@@ -5,23 +5,27 @@ import { GlassCard } from '../components/glass/GlassCard';
 import { GlassButton } from '../components/glass/GlassButton';
 import { 
   Compass, CheckCircle2, Circle, Plus, Trash2, 
-  Sparkles, Layers, BookOpen, Laptop, HelpCircle
+  Sparkles, Layers, BookOpen, Laptop, HelpCircle, AlertCircle, RotateCcw
 } from 'lucide-react';
 
 export const RoadmapPage: React.FC = () => {
   const [tasks, setTasks] = useState<RoadmapTask[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [newTitle, setNewTitle] = useState('');
   const [newDesc, setNewDesc] = useState('');
   const [newPriority, setNewPriority] = useState<'high' | 'medium' | 'low'>('medium');
   const [showAddModal, setShowAddModal] = useState(false);
 
   const fetchTasks = async () => {
+    setIsLoading(true);
+    setError(null);
     try {
       const res = await api.getRoadmap();
-      setTasks(res.tasks);
-    } catch (err) {
+      setTasks(res.tasks || []);
+    } catch (err: any) {
       console.error('Failed to load roadmap tasks:', err);
+      setError(err.message || 'Unable to retrieve career roadmap milestones. Please retry.');
     } finally {
       setIsLoading(false);
     }
@@ -63,8 +67,9 @@ export const RoadmapPage: React.FC = () => {
       setNewTitle('');
       setNewDesc('');
       setShowAddModal(false);
-    } catch (err) {
+    } catch (err: any) {
       console.error('Failed to add milestone:', err);
+      alert(err.message || 'Failed to add milestone.');
     }
   };
 
@@ -111,6 +116,24 @@ export const RoadmapPage: React.FC = () => {
           />
         </div>
       </GlassCard>
+
+      {/* Error state with retry */}
+      {error && (
+        <div className="mb-6 p-4 rounded-lg bg-rose-500/10 border border-rose-500/25 text-rose-300 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 font-mono">
+          <div className="flex items-center gap-2.5">
+            <AlertCircle size={16} className="shrink-0 text-rose-400" />
+            <span className="font-sans leading-relaxed">{error}</span>
+          </div>
+          <button
+            type="button"
+            onClick={fetchTasks}
+            className="px-3 py-1.5 rounded-md bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shrink-0"
+          >
+            <RotateCcw size={12} />
+            <span>Retry</span>
+          </button>
+        </div>
+      )}
 
       {/* Add Modal */}
       {showAddModal && (

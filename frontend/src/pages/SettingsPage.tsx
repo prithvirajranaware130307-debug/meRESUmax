@@ -6,7 +6,7 @@ import { GlassCard } from '../components/glass/GlassCard';
 import { GlassButton } from '../components/glass/GlassButton';
 import { 
   Settings, ShieldAlert, Cpu, Briefcase, Database, 
-  Trash2, Lock, CheckCircle2, AlertTriangle
+  Trash2, Lock, CheckCircle2, AlertTriangle, RotateCcw
 } from 'lucide-react';
 
 export const SettingsPage: React.FC = () => {
@@ -14,17 +14,25 @@ export const SettingsPage: React.FC = () => {
   const navigate = useNavigate();
 
   const [healthData, setHealthData] = useState<any>(null);
+  const [isLoadingHealth, setIsLoadingHealth] = useState(true);
+  const [healthError, setHealthError] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  useEffect(() => {
-    async function loadHealth() {
-      try {
-        const data = await api.getHealth();
-        setHealthData(data);
-      } catch (err) {
-        console.error('Failed to query system health:', err);
-      }
+  const loadHealth = async () => {
+    setIsLoadingHealth(true);
+    setHealthError(null);
+    try {
+      const data = await api.getHealth();
+      setHealthData(data);
+    } catch (err: any) {
+      console.error('Failed to query system health:', err);
+      setHealthError('Unable to inspect backend health at this moment.');
+    } finally {
+      setIsLoadingHealth(false);
     }
+  };
+
+  useEffect(() => {
     loadHealth();
   }, []);
 
@@ -61,17 +69,35 @@ export const SettingsPage: React.FC = () => {
       <div className="space-y-6">
         {/* Backend & AI Integration Health */}
         <GlassCard variant="standard" className="p-6">
-          <h2 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
-            <Cpu size={16} className="text-brand-blue" />
-            <span>Service Integration Status</span>
-          </h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-sm font-bold text-white flex items-center gap-2">
+              <Cpu size={16} className="text-brand-blue" />
+              <span>Service Integration Status</span>
+            </h2>
+            {healthError && (
+              <button
+                type="button"
+                onClick={loadHealth}
+                className="text-xs font-mono text-rose-300 hover:text-white flex items-center gap-1 cursor-pointer"
+              >
+                <RotateCcw size={11} />
+                <span>Retry</span>
+              </button>
+            )}
+          </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 space-y-1.5">
               <div className="text-xs font-semibold text-white flex items-center justify-between">
                 <span>AI Intelligence Engine</span>
-                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${healthData?.ai_service?.configured ? 'bg-mint-500/10 text-brand-mint' : 'bg-amber-500/10 text-brand-amber'}`}>
-                  {healthData?.ai_service?.configured ? 'Live OpenAI' : 'Deterministic Heuristic'}
+                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                  healthData?.ai_service?.configured 
+                    ? 'bg-emerald-500/10 text-emerald-400' 
+                    : 'bg-amber-500/10 text-amber-400'
+                }`}>
+                  {healthData?.ai_service?.configured 
+                    ? (healthData?.ai_service?.provider || 'Live AI Engine') 
+                    : 'Deterministic Heuristic'}
                 </span>
               </div>
               <p className="text-[11px] text-text-secondary">
@@ -82,7 +108,11 @@ export const SettingsPage: React.FC = () => {
             <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 space-y-1.5">
               <div className="text-xs font-semibold text-white flex items-center justify-between">
                 <span>Job Recommendation Stream</span>
-                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${healthData?.job_service?.configured ? 'bg-mint-500/10 text-brand-mint' : 'bg-amber-500/10 text-brand-amber'}`}>
+                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                  healthData?.job_service?.configured 
+                    ? 'bg-emerald-500/10 text-emerald-400' 
+                    : 'bg-amber-500/10 text-amber-400'
+                }`}>
                   {healthData?.job_service?.configured ? 'Live Adzuna' : 'Curated Demo Engine'}
                 </span>
               </div>
@@ -96,20 +126,20 @@ export const SettingsPage: React.FC = () => {
         {/* Privacy & Document Security */}
         <GlassCard variant="standard" className="p-6">
           <h2 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
-            <Lock size={16} className="text-brand-mint" />
+            <Lock size={16} className="text-emerald-400" />
             <span>Privacy & Storage Compliance</span>
           </h2>
           <ul className="space-y-2 text-xs text-text-secondary">
             <li className="flex items-center gap-2">
-              <CheckCircle2 size={14} className="text-brand-mint" />
+              <CheckCircle2 size={14} className="text-emerald-400" />
               <span>Resumes are stored with random UUID hashes in isolated private storage.</span>
             </li>
             <li className="flex items-center gap-2">
-              <CheckCircle2 size={14} className="text-brand-mint" />
+              <CheckCircle2 size={14} className="text-emerald-400" />
               <span>Password hashes use modern cryptographic PBKDF2 / SHA-256 salts.</span>
             </li>
             <li className="flex items-center gap-2">
-              <CheckCircle2 size={14} className="text-brand-mint" />
+              <CheckCircle2 size={14} className="text-emerald-400" />
               <span>Zero third-party advertisement trackers or tracking pixels enabled.</span>
             </li>
           </ul>

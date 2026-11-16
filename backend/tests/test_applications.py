@@ -1,4 +1,5 @@
 import pytest
+from datetime import datetime, timedelta
 from app import create_app
 from app.models import db, User
 
@@ -66,9 +67,10 @@ def test_application_lifecycle(client, auth_headers):
     assert updated['applied_date'] is not None
 
     # 4. Transition to 'interviewing' with upcoming interview date
+    future_interview = (datetime.utcnow() + timedelta(days=7)).replace(microsecond=0).isoformat()
     res = client.patch(f'/api/applications/{app_id}', json={
         'status': 'interviewing',
-        'interview_date': '2026-11-01T15:00:00',
+        'interview_date': future_interview,
         'next_step': 'Technical Screen on Leetcode & System Design'
     }, headers=auth_headers)
     assert res.status_code == 200

@@ -70,7 +70,12 @@ export const DashboardPage: React.FC = () => {
       </div>
 
       {/* Primary Metrics Row */}
-      {latestAnalysis ? (
+      {isLoading ? (
+        <GlassCard variant="elevated" className="p-12 text-center mb-8 border border-white/10 flex flex-col items-center justify-center space-y-3">
+          <div className="w-8 h-8 rounded-full border-2 border-brand-cyan/20 border-t-brand-cyan animate-spin" />
+          <p className="text-xs font-mono text-text-muted">Loading profile analytics and benchmarks...</p>
+        </GlassCard>
+      ) : latestAnalysis ? (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-8">
           {/* Quality Score Dial */}
           <GlassCard variant="elevated" className="p-5 flex flex-col items-center justify-center text-center">

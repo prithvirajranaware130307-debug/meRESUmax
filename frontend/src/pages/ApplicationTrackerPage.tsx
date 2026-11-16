@@ -78,6 +78,7 @@ export const ApplicationTrackerPage: React.FC = () => {
   });
   const [upcomingInterviews, setUpcomingInterviews] = useState<JobApplication[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   // Filters & View Mode
   const [search, setSearch] = useState('');
@@ -110,6 +111,7 @@ export const ApplicationTrackerPage: React.FC = () => {
 
   const fetchApplications = async () => {
     setIsLoading(true);
+    setError(null);
     try {
       const res = await api.getApplications({
         priority: priorityFilter !== 'all' ? priorityFilter : undefined,
@@ -118,8 +120,9 @@ export const ApplicationTrackerPage: React.FC = () => {
       setApplications(res.applications);
       setStats(res.stats);
       setUpcomingInterviews(res.upcoming_interviews || []);
-    } catch (err) {
+    } catch (err: any) {
       console.error('Error fetching applications:', err);
+      setError(err?.message || 'Failed to load applications. The backend service may be waking up.');
     } finally {
       setIsLoading(false);
     }
@@ -486,6 +489,20 @@ export const ApplicationTrackerPage: React.FC = () => {
           </div>
         </div>
       </GlassCard>
+
+      {/* Error state if fetch failed */}
+      {error && (
+        <GlassCard variant="standard" className="p-6 mb-8 border-rose-500/25 bg-rose-500/10 text-center">
+          <div className="flex items-center justify-center gap-2 text-rose-300 font-semibold mb-2">
+            <AlertCircle size={18} className="text-rose-400" />
+            <span>Connection Notice</span>
+          </div>
+          <p className="text-xs text-text-secondary mb-4 max-w-md mx-auto">{error}</p>
+          <GlassButton variant="primary" size="sm" onClick={() => fetchApplications()}>
+            Retry Loading Applications
+          </GlassButton>
+        </GlassCard>
+      )}
 
       {/* Main Content Area: Kanban vs Table */}
       {isLoading ? (

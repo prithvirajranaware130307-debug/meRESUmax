@@ -6,7 +6,7 @@ import { GlassButton } from '../components/glass/GlassButton';
 import { 
   Search, MapPin, Briefcase, Filter, ExternalLink, 
   Bookmark, CheckCircle2, AlertCircle, Sparkles, Building,
-  Kanban, Check
+  Kanban, Check, RotateCcw
 } from 'lucide-react';
 
 export const JobsPage: React.FC = () => {
@@ -19,16 +19,19 @@ export const JobsPage: React.FC = () => {
   const [isLive, setIsLive] = useState(false);
   const [providerMessage, setProviderMessage] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchJobListings = async () => {
     setIsLoading(true);
+    setError(null);
     try {
       const res = await api.getJobs({ query, location, type: jobType });
-      setJobs(res.jobs);
+      setJobs(res.jobs || []);
       setIsLive(res.is_live);
       if (res.message) setProviderMessage(res.message);
-    } catch (err) {
+    } catch (err: any) {
       console.error('Error fetching jobs:', err);
+      setError(err.message || 'Unable to retrieve job opportunities. Please retry.');
     } finally {
       setIsLoading(false);
     }
@@ -153,12 +156,30 @@ export const JobsPage: React.FC = () => {
               <option value="full-time" className="bg-[#111318]">Full-Time</option>
               <option value="internship" className="bg-[#111318]">Internships</option>
             </select>
-            <GlassButton type="submit" variant="primary" size="sm">
+            <GlassButton type="submit" variant="primary" size="sm" disabled={isLoading}>
               Search
             </GlassButton>
           </div>
         </form>
       </GlassCard>
+
+      {/* Error state with retry */}
+      {error && (
+        <div className="mb-6 p-4 rounded-lg bg-rose-500/10 border border-rose-500/25 text-rose-300 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 font-mono">
+          <div className="flex items-center gap-2.5">
+            <AlertCircle size={16} className="shrink-0 text-rose-400" />
+            <span className="font-sans leading-relaxed">{error}</span>
+          </div>
+          <button
+            type="button"
+            onClick={fetchJobListings}
+            className="px-3 py-1.5 rounded-md bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shrink-0"
+          >
+            <RotateCcw size={12} />
+            <span>Retry Search</span>
+          </button>
+        </div>
+      )}
 
       {/* Job Cards Grid */}
       {isLoading ? (

@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { api } from '../../services/api';
 import { useAuth } from '../../context/AuthContext';
 import { 
-  Sparkles, MessageSquare, X, Send, RotateCcw, 
+  Sparkles, X, Send, RotateCcw, 
   Bot, User as UserIcon, AlertCircle, Minimize2, Maximize2,
-  ChevronDown, Check, Copy, ArrowUpRight
+  Check, Copy, ArrowUpRight
 } from 'lucide-react';
 
 interface ChatMessage {
@@ -20,7 +20,9 @@ const QUICK_ACTIONS = [
   'Improve my resume',
   'Explain my score',
   'Prepare interview questions',
-  'Find matching jobs'
+  'Find matching jobs',
+  'ATS formatting tips',
+  'Roadmap guidance'
 ];
 
 export const FloatingAssistant: React.FC = () => {
@@ -33,11 +35,17 @@ export const FloatingAssistant: React.FC = () => {
   const [lastFailedMessage, setLastFailedMessage] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
+  const initialWelcomeText = useMemo(() => {
+    const firstName = user?.name ? user.name.split(' ')[0] : 'there';
+    const role = user?.target_role || 'Software Developer';
+    return `Hello ${firstName}! I am your meRESUmax Career Intelligence Assistant. I specialize in resume optimization, ATS formatting, interview preparation, and job matching for ${role} roles. How can I help you today?`;
+  }, [user?.name, user?.target_role]);
+
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'welcome-1',
       sender: 'assistant',
-      text: `Hello ${user?.name ? user.name.split(' ')[0] : 'there'}! I am your meRESUmax Career Intelligence Assistant. How can I help sharpen your resume, prepare for interviews, or optimize your job search today?`,
+      text: initialWelcomeText,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       isDemo: false
     }
@@ -45,6 +53,10 @@ export const FloatingAssistant: React.FC = () => {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Find index of first message that was generated in demo/fallback mode
+  // The requirement says: "If live AI keys are missing, clearly label the response as demo/fallback mode only once per conversation, not repeatedly."
+  const firstDemoIndex = messages.findIndex(m => m.isDemo);
 
   useEffect(() => {
     if (isOpen && !isMinimized) {
@@ -54,7 +66,8 @@ export const FloatingAssistant: React.FC = () => {
 
   useEffect(() => {
     if (isOpen && !isMinimized) {
-      setTimeout(() => inputRef.current?.focus(), 150);
+      const timer = setTimeout(() => inputRef.current?.focus(), 150);
+      return () => clearTimeout(timer);
     }
   }, [isOpen, isMinimized]);
 
@@ -95,8 +108,16 @@ export const FloatingAssistant: React.FC = () => {
 
       setMessages(prev => [...prev, assistantMsg]);
     } catch (err: any) {
-      const errorMsg = err.message || 'Unable to connect to AI assistant. Please try again.';
-      setError(errorMsg);
+      const raw = (err.message || '').toLowerCase();
+      let friendlyError = 'Unable to connect to AI assistant. Please try again.';
+      if (raw.includes('timeout') || raw.includes('starting') || raw.includes('failed to fetch') || raw.includes('502') || raw.includes('503')) {
+        friendlyError = 'The assistant service is warming up on Render. Please wait a moment and click Retry.';
+      } else if (raw.includes('rate') || raw.includes('429')) {
+        friendlyError = 'Service rate limit reached. Please wait a few seconds and retry.';
+      } else if (err.message) {
+        friendlyError = err.message;
+      }
+      setError(friendlyError);
       setLastFailedMessage(text);
     } finally {
       setIsLoading(false);
@@ -127,25 +148,27 @@ export const FloatingAssistant: React.FC = () => {
       {
         id: `welcome-${Date.now()}`,
         sender: 'assistant',
-        text: `Chat reset. What would you like to explore regarding your ${user?.target_role || 'technical career'}?`,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        text: `Conversation reset. I am ready to assist with your resume, interviews, or job search for ${user?.target_role || 'technical'} roles.`,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        isDemo: false
       }
     ]);
     setError(null);
+    setLastFailedMessage(null);
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end pointer-events-none">
+    <div className="fixed bottom-4 right-3 sm:bottom-6 sm:right-6 z-40 flex flex-col items-end pointer-events-none">
       {/* Expanded / Minimized Chat Panel */}
       {isOpen && (
         <div 
-          className={`pointer-events-auto mb-3 w-[370px] sm:w-[420px] max-w-[calc(100vw-2rem)] transition-all duration-200 ease-out origin-bottom-right ${
+          className={`pointer-events-auto mb-3 w-[calc(100vw-1.5rem)] sm:w-[420px] max-w-[420px] transition-all duration-200 ease-out origin-bottom-right ${
             isMinimized 
               ? 'h-13 overflow-hidden rounded-xl bg-[#0D0F14]/95 border border-white/10 shadow-elevated'
-              : 'h-[500px] max-h-[calc(100vh-6rem)] rounded-xl bg-[#0D0F14]/95 border border-white/10 shadow-elevated flex flex-col overflow-hidden'
+              : 'h-[500px] max-h-[calc(100vh-6.5rem)] rounded-xl bg-[#0D0F14]/95 border border-white/10 shadow-elevated flex flex-col overflow-hidden'
           }`}
           role="dialog"
-          aria-label="meRESUmax AI Assistant"
+          aria-label="meRESUmax AI Career Assistant"
         >
           {/* Header */}
           <div className="px-4 py-3 bg-white/[0.02] border-b border-white/[0.08] flex items-center justify-between shrink-0">
@@ -155,11 +178,11 @@ export const FloatingAssistant: React.FC = () => {
               </div>
               <div>
                 <div className="text-xs font-semibold text-white flex items-center gap-1.5 leading-tight">
-                  <span>Assistant Engine</span>
+                  <span>Career Intelligence Assistant</span>
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                 </div>
-                <div className="text-[10px] text-text-muted font-mono">
-                  ATS & Career Intelligence
+                <div className="text-[10px] text-text-muted font-mono truncate max-w-[180px]">
+                  {user?.target_role || 'Resume & Career Strategist'}
                 </div>
               </div>
             </div>
@@ -170,14 +193,16 @@ export const FloatingAssistant: React.FC = () => {
                 onClick={clearChat}
                 className="p-1.5 text-text-muted hover:text-white rounded-lg hover:bg-white/[0.06] transition-colors cursor-pointer"
                 title="Clear Conversation"
+                aria-label="Clear Conversation"
               >
                 <RotateCcw size={13} />
               </button>
               <button
                 type="button"
-                onClick={() => setIsMinimized(!isMinimized)}
+                onClick={() => setIsMinimized(prev => !prev)}
                 className="p-1.5 text-text-muted hover:text-white rounded-lg hover:bg-white/[0.06] transition-colors cursor-pointer"
                 title={isMinimized ? 'Expand Chat' : 'Minimize Chat'}
+                aria-label={isMinimized ? 'Expand Chat' : 'Minimize Chat'}
               >
                 {isMinimized ? <Maximize2 size={13} /> : <Minimize2 size={13} />}
               </button>
@@ -186,6 +211,7 @@ export const FloatingAssistant: React.FC = () => {
                 onClick={() => setIsOpen(false)}
                 className="p-1.5 text-text-muted hover:text-rose-400 rounded-lg hover:bg-rose-500/10 transition-colors cursor-pointer"
                 title="Close Assistant"
+                aria-label="Close Assistant"
               >
                 <X size={14} />
               </button>
@@ -195,14 +221,14 @@ export const FloatingAssistant: React.FC = () => {
           {!isMinimized && (
             <>
               {/* Quick Action Chips Bar */}
-              <div className="px-3 py-2 bg-black/20 border-b border-white/5 overflow-x-auto flex gap-1.5 scrollbar-none shrink-0 font-mono text-[11px]">
+              <div className="px-3 py-2 bg-black/25 border-b border-white/5 overflow-x-auto flex gap-1.5 scrollbar-none shrink-0 font-mono text-[11px]">
                 {QUICK_ACTIONS.map((action, idx) => (
                   <button
                     key={idx}
                     type="button"
                     onClick={() => sendMessage(action)}
                     disabled={isLoading}
-                    className="whitespace-nowrap px-2.5 py-1 rounded bg-[#161922] hover:bg-[#1D212C] text-text-secondary hover:text-white border border-white/10 transition-all shrink-0 flex items-center gap-1 disabled:opacity-50 cursor-pointer text-[10px]"
+                    className="whitespace-nowrap px-2.5 py-1 rounded-md bg-[#161922] hover:bg-[#1D212C] text-text-secondary hover:text-white border border-white/10 transition-all shrink-0 flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer text-[10px]"
                   >
                     <span>{action}</span>
                     <ArrowUpRight size={10} className="text-zinc-400" />
@@ -212,7 +238,7 @@ export const FloatingAssistant: React.FC = () => {
 
               {/* Message Feed */}
               <div className="flex-1 p-3.5 space-y-3.5 overflow-y-auto text-xs leading-relaxed">
-                {messages.map((m) => (
+                {messages.map((m, idx) => (
                   <div
                     key={m.id}
                     className={`flex gap-2.5 ${m.sender === 'user' ? 'justify-end' : 'justify-start'}`}
@@ -237,19 +263,20 @@ export const FloatingAssistant: React.FC = () => {
                           <button
                             type="button"
                             onClick={() => copyText(m.id, m.text)}
-                            className="absolute -top-2 right-2 opacity-0 group-hover:opacity-100 p-1 rounded bg-[#090A0E] border border-white/20 text-text-secondary hover:text-white transition-opacity cursor-pointer"
+                            className="absolute -top-2 right-2 opacity-0 group-hover:opacity-100 p-1 rounded bg-[#090A0E] border border-white/20 text-text-secondary hover:text-white transition-opacity cursor-pointer shadow-sm"
                             title="Copy reply"
+                            aria-label="Copy reply"
                           >
                             {copiedId === m.id ? <Check size={11} className="text-emerald-400" /> : <Copy size={11} />}
                           </button>
                         )}
                       </div>
 
-                      {/* Demo disclaimer badge if message was generated in fallback */}
-                      {m.isDemo && (
+                      {/* Fallback demo mode badge shown ONLY ONCE per conversation */}
+                      {idx === firstDemoIndex && (
                         <div className="text-[10px] text-amber-300 px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20 inline-flex items-center gap-1.5 font-mono">
                           <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                          <span>Demo Engine Fallback</span>
+                          <span>Demo Engine Fallback (Deterministic Mode)</span>
                         </div>
                       )}
 
@@ -266,16 +293,17 @@ export const FloatingAssistant: React.FC = () => {
                   </div>
                 ))}
 
-                {/* Loading indicator */}
+                {/* Loading State Indicator */}
                 {isLoading && (
                   <div className="flex gap-2.5 items-center text-text-muted">
                     <div className="w-6 h-6 rounded-md bg-[#161922] text-zinc-300 border border-white/10 flex items-center justify-center shrink-0">
-                      <Sparkles size={11} className="animate-spin" />
+                      <Sparkles size={11} className="animate-spin text-blue-400" />
                     </div>
                     <div className="p-2.5 rounded-lg bg-[#161922] border border-white/10 flex items-center gap-1.5">
                       <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 animate-bounce" style={{ animationDelay: '0ms' }} />
                       <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 animate-bounce" style={{ animationDelay: '150ms' }} />
                       <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 animate-bounce" style={{ animationDelay: '300ms' }} />
+                      <span className="text-[11px] text-text-muted font-mono ml-2">Consulting career intelligence...</span>
                     </div>
                   </div>
                 )}
@@ -291,7 +319,8 @@ export const FloatingAssistant: React.FC = () => {
                       <button
                         type="button"
                         onClick={handleRetry}
-                        className="text-[10px] uppercase font-bold text-white bg-rose-500/30 hover:bg-rose-500/50 px-2 py-1 rounded transition-colors shrink-0 cursor-pointer"
+                        disabled={isLoading}
+                        className="text-[10px] uppercase font-bold text-white bg-rose-500/30 hover:bg-rose-500/50 px-2 py-1 rounded transition-colors shrink-0 cursor-pointer disabled:opacity-50"
                       >
                         Retry
                       </button>
@@ -303,7 +332,7 @@ export const FloatingAssistant: React.FC = () => {
               </div>
 
               {/* Chat Input Bar */}
-              <div className="p-3 bg-black/20 border-t border-white/[0.08] shrink-0">
+              <div className="p-3 bg-black/25 border-t border-white/[0.08] shrink-0">
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
@@ -317,15 +346,16 @@ export const FloatingAssistant: React.FC = () => {
                     value={inputMessage}
                     onChange={(e) => setInputMessage(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder="Ask about resume, score, or interview..."
+                    placeholder="Ask about resume, score, ATS, or interview..."
                     disabled={isLoading}
-                    className="flex-1 bg-[#090A0E] border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-text-muted focus:outline-none focus:border-blue-500 transition-colors"
+                    className="flex-1 bg-[#090A0E] border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-text-muted focus:outline-none focus:border-blue-500 disabled:opacity-50 transition-colors"
                   />
                   <button
                     type="submit"
                     disabled={!inputMessage.trim() || isLoading}
-                    className="p-2 rounded-lg bg-white text-[#090A0E] hover:bg-zinc-200 disabled:opacity-40 transition-all shrink-0 cursor-pointer"
+                    className="p-2 rounded-lg bg-white text-[#090A0E] hover:bg-zinc-200 disabled:opacity-40 disabled:cursor-not-allowed transition-all shrink-0 cursor-pointer"
                     title="Send Message"
+                    aria-label="Send Message"
                   >
                     <Send size={14} />
                   </button>
@@ -340,13 +370,14 @@ export const FloatingAssistant: React.FC = () => {
       <button
         type="button"
         onClick={() => {
-          setIsOpen(!isOpen);
+          setIsOpen(prev => !prev);
           setIsMinimized(false);
         }}
-        className={`pointer-events-auto group relative flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#111318]/95 border border-white/12 shadow-card transition-all duration-200 cursor-pointer ${
+        className={`pointer-events-auto group relative flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-xl bg-[#111318]/95 border border-white/12 shadow-card transition-all duration-200 cursor-pointer ${
           isOpen ? 'bg-[#161922] border-white/20' : 'hover:bg-[#161922] hover:border-white/20'
         }`}
         aria-label="Open AI Career Assistant"
+        aria-expanded={isOpen}
       >
         <div className="relative">
           <div className="w-6 h-6 rounded-md bg-[#161922] border border-white/10 flex items-center justify-center text-zinc-200">

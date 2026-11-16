@@ -45,3 +45,4 @@ def delete_account():
     db.session.delete(user)
     db.session.commit()
     return jsonify({'message': 'Your account, uploaded resumes, analyses, and saved data have been permanently deleted.'}), 200
+   

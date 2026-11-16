@@ -6,19 +6,23 @@ import { GlassCard } from '../components/glass/GlassCard';
 import { GlassButton } from '../components/glass/GlassButton';
 import { 
   History, Download, Trash2, Eye, Calendar, 
-  FileText, ArrowRight, Sparkles 
+  FileText, ArrowRight, Sparkles, AlertCircle, RotateCcw
 } from 'lucide-react';
 
 export const HistoryPage: React.FC = () => {
   const [analyses, setAnalyses] = useState<Analysis[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const loadAnalyses = async () => {
+    setIsLoading(true);
+    setError(null);
     try {
       const res = await api.getAnalyses();
-      setAnalyses(res.analyses);
-    } catch (err) {
+      setAnalyses(res.analyses || []);
+    } catch (err: any) {
       console.error('Failed to load history:', err);
+      setError(err.message || 'Unable to load analysis history. Please check your connection and retry.');
     } finally {
       setIsLoading(false);
     }
@@ -31,7 +35,11 @@ export const HistoryPage: React.FC = () => {
   const handleDelete = async (id: number) => {
     if (window.confirm('Are you sure you want to delete this analysis audit?')) {
       setAnalyses(analyses.filter((a) => a.id !== id));
-      await api.deleteAnalysis(id);
+      try {
+        await api.deleteAnalysis(id);
+      } catch (err: any) {
+        console.error('Delete analysis failed:', err);
+      }
     }
   };
 
@@ -56,76 +64,96 @@ export const HistoryPage: React.FC = () => {
         </Link>
       </div>
 
+      {/* Error State with retry */}
+      {error && (
+        <div className="mb-6 p-4 rounded-lg bg-rose-500/10 border border-rose-500/25 text-rose-300 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 font-mono">
+          <div className="flex items-center gap-2.5">
+            <AlertCircle size={16} className="shrink-0 text-rose-400" />
+            <span className="font-sans leading-relaxed">{error}</span>
+          </div>
+          <button
+            type="button"
+            onClick={loadAnalyses}
+            className="px-3 py-1.5 rounded-md bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shrink-0"
+          >
+            <RotateCcw size={12} />
+            <span>Retry</span>
+          </button>
+        </div>
+      )}
+
       {isLoading ? (
         <div className="py-20 text-center">
-          <div className="w-10 h-10 rounded-full border-2 border-brand-amber/20 border-t-brand-amber animate-spin mx-auto mb-3" />
-          <div className="text-xs text-text-secondary">Loading audit records...</div>
+          <div className="w-10 h-10 rounded-full border-2 border-brand-cyan/20 border-t-brand-cyan animate-spin mx-auto mb-3" />
+          <div className="text-xs text-text-secondary">Retrieving audit archive...</div>
         </div>
       ) : analyses.length > 0 ? (
         <div className="space-y-4">
           {analyses.map((a) => (
-            <GlassCard key={a.id} variant="standard" interactive className="p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <GlassCard key={a.id} variant="standard" interactive className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-start gap-4">
-                {/* Score badge */}
-                <div className="w-12 h-12 rounded-xl bg-white/[0.05] border border-white/10 flex flex-col items-center justify-center shrink-0">
-                  <span className="text-sm font-extrabold text-brand-cyan">{Math.round(a.quality_score)}</span>
-                  <span className="text-[9px] uppercase font-semibold text-text-muted">Quality</span>
+                <div className="w-12 h-12 rounded-xl bg-white/[0.04] border border-white/10 flex flex-col items-center justify-center shrink-0">
+                  <span className="text-base font-bold text-brand-mint">{Math.round(a.quality_score)}</span>
+                  <span className="text-[9px] text-text-muted font-mono uppercase tracking-tighter">SCORE</span>
                 </div>
 
                 <div>
-                  <div className="text-base font-bold text-white leading-tight">
-                    {a.target_role}
+                  <div className="flex items-center gap-2 mb-1">
+                    <h3 className="text-base font-bold text-white tracking-tight">{a.target_role}</h3>
+                    <span className="text-xs text-text-muted font-mono">•</span>
+                    <span className="text-xs text-brand-cyan font-mono">{Math.round(a.job_match_score)}% Role Match</span>
                   </div>
-                  <div className="text-xs text-text-secondary mt-1 flex flex-wrap items-center gap-2">
-                    <span className="flex items-center gap-1 text-text-muted">
-                      <FileText size={12} />
-                      <span>{a.resume_filename}</span>
-                    </span>
-                    <span>•</span>
-                    <span className="flex items-center gap-1 text-text-muted">
+                  <div className="flex items-center gap-3 text-xs text-text-muted">
+                    <span className="flex items-center gap-1">
                       <Calendar size={12} />
-                      <span>{a.created_at?.slice(0, 10)}</span>
+                      {new Date(a.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                     </span>
                     <span>•</span>
-                    <span className="text-brand-mint font-medium">
-                      {Math.round(a.job_match_score)}% Role Match
-                    </span>
+                    <span>{a.matched_skills?.length || 0} Skills Detected</span>
                   </div>
                 </div>
               </div>
 
-              {/* Action buttons */}
               <div className="flex items-center gap-2 self-end sm:self-center">
-                <Link to={`/results/${a.id}`}>
-                  <GlassButton variant="secondary" size="sm" icon={<Eye size={14} />}>
-                    View
-                  </GlassButton>
-                </Link>
-
-                <a href={api.getReportDownloadUrl(a.id)} target="_blank" rel="noopener noreferrer">
-                  <GlassButton variant="ghost" size="sm" title="Download PDF Report">
-                    <Download size={14} />
-                  </GlassButton>
+                <a
+                  href={api.getReportDownloadUrl(a.id)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-text-secondary hover:text-white transition-colors"
+                  title="Download Executive PDF"
+                >
+                  <Download size={15} />
                 </a>
 
                 <button
                   onClick={() => handleDelete(a.id)}
-                  className="p-2 rounded-xl text-text-muted hover:text-rose-400 hover:bg-rose-500/10 transition-colors"
-                  title="Delete record"
+                  className="p-2 rounded-lg bg-white/5 hover:bg-rose-500/10 text-text-secondary hover:text-rose-400 transition-colors"
+                  title="Delete Audit"
                 >
-                  <Trash2 size={16} />
+                  <Trash2 size={15} />
                 </button>
+
+                <Link to={`/results/${a.id}`}>
+                  <GlassButton variant="secondary" size="sm" icon={<Eye size={14} />}>
+                    View Audit
+                  </GlassButton>
+                </Link>
               </div>
             </GlassCard>
           ))}
         </div>
       ) : (
         <GlassCard variant="standard" className="p-12 text-center text-text-secondary">
-          <History size={28} className="mx-auto mb-2 text-text-muted" />
-          <div className="text-sm font-semibold text-white">No historical audits found</div>
-          <p className="text-xs text-text-muted mt-1 max-w-sm mx-auto">
-            Uploaded resumes and calculated score breakdowns will appear here for long-term tracking.
+          <FileText size={32} className="mx-auto mb-3 text-text-muted opacity-60" />
+          <h3 className="text-base font-bold text-white mb-1">No Previous Audits Found</h3>
+          <p className="text-xs text-text-secondary max-w-sm mx-auto mb-6">
+            You haven't run any resume evaluations yet. Upload your resume to receive your first ATS score and actionable recommendations.
           </p>
+          <Link to="/analyze">
+            <GlassButton variant="primary" size="sm" icon={<Sparkles size={14} />}>
+              Start First Analysis
+            </GlassButton>
+          </Link>
         </GlassCard>
       )}
     </div>

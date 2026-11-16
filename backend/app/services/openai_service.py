@@ -423,19 +423,32 @@ class AIService:
         skills_str = ', '.join(skills[:4]) if skills else "Python, React, and SQL"
         missing_str = ', '.join(missing_skills[:3]) if missing_skills else "Cloud Architecture & Docker"
 
-        if 'improve' in lower or 'resume' in lower or 'bullet' in lower:
+        # 1. Job Matching & Opportunities
+        if any(w in lower for w in ['job', 'match', 'opportunity', 'opening', 'vacancy']):
             return (
-                f"### Resume Optimization Strategy for {target_role}\n\n"
-                "To instantly elevate your resume above 85% of applicants:\n"
-                "1. **Use STAR Formatted Bullets**: Frame achievements as (Situation, Task, Action, Result).\n"
-                "   - *Weak*: \"Worked on a website.\"\n"
-                "   - *Improved*: \"Built a responsive React dashboard that reduced manual reporting time by 35% for 20 internal users.\"\n"
-                "2. **Quantify Metrics**: Add numbers (latency reduction, query times, users served, records processed).\n"
-                f"3. **Target High-Impact Skills**: Highlight proficiency in {skills_str} and consider addressing gaps in {missing_str}.\n"
-                "4. **ATS Hygiene**: Keep headers standard (Experience, Projects, Education) without graphical tables."
+                f"### Career Opportunity Recommendations for {target_role}\n\n"
+                f"Based on your profile with {skills_str}:\n"
+                f"• **Top Job Titles**: Junior/Mid-Level {target_role}, Full Stack Associate, Cloud Applications Engineer.\n"
+                f"• **Target Keywords to Search**: {target_role}, {skills_str}.\n"
+                f"• **Closing Skill Gaps**: Adding {missing_str} will increase your match rate by up to 25%.\n\n"
+                "👉 *Head to the Opportunity Radar (/jobs) to view matching openings and track applications in the Kanban pipeline (/tracker).*"
             )
 
-        if 'score' in lower or 'explain' in lower or 'audit' in lower:
+        # 2. ATS Formatting & Parsing Standards
+        if any(w in lower for w in ['ats', 'format', 'layout', 'font', 'template', 'column', 'margin', 'docx', 'pdf', 'parser', 'parse']):
+            return (
+                f"### ATS Formatting & Parsing Standards for {target_role}\n\n"
+                "To ensure 100% readability across modern Applicant Tracking Systems (Workday, Greenhouse, Lever, Taleo):\n"
+                "• **Linear Single-Column Layout**: Avoid multi-column tables, text boxes, and floating header graphics.\n"
+                "• **Standard Section Headers**: Use universal titles: `Professional Summary`, `Technical Skills`, `Experience`, `Projects`, `Education`.\n"
+                "• **Clean File Formats**: Standard PDF or Microsoft Word DOCX under 16 MB. Avoid scanned images or rasterized text.\n"
+                "• **Typography**: Use standard clean fonts (Inter, Arial, Calibri, Helvetica) at 10-11pt with 0.5-0.75in margins.\n"
+                "• **Structured Skills Section**: Categorize skills (Languages, Frameworks, Cloud, Databases) without rating bars or percentages.\n\n"
+                "💡 *Run your updated document through our ATS Audit Engine (/analyze) to verify parsing accuracy.*"
+            )
+
+        # 3. Score calculation & heuristic breakdown
+        if any(w in lower for w in ['score', 'explain', 'audit', 'calculate', 'breakdown', 'dimension', 'points']):
             score_text = f"{round(quality_score)}/100" if quality_score is not None else "pending audit"
             return (
                 f"### How Your Score is Calculated (Current: {score_text})\n\n"
@@ -448,7 +461,8 @@ class AIService:
                 "💡 *Tip: To gain 10-15 points immediately, revise 2 project bullet points with hard metrics.*"
             )
 
-        if 'interview' in lower or 'question' in lower or 'prepare' in lower:
+        # 4. Technical & Behavioral Interview Preparation
+        if any(w in lower for w in ['interview', 'question', 'prepare', 'prep', 'behavioral', 'mock']):
             return (
                 f"### Technical Interview Preparation for {target_role}\n\n"
                 "Key technical and behavioral focus areas:\n"
@@ -458,24 +472,63 @@ class AIService:
                 "👉 *Use our AI Mock Interview Simulator (/interview) to practice answering with instant STAR feedback and voice dictation.*"
             )
 
-        if 'job' in lower or 'match' in lower or 'find' in lower:
+        # 5. Roadmap & Skill Upskilling Guidance
+        if any(w in lower for w in ['roadmap', 'upskill', 'learn', 'study', 'milestone', 'path', 'gap', 'timeline']):
             return (
-                f"### Career Opportunity Recommendations for {target_role}\n\n"
-                f"Based on your profile with {skills_str}:\n"
-                f"• **Top Job Titles**: Junior/Mid-Level {target_role}, Full Stack Associate, Cloud Applications Engineer.\n"
-                f"• **Target Keywords to Search**: {target_role}, {skills_str}.\n"
-                f"• **Closing Skill Gaps**: Adding {missing_str} will increase your match rate by up to 25%.\n\n"
-                "👉 *Head to the Opportunity Radar (/jobs) to view matching openings and track applications in the Kanban pipeline (/tracker).*"
+                f"### Targeted Learning Roadmap for {target_role}\n\n"
+                f"To close high-impact skill gaps and qualify for higher-tier {target_role} roles:\n"
+                f"• **Sprint 1 (Weeks 1-2)**: Core Proficiency in {skills_str} — build a functional project emphasizing production error handling.\n"
+                f"• **Sprint 2 (Weeks 3-4)**: Gap Remediation in {missing_str} — implement containerization, CI/CD pipeline automation, and automated testing.\n"
+                "• **Sprint 3 (Weeks 5-6)**: System Architecture & Scale — document trade-offs, caching (Redis), and database indexing strategies.\n"
+                "• **Sprint 4 (Weeks 7-8)**: Portfolio & Proof of Work — publish verified open-source code and link demo deployments directly on your resume.\n\n"
+                "👉 *View, track, and complete your personalized milestones in the Career Roadmap dashboard (/roadmap).*"
             )
 
-        # General helpful recruiter advice
+        # 6. Account, Profile & Data Privacy Management
+        if any(w in lower for w in ['account', 'delete', 'password', 'privacy', 'settings', 'data policy', 'profile']):
+            return (
+                "### Account & Data Management in meRESUmax\n\n"
+                "Here is how you can manage your account and confidential documents:\n"
+                "• **Update Profile & Target Role**: Head to your Profile page (/profile) to update your name, target role, education, and credentials.\n"
+                "• **Document Privacy**: Your resumes and analysis audits are isolated in your private session and never used to train public models.\n"
+                "• **Delete Uploads or Audits**: You can delete individual resumes or analysis audits anytime from History (/history).\n"
+                "• **Permanent Account Deletion**: You can permanently purge your entire account, resumes, and data from the Profile settings section.\n\n"
+                "👉 *Navigate to My Profile (/profile) to manage your candidate preferences.*"
+            )
+
+        # 7. General Career Strategy & Networking
+        if any(w in lower for w in ['career', 'salary', 'negotiat', 'switch', 'transition', 'linkedin', 'network', 'offer']):
+            return (
+                f"### Career Growth & Strategy for {target_role}\n\n"
+                "Strategic recommendations to maximize your career trajectory and compensation:\n"
+                '• **LinkedIn Optimization**: Craft an impactful headline with target keywords (e.g., "Software Engineer | Distributed Systems | Python & React").\n'
+                "• **Proof of Capability**: Replace broad claims with verifiable links to GitHub repositories, live projects, or technical case studies.\n"
+                "• **Salary Benchmarking**: Research compensation bands for your region using current market data and negotiate based on quantified impact.\n"
+                "• **Cover Letters & Outreach**: Generate customized, company-specific cover letters using our AI Career Tools (/tools).\n\n"
+                "👉 *Explore our AI Tools suite (/tools) for instant cover letters and LinkedIn headline generators.*"
+            )
+
+        # 8. Resume improvement & STAR bullets
+        if any(w in lower for w in ['improve', 'resume', 'bullet', 'rewrite', 'action verb', 'star']):
+            return (
+                f"### Resume Optimization Strategy for {target_role}\n\n"
+                "To instantly elevate your resume above 85% of applicants:\n"
+                "1. **Use STAR Formatted Bullets**: Frame achievements as (Situation, Task, Action, Result).\n"
+                '   - *Weak*: "Worked on a website."\n'
+                '   - *Improved*: "Built a responsive React dashboard that reduced manual reporting time by 35% for 20 internal users."\n'
+                "2. **Quantify Metrics**: Add numbers (latency reduction, query times, users served, records processed).\n"
+                f"3. **Target High-Impact Skills**: Highlight proficiency in {skills_str} and consider addressing gaps in {missing_str}.\n"
+                "4. **ATS Hygiene**: Keep headers standard (Experience, Projects, Education) without graphical tables."
+            )
+
+        # 9. General Focused Recruiting Guidance (Do not over-promise; keep career-focused)
         return (
             f"Hello! I am your meRESUmax Career Intelligence Assistant.\n\n"
-            f"I can help you prepare for **{target_role}** roles:\n"
-            "• **\"Improve my resume\"**: Transform passive bullets into quantified STAR bullets.\n"
-            "• **\"Explain my score\"**: Understand heuristic breakdown and how to reach 90+.\n"
-            "• **\"Prepare interview questions\"**: Practice technical and behavioral scenarios.\n"
-            "• **\"Find matching jobs\"**: Identify openings calibrated for your experience level.\n\n"
-            "What would you like to focus on right now?"
+            f"I specialize in technical career advancement, resume optimization, and interview preparation for **{target_role}** roles. I can assist you with:\n"
+            "• **Resume Optimization**: Transform bullet points into quantified STAR impact statements.\n"
+            "• **Score Breakdown**: Understand your 5-dimension heuristic audit score and how to reach 90+.\n"
+            "• **ATS Formatting**: Master clean parsing layout, fonts, and section structure.\n"
+            "• **Interview Prep**: Practice behavioral and technical questions for target roles.\n"
+            "• **Job Search & Roadmap**: Discover curated openings and structured learning milestones.\n\n"
+            "How can I assist your career progression today?"
         )
-
