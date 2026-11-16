@@ -275,8 +275,8 @@ export const FloatingAssistant: React.FC = () => {
                       {/* Fallback demo mode badge shown ONLY ONCE per conversation */}
                       {idx === firstDemoIndex && (
                         <div className="text-[10px] text-amber-700 dark:text-amber-300 px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20 inline-flex items-center gap-1.5 font-mono">
-                          <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400" />
-                          <span>Demo Engine Fallback (Deterministic Mode)</span>
+                          <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400 shrink-0" />
+                          <span>{m.disclaimer || 'Demo Engine Fallback (Deterministic Mode)'}</span>
                         </div>
                       )}
 

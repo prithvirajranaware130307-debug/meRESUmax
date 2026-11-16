@@ -69,7 +69,7 @@
 13. **Floating AI Career Assistant**
     - Omnipresent Liquid Glass floating chat interface available across authenticated routes.
     - Context-aware recruiter AI answering resume improvements, score explanations, mock questions, and job matching.
-    - Dual mode: live Gemini AI integration when configured, with high-fidelity deterministic heuristic advice in fallback mode.
+    - Multi-tier AI architecture: primary Google Gemini integration, automatic real-AI Groq fallback (`llama-3.3-70b-versatile`), and deterministic heuristic advice when no external keys are configured.
 
 ---
 
@@ -96,6 +96,8 @@ Configure your keys (optional):
 ```env
 GEMINI_API_KEY=your_gemini_api_key_here
 GEMINI_MODEL=gemini-2.5-flash
+GROQ_API_KEY=your_groq_api_key_here
+GROQ_MODEL=llama-3.3-70b-versatile
 RAPIDAPI_KEY=your_rapidapi_key
 JSEARCH_API_HOST=jsearch-mega.p.rapidapi.com
 ```
@@ -148,6 +150,8 @@ You can deploy meRESUmax on Render using either the included `render.yaml` Bluep
   - `CORS_ORIGINS`: `*` *(or your frontend Render URL)*
   - `GEMINI_API_KEY`: *(Optional: Google Gemini API key)*
   - `GEMINI_MODEL`: `gemini-2.5-flash`
+  - `GROQ_API_KEY`: *(Optional: Groq API key for assistant real-AI fallback)*
+  - `GROQ_MODEL`: `llama-3.3-70b-versatile`
   - `DATABASE_URL`: *(Optional Render PostgreSQL instance, or defaults to local SQLite)*
 
 #### 2. Frontend Service (Static Site)

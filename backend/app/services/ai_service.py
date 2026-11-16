@@ -266,6 +266,66 @@ class AIService:
         }
 
     @classmethod
+    def _call_gemini_assistant(cls, system_instruction: str, user_content: str) -> Dict[str, Any]:
+        """
+        Calls Google Gemini API for assistant chat.
+        Uses connect timeout of 4.0s and read timeout of 8.0s.
+        """
+        api_key = Config.GEMINI_API_KEY.strip()
+        model = Config.GEMINI_MODEL or "gemini-2.5-flash"
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
+        payload = {
+            "system_instruction": {"parts": [{"text": system_instruction}]},
+            "contents": [{"parts": [{"text": user_content}]}],
+            "generationConfig": {"temperature": 0.4, "maxOutputTokens": 600}
+        }
+        resp = requests.post(url, headers={"Content-Type": "application/json"}, json=payload, timeout=(4.0, 8.0))
+        resp.raise_for_status()
+        res_json = resp.json()
+        reply = res_json['candidates'][0]['content']['parts'][0]['text'].strip()
+        return {
+            'reply': reply,
+            'provider': 'google_gemini',
+            'model': model,
+            'is_live_ai': True,
+            'disclaimer': None
+        }
+
+    @classmethod
+    def _call_groq_assistant(cls, system_instruction: str, user_content: str) -> Dict[str, Any]:
+        """
+        Calls Groq OpenAI-compatible chat completions endpoint via direct requests.
+        Uses connect timeout of 4.0s and read timeout of 8.0s.
+        """
+        api_key = Config.GROQ_API_KEY.strip()
+        model = Config.GROQ_MODEL or "llama-3.3-70b-versatile"
+        url = "https://api.groq.com/openai/v1/chat/completions"
+        headers = {
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json"
+        }
+        payload = {
+            "model": model,
+            "messages": [
+                {"role": "system", "content": system_instruction},
+                {"role": "user", "content": user_content}
+            ],
+            "temperature": 0.4,
+            "max_tokens": 600
+        }
+        resp = requests.post(url, headers=headers, json=payload, timeout=(4.0, 8.0))
+        resp.raise_for_status()
+        res_json = resp.json()
+        reply = res_json['choices'][0]['message']['content'].strip()
+        return {
+            'reply': reply,
+            'provider': 'groq',
+            'model': model,
+            'is_live_ai': True,
+            'disclaimer': None
+        }
+
+    @classmethod
     def chat_assistant(
         cls,
         message: str,
@@ -276,8 +336,10 @@ class AIService:
     ) -> Dict[str, Any]:
         """
         Interactive career coach chat assistant.
-        Uses Google Gemini when GEMINI_API_KEY is configured,
-        or immediately falls back to high-fidelity deterministic fallback.
+        Provider Order:
+        1. Google Gemini (primary live AI)
+        2. Groq API (fallback live AI)
+        3. Deterministic Heuristic Assistant (final built-in fallback)
         """
         skills = skills or []
         missing_skills = missing_skills or []
@@ -295,42 +357,33 @@ class AIService:
             "Help the candidate optimize their resume, prepare for interviews, understand ATS algorithms, "
             "and land technical roles. Give direct, actionable, concise advice (under 180 words). "
             "Use bullet points and concrete examples (e.g., STAR bullet rewrites with quantifiable metrics). "
-            "Never invent fake credentials."
+            "Never invent fake credentials, degrees, employers, or achievements. "
+            "Always tailor guidance to the candidate's target role and specific skill context."
         )
+        user_content = f"Context:\n{context_str}\n\nUser Question: {msg_clean}"
 
-        # 1. Try Gemini
+        # 1. Primary AI: Google Gemini
         if Config.GEMINI_API_KEY and Config.GEMINI_API_KEY.strip() and not Config.GEMINI_API_KEY.startswith("replace_"):
             try:
-                model = Config.GEMINI_MODEL or "gemini-2.5-flash"
-                url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={Config.GEMINI_API_KEY}"
-                payload = {
-                    "system_instruction": {"parts": [{"text": system_instruction}]},
-                    "contents": [{"parts": [{"text": f"Context:\n{context_str}\nUser Question: {msg_clean}"}]}],
-                    "generationConfig": {"temperature": 0.4, "maxOutputTokens": 600}
-                }
-                resp = requests.post(url, headers={"Content-Type": "application/json"}, json=payload, timeout=6.0)
-                if resp.status_code == 200:
-                    data = resp.json()
-                    reply = data['candidates'][0]['content']['parts'][0]['text']
-                    return {
-                        'reply': reply.strip(),
-                        'provider': 'google_gemini',
-                        'model': model,
-                        'is_live_ai': True,
-                        'disclaimer': None
-                    }
-                else:
-                    logger.warning(f"Gemini API returned status {resp.status_code}: {resp.text}")
+                return cls._call_gemini_assistant(system_instruction, user_content)
             except Exception as e:
-                logger.warning(f"Gemini assistant chat failed, falling back: {e}")
+                logger.warning(f"Gemini assistant chat failed or timed out: {type(e).__name__}. Trying Groq fallback.")
 
-        # 2. Deterministic Heuristic Assistant (Demo / Fallback Mode)
+        # 2. Fallback AI: Groq API
+        if Config.GROQ_API_KEY and Config.GROQ_API_KEY.strip() and not Config.GROQ_API_KEY.startswith("replace_"):
+            try:
+                return cls._call_groq_assistant(system_instruction, user_content)
+            except Exception as e:
+                logger.warning(f"Groq assistant chat failed or timed out: {type(e).__name__}. Falling back to deterministic demo.")
+
+        # 3. Final Fallback: Deterministic Heuristic Assistant
         reply = cls._generate_chat_fallback(msg_clean, target_role, quality_score, skills, missing_skills)
         return {
             'reply': reply,
             'provider': 'deterministic_demo',
+            'model': 'deterministic-heuristic',
             'is_live_ai': False,
-            'disclaimer': 'Demo Engine Fallback (Deterministic Mode) — Running in built-in fallback mode without external API keys. Configure GEMINI_API_KEY to activate live AI.'
+            'disclaimer': 'Demo assistant mode — Gemini and Groq are unavailable. Running built-in career guidance.'
         }
 
     @classmethod

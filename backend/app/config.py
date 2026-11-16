@@ -26,9 +26,11 @@ class Config:
     # CORS
     CORS_ORIGINS = os.getenv('CORS_ORIGINS', '*')
     
-    # AI Credentials (Google Gemini AI)
+    # AI Credentials (Google Gemini AI & Groq Fallback)
     GEMINI_API_KEY = os.getenv('GEMINI_API_KEY', '')
     GEMINI_MODEL = os.getenv('GEMINI_MODEL', 'gemini-2.5-flash')
+    GROQ_API_KEY = os.getenv('GROQ_API_KEY', '')
+    GROQ_MODEL = os.getenv('GROQ_MODEL', 'llama-3.3-70b-versatile')
     
     # Job Provider Credentials (JSearch Mega RapidAPI)
     RAPIDAPI_KEY = os.getenv('RAPIDAPI_KEY', '')

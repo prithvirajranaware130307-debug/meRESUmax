@@ -14,15 +14,28 @@ def health():
         db_ok = False
 
     gemini_configured = bool(Config.GEMINI_API_KEY and Config.GEMINI_API_KEY.strip() and not Config.GEMINI_API_KEY.startswith('replace_'))
+    groq_configured = bool(Config.GROQ_API_KEY and Config.GROQ_API_KEY.strip() and not Config.GROQ_API_KEY.startswith('replace_'))
+
+    if gemini_configured:
+        ai_provider = 'Google Gemini'
+        ai_model = Config.GEMINI_MODEL or 'gemini-2.5-flash'
+    elif groq_configured:
+        ai_provider = 'Groq'
+        ai_model = Config.GROQ_MODEL or 'llama-3.3-70b-versatile'
+    else:
+        ai_provider = 'Deterministic Heuristic Fallback'
+        ai_model = 'deterministic-heuristic'
 
     return jsonify({
         'status': 'healthy' if db_ok else 'degraded',
         'platform': 'meRESUmax Platform API',
         'database_connected': db_ok,
         'ai_service': {
-            'provider': 'Google Gemini' if gemini_configured else 'Deterministic Heuristic Fallback',
-            'configured': gemini_configured,
-            'model': Config.GEMINI_MODEL if gemini_configured else 'deterministic-heuristic'
+            'provider': ai_provider,
+            'configured': gemini_configured or groq_configured,
+            'model': ai_model,
+            'gemini_configured': gemini_configured,
+            'groq_configured': groq_configured
         },
         'job_service': {
             'provider': 'JSearch (RapidAPI)' if (Config.RAPIDAPI_KEY and not Config.RAPIDAPI_KEY.startswith('replace_')) else 'Curated Demo Engine',
