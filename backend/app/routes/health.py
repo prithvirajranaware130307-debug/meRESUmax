@@ -21,7 +21,7 @@ def health():
         ai_model = Config.GEMINI_MODEL or 'gemini-2.5-flash'
     elif groq_configured:
         ai_provider = 'Groq'
-        ai_model = Config.GROQ_MODEL or 'llama-3.3-70b-versatile'
+        ai_model = Config.GROQ_MODEL or 'qwen/qwen3.8-27b'
     else:
         ai_provider = 'Deterministic Heuristic Fallback'
         ai_model = 'deterministic-heuristic'

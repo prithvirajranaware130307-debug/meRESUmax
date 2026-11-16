@@ -43,13 +43,13 @@ def test_health_check_with_gemini(client, monkeypatch):
 def test_health_check_with_groq_when_gemini_missing(client, monkeypatch):
     monkeypatch.setattr(Config, 'GEMINI_API_KEY', '')
     monkeypatch.setattr(Config, 'GROQ_API_KEY', 'valid_test_key_groq_67890')
-    monkeypatch.setattr(Config, 'GROQ_MODEL', 'llama-3.3-70b-versatile')
+    monkeypatch.setattr(Config, 'GROQ_MODEL', 'qwen/qwen3.8-27b')
     res = client.get('/api/health')
     assert res.status_code == 200
     data = res.get_json()
     assert data['ai_service']['provider'] == 'Groq'
     assert data['ai_service']['configured'] is True
-    assert data['ai_service']['model'] == 'llama-3.3-70b-versatile'
+    assert data['ai_service']['model'] == 'qwen/qwen3.8-27b'
 
 def test_assistant_chat_deterministic_fallback_when_both_keys_absent(client, monkeypatch):
     monkeypatch.setattr(Config, 'GEMINI_API_KEY', '')
@@ -94,12 +94,12 @@ def test_assistant_gemini_success_does_not_call_groq(monkeypatch):
 def test_assistant_gemini_failure_falls_back_to_groq(monkeypatch):
     monkeypatch.setattr(Config, 'GEMINI_API_KEY', 'gemini_test_key')
     monkeypatch.setattr(Config, 'GROQ_API_KEY', 'groq_test_key')
-    monkeypatch.setattr(Config, 'GROQ_MODEL', 'llama-3.3-70b-versatile')
+    monkeypatch.setattr(Config, 'GROQ_MODEL', 'qwen/qwen3.8-27b')
 
     mock_groq_resp = {
         'reply': 'Groq live fallback advice: use STAR method with 35% performance gains.',
         'provider': 'groq',
-        'model': 'llama-3.3-70b-versatile',
+        'model': 'qwen/qwen3.8-27b',
         'is_live_ai': True,
         'disclaimer': None
     }
@@ -113,7 +113,7 @@ def test_assistant_gemini_failure_falls_back_to_groq(monkeypatch):
 
         mock_groq.assert_called_once()
         assert result['provider'] == 'groq'
-        assert result['model'] == 'llama-3.3-70b-versatile'
+        assert result['model'] == 'qwen/qwen3.8-27b'
         assert result['is_live_ai'] is True
         assert result['disclaimer'] is None
         assert 'Groq live fallback' in result['reply']

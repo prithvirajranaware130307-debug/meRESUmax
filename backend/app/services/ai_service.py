@@ -298,7 +298,7 @@ class AIService:
         Uses connect timeout of 4.0s and read timeout of 8.0s.
         """
         api_key = Config.GROQ_API_KEY.strip()
-        model = Config.GROQ_MODEL or "llama-3.3-70b-versatile"
+        model = Config.GROQ_MODEL or "qwen/qwen3.8-27b"
         url = "https://api.groq.com/openai/v1/chat/completions"
         headers = {
             "Authorization": f"Bearer {api_key}",
