@@ -27,7 +27,7 @@
 4. **AI Career Intelligence & STAR Enhancements**
    - Executive synthesis, role-tailored summary rewrites, and STAR project bullet enhancements.
    - Technical interview preparation questions with strategic talking points.
-   - Deterministic high-grade fallback engine when live OpenAI API keys are not supplied.
+   - Deterministic high-grade fallback engine when live Gemini API keys are not supplied.
 
 5. **Personalized Career Roadmap**
    - Generates progressive learning milestones from verified skill gaps.
@@ -69,14 +69,14 @@
 13. **Floating AI Career Assistant**
     - Omnipresent Liquid Glass floating chat interface available across authenticated routes.
     - Context-aware recruiter AI answering resume improvements, score explanations, mock questions, and job matching.
-    - Dual mode: live Gemini/OpenAI integration when configured, with high-fidelity deterministic heuristic advice in demo mode.
+    - Dual mode: live Gemini AI integration when configured, with high-fidelity deterministic heuristic advice in fallback mode.
 
 ---
 
 ## 🏗 Tech Stack
 
 - **Frontend**: React 18, Vite, TypeScript, Tailwind CSS, Lucide Icons, Recharts, Framer Motion
-- **Backend**: Python 3.13, Flask 3, Flask-SQLAlchemy, Werkzeug, PyPDF, python-docx, ReportLab, OpenAI SDK, Requests
+- **Backend**: Python 3.13, Flask 3, Flask-SQLAlchemy, Werkzeug, PyPDF, python-docx, ReportLab, Requests
 - **Database**: SQLite (local development) / MySQL compatible via SQLAlchemy
 
 ---
@@ -94,8 +94,8 @@ cp .env.example .env
 ```
 Configure your keys (optional):
 ```env
-OPENAI_API_KEY=your_openai_api_key_here
-OPENAI_MODEL=gpt-4o-mini
+GEMINI_API_KEY=your_gemini_api_key_here
+GEMINI_MODEL=gemini-2.5-flash
 RAPIDAPI_KEY=your_rapidapi_key
 JSEARCH_API_HOST=jsearch-mega.p.rapidapi.com
 ```
@@ -187,7 +187,7 @@ meRESUmax/
 │   ├── app/
 │   │   ├── models/           # SQLAlchemy models: User, Resume, Analysis, Job, RoadmapTask
 │   │   ├── routes/           # Blueprints: auth, resume, analysis, jobs, roadmap, profile, health
-│   │   ├── services/         # parser.py, scorer.py, matcher.py, openai_service.py, job_service.py, report_generator.py
+│   │   ├── services/         # parser.py, scorer.py, matcher.py, ai_service.py, job_service.py, report_generator.py
 │   │   ├── utils/            # auth_helper.py (HMAC token security)
 │   │   ├── config.py         # App configuration & environment loader
 │   │   └── __init__.py       # App factory & DB initialization

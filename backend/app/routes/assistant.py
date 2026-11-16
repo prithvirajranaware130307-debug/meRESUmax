@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, g
 from ..utils.auth_helper import get_current_user
 from ..models import Analysis, Resume
-from ..services.openai_service import AIService
+from ..services.ai_service import AIService
 
 assistant_bp = Blueprint('assistant', __name__, url_prefix='/api/assistant')
 

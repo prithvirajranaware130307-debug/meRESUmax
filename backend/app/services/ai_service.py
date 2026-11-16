@@ -2,21 +2,11 @@ import json
 import logging
 from typing import Dict, Any, List
 import requests
-from openai import OpenAI
 from ..config import Config
 
 logger = logging.getLogger(__name__)
 
 class AIService:
-    @classmethod
-    def get_client(cls):
-        if Config.OPENAI_API_KEY and Config.OPENAI_API_KEY.strip() and not Config.OPENAI_API_KEY.startswith("replace_"):
-            try:
-                return OpenAI(api_key=Config.OPENAI_API_KEY, timeout=7.0)
-            except Exception as e:
-                logger.warning(f"Failed to initialize OpenAI client: {e}")
-        return None
-
     @classmethod
     def _build_prompts(cls, resume_text: str, skills: List[str], target_role: str, quality_score: float, matched_skills: List[str], missing_skills: List[str]):
         safe_text = resume_text[:2000]
@@ -117,7 +107,8 @@ class AIService:
     ) -> Dict[str, Any]:
         """
         Generates structured AI feedback, actionable rewrites, and roadmap steps.
-        Tries single primary AI provider with 7s strict timeout, then immediately falls back to deterministic engine.
+        Uses Google Gemini when GEMINI_API_KEY is configured with a 7s timeout,
+        then immediately falls back to the deterministic internal engine.
         """
         # 1. Try Google Gemini if configured
         if Config.GEMINI_API_KEY and Config.GEMINI_API_KEY.strip() and not Config.GEMINI_API_KEY.startswith("replace_"):
@@ -129,53 +120,7 @@ class AIService:
                 fallback['provider_status'] = "Deterministic Heuristic Engine (Fallback)"
                 return fallback
 
-        # 2. Try OpenAI if configured (and Gemini not configured)
-        client = cls.get_client()
-        if client:
-            try:
-                system_prompt, user_prompt = cls._build_prompts(resume_text, skills, target_role, quality_score, matched_skills, missing_skills)
-
-                response = client.chat.completions.create(
-                    model=Config.OPENAI_MODEL or "gpt-4o-mini",
-                    messages=[
-                        {"role": "system", "content": system_prompt},
-                        {"role": "user", "content": user_prompt}
-                    ],
-                    response_format={"type": "json_object"},
-                    temperature=0.4,
-                    max_tokens=1500
-                )
-                
-                content = response.choices[0].message.content
-                ai_data = json.loads(content)
-                
-                if 'better_bullet_examples' in ai_data and 'project_bullet_improvements' not in ai_data:
-                    ai_data['project_bullet_improvements'] = [
-                        {
-                            'original_theme': item.get('weak', ''),
-                            'suggested_rewrite': item.get('better', ''),
-                            'rationale': item.get('rationale', '')
-                        }
-                        for item in ai_data['better_bullet_examples']
-                    ]
-                elif 'project_bullet_improvements' in ai_data and 'better_bullet_examples' not in ai_data:
-                    ai_data['better_bullet_examples'] = [
-                        {
-                            'weak': item.get('original_theme', ''),
-                            'better': item.get('suggested_rewrite', ''),
-                            'rationale': item.get('rationale', '')
-                        }
-                        for item in ai_data['project_bullet_improvements']
-                    ]
-
-                ai_data['provider'] = 'openai'
-                ai_data['model'] = Config.OPENAI_MODEL or 'gpt-4o-mini'
-                ai_data['is_live_ai'] = True
-                return ai_data
-            except Exception as e:
-                logger.error(f"OpenAI API call failed or timed out: {e}")
-
-        # 3. No live AI or failure: Provide deterministic high-grade intelligence
+        # 2. No live AI configured: Provide deterministic high-grade intelligence
         fallback = cls._generate_deterministic_fallback(skills, target_role, quality_score, matched_skills, missing_skills)
         fallback['provider_status'] = "Deterministic Heuristic Engine"
         return fallback
@@ -331,12 +276,12 @@ class AIService:
     ) -> Dict[str, Any]:
         """
         Interactive career coach chat assistant.
-        Uses Gemini if configured, then OpenAI, with high-fidelity deterministic fallback.
+        Uses Google Gemini when GEMINI_API_KEY is configured,
+        or immediately falls back to high-fidelity deterministic fallback.
         """
         skills = skills or []
         missing_skills = missing_skills or []
         msg_clean = (message or '').strip()
-        lower_msg = msg_clean.lower()
 
         context_str = (
             f"Target Role: {target_role}\n"
@@ -374,40 +319,18 @@ class AIService:
                         'is_live_ai': True,
                         'disclaimer': None
                     }
+                else:
+                    logger.warning(f"Gemini API returned status {resp.status_code}: {resp.text}")
             except Exception as e:
                 logger.warning(f"Gemini assistant chat failed, falling back: {e}")
 
-        # 2. Try OpenAI
-        client = cls.get_client()
-        if client:
-            try:
-                response = client.chat.completions.create(
-                    model=Config.OPENAI_MODEL or "gpt-4o-mini",
-                    messages=[
-                        {"role": "system", "content": system_instruction},
-                        {"role": "user", "content": f"Context:\n{context_str}\nUser Question: {msg_clean}"}
-                    ],
-                    max_tokens=500,
-                    temperature=0.4
-                )
-                reply = response.choices[0].message.content
-                return {
-                    'reply': reply.strip(),
-                    'provider': 'openai',
-                    'model': Config.OPENAI_MODEL or 'gpt-4o-mini',
-                    'is_live_ai': True,
-                    'disclaimer': None
-                }
-            except Exception as e:
-                logger.warning(f"OpenAI assistant chat failed, falling back: {e}")
-
-        # 3. Deterministic Heuristic Assistant (Demo Mode)
+        # 2. Deterministic Heuristic Assistant (Demo / Fallback Mode)
         reply = cls._generate_chat_fallback(msg_clean, target_role, quality_score, skills, missing_skills)
         return {
             'reply': reply,
             'provider': 'deterministic_demo',
             'is_live_ai': False,
-            'disclaimer': 'Demo assistant mode — Running in built-in fallback mode without external API keys. Configure GEMINI_API_KEY or OPENAI_API_KEY to activate live AI.'
+            'disclaimer': 'Demo Engine Fallback (Deterministic Mode) — Running in built-in fallback mode without external API keys. Configure GEMINI_API_KEY to activate live AI.'
         }
 
     @classmethod
@@ -521,7 +444,7 @@ class AIService:
                 "4. **ATS Hygiene**: Keep headers standard (Experience, Projects, Education) without graphical tables."
             )
 
-        # 9. General Focused Recruiting Guidance (Do not over-promise; keep career-focused)
+        # 9. General Focused Recruiting Guidance
         return (
             f"Hello! I am your meRESUmax Career Intelligence Assistant.\n\n"
             f"I specialize in technical career advancement, resume optimization, and interview preparation for **{target_role}** roles. I can assist you with:\n"

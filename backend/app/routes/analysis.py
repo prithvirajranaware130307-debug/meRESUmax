@@ -6,7 +6,7 @@ from ..config import Config
 from ..models import db, Resume, Analysis, RoadmapTask
 from ..services.scorer import ResumeScorer
 from ..services.matcher import JobMatcher
-from ..services.openai_service import AIService
+from ..services.ai_service import AIService
 from ..services.report_generator import ReportGenerator
 from ..utils.auth_helper import auth_required
 

@@ -26,7 +26,7 @@ SKILLS_TAXONOMY = {
     'AI & Machine Learning': [
         'Machine Learning', 'Deep Learning', 'PyTorch', 'TensorFlow', 'Scikit-Learn', 
         'NLP', 'Natural Language Processing', 'Computer Vision', 'LLMs', 'Large Language Models',
-        'LangChain', 'Hugging Face', 'OpenAI', 'Pandas', 'NumPy', 'Keras', 'Generative AI',
+        'LangChain', 'Hugging Face', 'Gemini API', 'Pandas', 'NumPy', 'Keras', 'Generative AI',
         'RAG', 'Vector Databases', 'Pinecone', 'ChromaDB'
     ],
     'Cloud & DevOps': [

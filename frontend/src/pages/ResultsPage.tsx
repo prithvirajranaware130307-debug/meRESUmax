@@ -283,7 +283,7 @@ export const ResultsPage: React.FC = () => {
             </p>
           </div>
           <div className="pt-3 border-t border-white/5 flex items-center justify-between text-[11px] text-text-muted">
-            <span>Engine: {ai.provider === 'google_gemini' ? `Google Gemini (${ai.model || '2.5-flash'})` : (ai.provider === 'openai' ? 'OpenAI GPT-4o' : 'Deterministic Heuristic Engine')}</span>
+            <span>Engine: {ai.provider === 'google_gemini' ? `Google Gemini (${ai.model || '2.5-flash'})` : 'Deterministic Heuristic Engine'}</span>
             <span className="text-brand-mint font-medium">Explainable Audit</span>
           </div>
         </GlassCard>

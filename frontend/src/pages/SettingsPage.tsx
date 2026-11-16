@@ -101,7 +101,7 @@ export const SettingsPage: React.FC = () => {
                 </span>
               </div>
               <p className="text-[11px] text-text-secondary">
-                Model: <span className="font-mono text-slate-800 dark:text-white">{healthData?.ai_service?.model || 'gpt-4o-mini'}</span>
+                Model: <span className="font-mono text-slate-800 dark:text-white">{healthData?.ai_service?.model || 'gemini-2.5-flash'}</span>
               </p>
             </div>
 

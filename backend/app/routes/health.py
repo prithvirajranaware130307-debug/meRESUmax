@@ -13,14 +13,16 @@ def health():
     except Exception:
         db_ok = False
 
+    gemini_configured = bool(Config.GEMINI_API_KEY and Config.GEMINI_API_KEY.strip() and not Config.GEMINI_API_KEY.startswith('replace_'))
+
     return jsonify({
         'status': 'healthy' if db_ok else 'degraded',
         'platform': 'meRESUmax Platform API',
         'database_connected': db_ok,
         'ai_service': {
-            'provider': 'Google Gemini' if (Config.GEMINI_API_KEY and not Config.GEMINI_API_KEY.startswith('replace_')) else ('OpenAI' if (Config.OPENAI_API_KEY and not Config.OPENAI_API_KEY.startswith('replace_')) else 'Deterministic Heuristic Fallback'),
-            'configured': bool((Config.GEMINI_API_KEY and not Config.GEMINI_API_KEY.startswith('replace_')) or (Config.OPENAI_API_KEY and not Config.OPENAI_API_KEY.startswith('replace_'))),
-            'model': Config.GEMINI_MODEL if Config.GEMINI_API_KEY else Config.OPENAI_MODEL
+            'provider': 'Google Gemini' if gemini_configured else 'Deterministic Heuristic Fallback',
+            'configured': gemini_configured,
+            'model': Config.GEMINI_MODEL if gemini_configured else 'deterministic-heuristic'
         },
         'job_service': {
             'provider': 'JSearch (RapidAPI)' if (Config.RAPIDAPI_KEY and not Config.RAPIDAPI_KEY.startswith('replace_')) else 'Curated Demo Engine',
