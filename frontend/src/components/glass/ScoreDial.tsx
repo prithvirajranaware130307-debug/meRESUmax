@@ -53,7 +53,7 @@ export const ScoreDial: React.FC<ScoreDialProps> = ({
           cx={size / 2}
           cy={size / 2}
           r={radius}
-          stroke="rgba(255, 255, 255, 0.08)"
+          className="stroke-slate-200 dark:stroke-white/10"
           strokeWidth={strokeWidth}
           fill="transparent"
         />
@@ -75,14 +75,14 @@ export const ScoreDial: React.FC<ScoreDialProps> = ({
       </svg>
       {/* Center content */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-        <span className="text-3xl font-bold font-mono tracking-tight text-white tabular-nums">
+        <span className="text-3xl font-bold font-mono tracking-tight text-slate-900 dark:text-white tabular-nums">
           {score}
         </span>
-        <span className="text-[10px] font-semibold text-text-secondary uppercase tracking-widest mt-0.5">
+        <span className="text-[10px] font-semibold text-slate-600 dark:text-text-secondary uppercase tracking-widest mt-0.5">
           {label}
         </span>
         {sublabel && (
-          <span className="text-[10px] text-text-muted mt-0.5 max-w-[85%] truncate">{sublabel}</span>
+          <span className="text-[10px] text-slate-500 dark:text-text-muted mt-0.5 max-w-[85%] truncate">{sublabel}</span>
         )}
       </div>
     </div>

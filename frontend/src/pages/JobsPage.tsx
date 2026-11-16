@@ -218,7 +218,7 @@ export const JobsPage: React.FC = () => {
                     <button
                       onClick={() => toggleSaveJob(job, idx)}
                       className={`p-2 rounded-lg transition-colors ${
-                        isSaved ? 'text-brand-amber bg-amber-500/10' : 'text-text-muted hover:text-white hover:bg-white/5'
+                        isSaved ? 'text-amber-500 bg-amber-500/10' : 'text-text-muted hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5'
                       }`}
                       title={isSaved ? 'Saved to bookmarks' : 'Bookmark job'}
                     >
@@ -240,7 +240,7 @@ export const JobsPage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-xs">
+                <div className="mt-4 pt-3 border-t border-slate-200/80 dark:border-white/5 flex items-center justify-between text-xs">
                   <div className="text-text-muted">
                     {job.salary_min ? (
                       <span className="text-brand-mint font-semibold">

@@ -124,7 +124,7 @@ export const RegisterPage: React.FC = () => {
                 <span>{error}</span>
                 {error.includes('already exists') && (
                   <div className="mt-1 font-mono text-[11px]">
-                    <Link to="/login" className="underline hover:text-white text-rose-200">
+                    <Link to="/login" className="underline hover:text-rose-400 dark:hover:text-white text-rose-500 dark:text-rose-200">
                       Go to Sign In &rarr;
                     </Link>
                   </div>

@@ -78,7 +78,7 @@ export const SettingsPage: React.FC = () => {
               <button
                 type="button"
                 onClick={loadHealth}
-                className="text-xs font-mono text-rose-300 hover:text-white flex items-center gap-1 cursor-pointer"
+                className="text-xs font-mono text-rose-500 dark:text-rose-300 hover:text-rose-700 dark:hover:text-white flex items-center gap-1 cursor-pointer"
               >
                 <RotateCcw size={11} />
                 <span>Retry</span>

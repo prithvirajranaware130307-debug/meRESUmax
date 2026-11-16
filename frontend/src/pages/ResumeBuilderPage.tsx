@@ -217,7 +217,7 @@ export const ResumeBuilderPage: React.FC = () => {
             <button
               onClick={() => setTemplate('modern')}
               className={`px-3 py-1.5 rounded-lg transition-colors ${
-                template === 'modern' ? 'bg-brand-cyan text-slate-900 font-bold' : 'text-text-secondary hover:text-white'
+                template === 'modern' ? 'bg-brand-cyan text-slate-900 font-bold' : 'text-text-secondary hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               Modern
@@ -225,7 +225,7 @@ export const ResumeBuilderPage: React.FC = () => {
             <button
               onClick={() => setTemplate('minimal')}
               className={`px-3 py-1.5 rounded-lg transition-colors ${
-                template === 'minimal' ? 'bg-brand-cyan text-slate-900 font-bold' : 'text-text-secondary hover:text-white'
+                template === 'minimal' ? 'bg-brand-cyan text-slate-900 font-bold' : 'text-text-secondary hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               Minimal
@@ -233,7 +233,7 @@ export const ResumeBuilderPage: React.FC = () => {
             <button
               onClick={() => setTemplate('executive')}
               className={`px-3 py-1.5 rounded-lg transition-colors ${
-                template === 'executive' ? 'bg-brand-cyan text-slate-900 font-bold' : 'text-text-secondary hover:text-white'
+                template === 'executive' ? 'bg-brand-cyan text-slate-900 font-bold' : 'text-text-secondary hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               Executive
@@ -242,7 +242,7 @@ export const ResumeBuilderPage: React.FC = () => {
 
           <button
             onClick={exportTxt}
-            className="px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-text-secondary hover:text-white border border-slate-200 dark:border-white/10 text-xs font-medium flex items-center gap-1.5 transition-colors"
+            className="px-3 py-2 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-text-secondary hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-white/10 text-xs font-medium flex items-center gap-1.5 transition-colors"
           >
             <Download size={14} />
             <span>ATS Plaintext</span>
@@ -250,7 +250,7 @@ export const ResumeBuilderPage: React.FC = () => {
 
           <button
             onClick={exportJson}
-            className="px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-text-secondary hover:text-white border border-slate-200 dark:border-white/10 text-xs font-medium flex items-center gap-1.5 transition-colors"
+            className="px-3 py-2 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-text-secondary hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-white/10 text-xs font-medium flex items-center gap-1.5 transition-colors"
           >
             <Download size={14} />
             <span>JSON</span>
@@ -292,7 +292,7 @@ export const ResumeBuilderPage: React.FC = () => {
 
           {/* Contact Details */}
           <GlassCard className="p-5 space-y-4 border-slate-200 dark:border-slate-200 dark:border-white/10">
-            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-900 dark:text-white uppercase tracking-wider">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">
               1. Contact Information
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
@@ -361,7 +361,7 @@ export const ResumeBuilderPage: React.FC = () => {
 
           {/* Professional Summary */}
           <GlassCard className="p-5 space-y-3 border-slate-200 dark:border-slate-200 dark:border-white/10">
-            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-900 dark:text-white uppercase tracking-wider">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">
               2. Executive Summary
             </h3>
             <label className="text-[11px] font-semibold uppercase tracking-wider text-slate-700 dark:text-text-secondary block">
@@ -377,7 +377,7 @@ export const ResumeBuilderPage: React.FC = () => {
 
           {/* Technical Skills */}
           <GlassCard className="p-5 space-y-3 border-slate-200 dark:border-slate-200 dark:border-white/10">
-            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-900 dark:text-white uppercase tracking-wider">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">
               3. Technical Skills
             </h3>
             <label className="text-[11px] font-semibold uppercase tracking-wider text-slate-700 dark:text-text-secondary block">
@@ -434,7 +434,7 @@ export const ResumeBuilderPage: React.FC = () => {
 
             <div className="space-y-4">
               {resume.experience.map(exp => (
-                <div key={exp.id} className="p-3.5 rounded-xl bg-white/5 border border-white/5 space-y-2">
+                <div key={exp.id} className="p-3.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/5 space-y-2">
                   <div className="flex justify-between items-center">
                     <input
                       type="text"
@@ -472,7 +472,7 @@ export const ResumeBuilderPage: React.FC = () => {
                     value={exp.bullets.join('\n')}
                     onChange={e => updateExperience(exp.id, 'bullets', e.target.value.split('\n'))}
                     placeholder="Enter bullet points (one per line)"
-                    className="w-full bg-surface-elevated/60 border border-white/5 rounded-lg p-2 text-xs text-text-secondary resize-y"
+                    className="w-full bg-slate-50 dark:bg-surface-elevated/60 border border-slate-200 dark:border-white/5 rounded-lg p-2 text-xs text-slate-900 dark:text-text-secondary resize-y"
                   />
                 </div>
               ))}
@@ -494,7 +494,7 @@ export const ResumeBuilderPage: React.FC = () => {
               </button>
             </div>
             {resume.projects.map(proj => (
-              <div key={proj.id} className="p-3 rounded-xl bg-white/5 border border-white/5 space-y-2">
+              <div key={proj.id} className="p-3 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/5 space-y-2">
                 <div className="flex justify-between items-center">
                   <input
                     type="text"

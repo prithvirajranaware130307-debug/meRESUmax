@@ -393,7 +393,7 @@ export const InterviewPage: React.FC = () => {
               </span>
               <button
                 onClick={handleRestart}
-                className="text-xs text-text-muted hover:text-white px-3 py-1 rounded-lg hover:bg-white/5 transition-colors flex items-center gap-1"
+                className="text-xs text-text-muted hover:text-slate-900 dark:hover:text-white px-3 py-1 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors flex items-center gap-1"
               >
                 <RotateCcw size={12} />
                 Exit
@@ -437,7 +437,7 @@ export const InterviewPage: React.FC = () => {
                       className={`text-xs px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all ${
                         isListening
                           ? 'bg-rose-500/20 border-rose-500 text-rose-300 animate-pulse'
-                          : 'bg-white/5 border-white/10 text-text-secondary hover:text-white hover:bg-white/10'
+                          : 'bg-slate-100 dark:bg-white/5 border-slate-200 dark:border-white/10 text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-white/10'
                       }`}
                     >
                       {isListening ? (
@@ -659,7 +659,7 @@ export const InterviewPage: React.FC = () => {
             <div className="flex flex-wrap items-center justify-center gap-3 pt-4 border-t border-white/10">
               <button
                 onClick={copyDebrief}
-                className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-text-secondary hover:text-white border border-white/10 text-xs font-semibold flex items-center gap-2 transition-colors"
+                className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-text-secondary hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-white/10 text-xs font-semibold flex items-center gap-2 transition-colors"
               >
                 {copied ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
                 <span>{copied ? 'Copied to Clipboard' : 'Copy Summary'}</span>
@@ -667,7 +667,7 @@ export const InterviewPage: React.FC = () => {
 
               <button
                 onClick={downloadTranscript}
-                className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-text-secondary hover:text-white border border-white/10 text-xs font-semibold flex items-center gap-2 transition-colors"
+                className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-text-secondary hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-white/10 text-xs font-semibold flex items-center gap-2 transition-colors"
               >
                 <Download size={14} />
                 <span>Download Transcript (.txt)</span>

@@ -41,13 +41,13 @@ export const LandingPage: React.FC = () => {
       <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-12 pb-16 relative z-10">
         <div className="flex flex-col items-start max-w-4xl">
           {/* System Eyebrow Tag */}
-          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/10 text-xs font-mono text-text-secondary mb-6">
+          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-slate-100 dark:bg-white/[0.04] border border-slate-200 dark:border-white/10 text-xs font-mono text-slate-700 dark:text-text-secondary mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
             <span>SYSTEM // ATS RESUME INTELLIGENCE</span>
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.08] mb-6">
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.08] mb-6">
             Transform raw resumes into verifiable career intelligence.
           </h1>
 
@@ -72,7 +72,7 @@ export const LandingPage: React.FC = () => {
           </div>
 
           {/* Trust Matrix Badges */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-y-2 gap-x-6 text-xs text-text-muted font-mono pt-4 border-t border-white/[0.08] w-full">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-y-2 gap-x-6 text-xs text-text-muted font-mono pt-4 border-t border-slate-200 dark:border-white/[0.08] w-full">
             <div className="flex items-center gap-2">
               <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />
               <span>16 MB PDF & DOCX Ingestion</span>
@@ -92,12 +92,12 @@ export const LandingPage: React.FC = () => {
         <div className="mt-14 max-w-6xl mx-auto relative">
           <GlassCard variant="elevated" className="p-0 border border-white/[0.12] shadow-elevated overflow-hidden">
             {/* Terminal Window Header Bar */}
-            <div className="flex items-center justify-between px-4 sm:px-6 py-3 bg-[#0D0F14] border-b border-white/[0.08]">
+            <div className="flex items-center justify-between px-4 sm:px-6 py-3 bg-slate-100 dark:bg-[#0D0F14] border-b border-slate-200 dark:border-white/[0.08]">
               <div className="flex items-center gap-2">
-                <div className="w-2.5 h-2.5 rounded-full bg-zinc-600" />
-                <div className="w-2.5 h-2.5 rounded-full bg-zinc-600" />
-                <div className="w-2.5 h-2.5 rounded-full bg-zinc-600" />
-                <span className="text-xs text-text-muted font-mono ml-3 truncate">
+                <div className="w-2.5 h-2.5 rounded-full bg-slate-400 dark:bg-zinc-600" />
+                <div className="w-2.5 h-2.5 rounded-full bg-slate-400 dark:bg-zinc-600" />
+                <div className="w-2.5 h-2.5 rounded-full bg-slate-400 dark:bg-zinc-600" />
+                <span className="text-xs text-slate-600 dark:text-text-muted font-mono ml-3 truncate">
                   audit_preview.json • Software Developer Archetype
                 </span>
               </div>
@@ -107,10 +107,10 @@ export const LandingPage: React.FC = () => {
             </div>
 
             {/* Dashboard Workspace Mock Content */}
-            <div className="p-6 sm:p-8 bg-[#111318]/90">
+            <div className="p-6 sm:p-8 bg-slate-50/70 dark:bg-[#111318]/90">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                 {/* Score Dial & Category Breakdown (5 Cols) */}
-                <div className="lg:col-span-5 p-5 rounded-xl bg-[#161922] border border-white/[0.08] flex flex-col justify-between">
+                <div className="lg:col-span-5 p-5 rounded-xl bg-white dark:bg-[#161922] border border-slate-200 dark:border-white/[0.08] shadow-sm flex flex-col justify-between">
                   <div className="flex items-center justify-between pb-3 border-b border-white/5">
                     <span className="text-xs font-mono uppercase tracking-wider text-text-secondary">Quality Index</span>
                     <span className="text-xs font-mono text-emerald-400 font-semibold">Tier 1 • Top 14%</span>
@@ -132,9 +132,9 @@ export const LandingPage: React.FC = () => {
                       <div key={dim.name} className="space-y-1">
                         <div className="flex justify-between text-[11px] font-mono">
                           <span className="text-text-secondary">{dim.name}</span>
-                          <span className="text-white font-medium">{dim.max}</span>
+                          <span className="text-slate-900 dark:text-white font-medium">{dim.max}</span>
                         </div>
-                        <div className="w-full h-1 rounded-full bg-white/5 overflow-hidden">
+                        <div className="w-full h-1 rounded-full bg-slate-200 dark:bg-white/5 overflow-hidden">
                           <div 
                             className="h-full bg-blue-500 rounded-full" 
                             style={{ width: `${dim.score}%` }} 
@@ -148,7 +148,7 @@ export const LandingPage: React.FC = () => {
                 {/* Skills & Real-Time Match Radar (7 Cols) */}
                 <div className="lg:col-span-7 flex flex-col justify-between space-y-6">
                   {/* Verified Skill Extraction Box */}
-                  <div className="p-5 rounded-xl bg-[#161922] border border-white/[0.08]">
+                  <div className="p-5 rounded-xl bg-white dark:bg-[#161922] border border-slate-200 dark:border-white/[0.08] shadow-sm">
                     <div className="flex items-center justify-between mb-3">
                       <span className="text-xs font-mono uppercase tracking-wider text-text-secondary">
                         Extracted Technical Inventory
@@ -159,7 +159,7 @@ export const LandingPage: React.FC = () => {
                       {['Python', 'TypeScript', 'React', 'PostgreSQL', 'Docker', 'REST APIs', 'Git', 'FastAPI', 'Redis', 'SQLAlchemy'].map((skill) => (
                         <span 
                           key={skill} 
-                          className="px-2.5 py-1 rounded bg-[#1D212C] border border-white/10 text-xs font-mono text-zinc-200"
+                          className="px-2.5 py-1 rounded bg-slate-100 dark:bg-[#1D212C] border border-slate-200 dark:border-white/10 text-xs font-mono text-slate-800 dark:text-zinc-200"
                         >
                           {skill}
                         </span>
@@ -168,7 +168,7 @@ export const LandingPage: React.FC = () => {
                   </div>
 
                   {/* Live Matched Opportunity */}
-                  <div className="p-5 rounded-xl bg-[#161922] border border-white/[0.08]">
+                  <div className="p-5 rounded-xl bg-white dark:bg-[#161922] border border-slate-200 dark:border-white/[0.08] shadow-sm">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-2">
                         <Briefcase size={14} className="text-blue-400" />
@@ -183,7 +183,7 @@ export const LandingPage: React.FC = () => {
 
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mt-3 pt-3 border-t border-white/5">
                       <div>
-                        <div className="text-sm font-semibold text-white">Full Stack Software Engineer</div>
+                        <div className="text-sm font-semibold text-slate-900 dark:text-white">Full Stack Software Engineer</div>
                         <div className="text-xs text-text-secondary mt-0.5">AuraCloud Technologies • Bangalore (Hybrid)</div>
                       </div>
                       <div className="text-xs font-mono text-text-muted shrink-0">
@@ -204,7 +204,7 @@ export const LandingPage: React.FC = () => {
           <div className="text-xs font-mono uppercase tracking-wider text-text-muted mb-2">
             ENGINEERING CAPABILITIES
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
             Designed for objective precision, not generic placeholders.
           </h2>
         </div>
@@ -218,7 +218,7 @@ export const LandingPage: React.FC = () => {
                 <Cpu size={16} />
               </div>
               <div className="text-xs font-mono text-blue-400 uppercase tracking-wider mb-1">01 // HEURISTIC EVALUATION</div>
-              <h3 className="text-xl font-bold text-white tracking-tight mb-2">
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight mb-2">
                 Deterministic 5-Dimensional Quality Index
               </h3>
               <p className="text-text-secondary text-sm leading-relaxed mb-6">
@@ -227,30 +227,30 @@ export const LandingPage: React.FC = () => {
               </p>
             </div>
 
-            <div className="p-4 rounded-lg bg-[#161922] border border-white/5 font-mono text-xs space-y-2">
+            <div className="p-4 rounded-lg bg-slate-100 dark:bg-[#161922] border border-slate-200 dark:border-white/5 font-mono text-xs space-y-2">
               <div className="flex justify-between text-text-muted">
                 <span>SCORING ENGINE</span>
                 <span className="text-emerald-400">100% EXPLAINABLE</span>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 pt-1 text-[11px]">
-                <div className="p-2 rounded bg-[#0D0F14] text-center border border-white/5">
-                  <div className="text-white font-semibold">20%</div>
+                <div className="p-2 rounded bg-white dark:bg-[#0D0F14] text-center border border-slate-200 dark:border-white/5 shadow-2xs">
+                  <div className="text-slate-900 dark:text-white font-semibold">20%</div>
                   <div className="text-text-muted text-[10px]">Structure</div>
                 </div>
-                <div className="p-2 rounded bg-[#0D0F14] text-center border border-white/5">
-                  <div className="text-white font-semibold">25%</div>
+                <div className="p-2 rounded bg-white dark:bg-[#0D0F14] text-center border border-slate-200 dark:border-white/5 shadow-2xs">
+                  <div className="text-slate-900 dark:text-white font-semibold">25%</div>
                   <div className="text-text-muted text-[10px]">Skills</div>
                 </div>
-                <div className="p-2 rounded bg-[#0D0F14] text-center border border-white/5">
-                  <div className="text-white font-semibold">25%</div>
+                <div className="p-2 rounded bg-white dark:bg-[#0D0F14] text-center border border-slate-200 dark:border-white/5 shadow-2xs">
+                  <div className="text-slate-900 dark:text-white font-semibold">25%</div>
                   <div className="text-text-muted text-[10px]">Projects</div>
                 </div>
-                <div className="p-2 rounded bg-[#0D0F14] text-center border border-white/5">
-                  <div className="text-white font-semibold">15%</div>
+                <div className="p-2 rounded bg-white dark:bg-[#0D0F14] text-center border border-slate-200 dark:border-white/5 shadow-2xs">
+                  <div className="text-slate-900 dark:text-white font-semibold">15%</div>
                   <div className="text-text-muted text-[10px]">Clarity</div>
                 </div>
-                <div className="p-2 rounded bg-[#0D0F14] text-center border border-white/5 col-span-2 sm:col-span-1">
-                  <div className="text-white font-semibold">15%</div>
+                <div className="p-2 rounded bg-white dark:bg-[#0D0F14] text-center border border-slate-200 dark:border-white/5 col-span-2 sm:col-span-1 shadow-2xs">
+                  <div className="text-slate-900 dark:text-white font-semibold">15%</div>
                   <div className="text-text-muted text-[10px]">Impact</div>
                 </div>
               </div>
@@ -264,7 +264,7 @@ export const LandingPage: React.FC = () => {
                 <Zap size={16} />
               </div>
               <div className="text-xs font-mono text-emerald-400 uppercase tracking-wider mb-1">02 // STAR REWRITING</div>
-              <h3 className="text-xl font-bold text-white tracking-tight mb-2">
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight mb-2">
                 Action-Verb & Impact Structuring
               </h3>
               <p className="text-text-secondary text-sm leading-relaxed mb-4">
@@ -272,11 +272,11 @@ export const LandingPage: React.FC = () => {
               </p>
             </div>
 
-            <div className="p-3.5 rounded-lg bg-[#161922] border border-white/5 space-y-2.5 font-mono text-xs">
+            <div className="p-3.5 rounded-lg bg-slate-100 dark:bg-[#161922] border border-slate-200 dark:border-white/5 space-y-2.5 font-mono text-xs">
               <div className="text-[11px] text-rose-400 line-through opacity-75">
                 - Worked on backend APIs and fixed some database bugs.
               </div>
-              <div className="text-[11px] text-emerald-400 pt-1 border-t border-white/5">
+              <div className="text-[11px] text-emerald-600 dark:text-emerald-400 pt-1 border-t border-slate-200 dark:border-white/5 font-medium">
                 + Architected 12 RESTful microservices in Python/Flask, decreasing query response times by 38%.
               </div>
             </div>
@@ -289,7 +289,7 @@ export const LandingPage: React.FC = () => {
                 <Layers size={16} />
               </div>
               <div className="text-xs font-mono text-purple-400 uppercase tracking-wider mb-1">03 // TAXONOMY MATCH</div>
-              <h3 className="text-xl font-bold text-white tracking-tight mb-2">
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight mb-2">
                 Industry Role Benchmarks
               </h3>
               <p className="text-text-secondary text-sm leading-relaxed mb-4">
@@ -299,7 +299,7 @@ export const LandingPage: React.FC = () => {
 
             <div className="flex flex-wrap gap-1.5 font-mono text-xs">
               {['AI/ML Engineer', 'Full Stack Developer', 'Data Analyst', 'Cloud Engineer', 'Cybersecurity'].map((r) => (
-                <span key={r} className="px-2.5 py-1 rounded bg-[#161922] border border-white/10 text-zinc-300">
+                <span key={r} className="px-2.5 py-1 rounded bg-slate-100 dark:bg-[#161922] border border-slate-200 dark:border-white/10 text-slate-800 dark:text-zinc-300 font-medium">
                   {r}
                 </span>
               ))}
@@ -313,7 +313,7 @@ export const LandingPage: React.FC = () => {
                 <Compass size={16} />
               </div>
               <div className="text-xs font-mono text-amber-400 uppercase tracking-wider mb-1">04 // TRAJECTORY BUILDER</div>
-              <h3 className="text-xl font-bold text-white tracking-tight mb-2">
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight mb-2">
                 Personalized Skill Gap Roadmaps
               </h3>
               <p className="text-text-secondary text-sm leading-relaxed mb-4">
@@ -323,13 +323,13 @@ export const LandingPage: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 font-mono text-xs">
-              <div className="p-3 rounded-lg bg-[#161922] border border-white/5 flex items-center gap-2">
+              <div className="p-3 rounded-lg bg-slate-100 dark:bg-[#161922] border border-slate-200 dark:border-white/5 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-rose-400" />
-                <span className="text-zinc-200">High Priority: Docker Containerization</span>
+                <span className="text-slate-800 dark:text-zinc-200 font-medium">High Priority: Docker Containerization</span>
               </div>
-              <div className="p-3 rounded-lg bg-[#161922] border border-white/5 flex items-center gap-2">
+              <div className="p-3 rounded-lg bg-slate-100 dark:bg-[#161922] border border-slate-200 dark:border-white/5 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-amber-400" />
-                <span className="text-zinc-200">Medium Priority: SQL Index Optimization</span>
+                <span className="text-slate-800 dark:text-zinc-200 font-medium">Medium Priority: SQL Index Optimization</span>
               </div>
             </div>
           </GlassCard>
@@ -342,31 +342,31 @@ export const LandingPage: React.FC = () => {
           <div className="text-xs font-mono uppercase tracking-wider text-text-muted mb-2">
             WORKFLOW
           </div>
-          <h2 className="text-3xl font-bold text-white tracking-tight">
+          <h2 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
             How meRESUmax Operates
           </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-6 rounded-xl bg-[#111318] border border-white/[0.08] relative">
+          <div className="p-6 rounded-xl bg-white dark:bg-[#111318] border border-slate-200 dark:border-white/[0.08] shadow-sm relative">
             <div className="text-xs font-mono text-text-muted mb-3">STEP // 01</div>
-            <h3 className="text-lg font-bold text-white mb-2">Document Ingestion</h3>
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Document Ingestion</h3>
             <p className="text-text-secondary text-sm leading-relaxed">
               Upload PDF or DOCX documents. Our parser performs in-memory extraction of sections, skills, work history, and academic milestones in milliseconds.
             </p>
           </div>
 
-          <div className="p-6 rounded-xl bg-[#111318] border border-white/[0.08] relative">
+          <div className="p-6 rounded-xl bg-white dark:bg-[#111318] border border-slate-200 dark:border-white/[0.08] shadow-sm relative">
             <div className="text-xs font-mono text-text-muted mb-3">STEP // 02</div>
-            <h3 className="text-lg font-bold text-white mb-2">Heuristic & Skill Audit</h3>
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Heuristic & Skill Audit</h3>
             <p className="text-text-secondary text-sm leading-relaxed">
               Calculates your 0-100 ATS quality score, extracts technical inventory, matches target role archetypes, and identifies critical skill gaps.
             </p>
           </div>
 
-          <div className="p-6 rounded-xl bg-[#111318] border border-white/[0.08] relative">
+          <div className="p-6 rounded-xl bg-white dark:bg-[#111318] border border-slate-200 dark:border-white/[0.08] shadow-sm relative">
             <div className="text-xs font-mono text-text-muted mb-3">STEP // 03</div>
-            <h3 className="text-lg font-bold text-white mb-2">Trajectory & Applications</h3>
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Trajectory & Applications</h3>
             <p className="text-text-secondary text-sm leading-relaxed">
               Export downloadable PDF audit reports, generate tailored STAR rewrites, simulate mock interviews, and apply to high-match jobs.
             </p>
@@ -378,7 +378,7 @@ export const LandingPage: React.FC = () => {
       <section id="faq" className="max-w-4xl mx-auto px-4 sm:px-6 py-16 relative z-10">
         <div className="mb-10 text-center">
           <div className="text-xs font-mono uppercase tracking-wider text-text-muted mb-2">EXPLAINABILITY</div>
-          <h2 className="text-3xl font-bold text-white tracking-tight">Frequently Asked Questions</h2>
+          <h2 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Frequently Asked Questions</h2>
         </div>
 
         <div className="space-y-3">
@@ -387,11 +387,11 @@ export const LandingPage: React.FC = () => {
             return (
               <div 
                 key={idx} 
-                className="rounded-xl bg-[#111318] border border-white/[0.08] transition-all overflow-hidden"
+                className="rounded-xl bg-white dark:bg-[#111318] border border-slate-200 dark:border-white/[0.08] shadow-2xs transition-all overflow-hidden"
               >
                 <button
                   onClick={() => setActiveFaq(isOpen ? null : idx)}
-                  className="w-full p-5 flex items-center justify-between text-left text-sm sm:text-base font-medium text-white focus:outline-none cursor-pointer"
+                  className="w-full p-5 flex items-center justify-between text-left text-sm sm:text-base font-medium text-slate-900 dark:text-white focus:outline-none cursor-pointer"
                 >
                   <span>{faq.q}</span>
                   {isOpen ? (
@@ -401,7 +401,7 @@ export const LandingPage: React.FC = () => {
                   )}
                 </button>
                 {isOpen && (
-                  <div className="px-5 pb-5 text-sm text-text-secondary leading-relaxed pt-1 border-t border-white/[0.06]">
+                  <div className="px-5 pb-5 text-sm text-text-secondary leading-relaxed pt-1 border-t border-slate-200 dark:border-white/[0.06]">
                     {faq.a}
                   </div>
                 )}
@@ -413,9 +413,9 @@ export const LandingPage: React.FC = () => {
 
       {/* 6. BOTTOM CALL TO ACTION */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-12 relative z-10">
-        <div className="p-8 sm:p-12 rounded-xl bg-[#111318] border border-white/[0.12] text-left relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div className="p-8 sm:p-12 rounded-xl bg-white dark:bg-[#111318] border border-slate-200 dark:border-white/[0.12] shadow-card text-left relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="max-w-xl space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
               Ready to give your resume the intelligence it deserves?
             </h2>
             <p className="text-text-secondary text-sm">

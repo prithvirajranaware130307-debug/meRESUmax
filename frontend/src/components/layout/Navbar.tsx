@@ -227,7 +227,7 @@ export const Navbar: React.FC = () => {
                         : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
                     }`}
                   >
-                    <Icon size={14} className={`shrink-0 ${active ? 'text-white' : 'text-zinc-400'}`} />
+                    <Icon size={14} className={`shrink-0 ${active ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-zinc-400'}`} />
                     <span>{link.label}</span>
                   </Link>
                 );
@@ -253,7 +253,7 @@ export const Navbar: React.FC = () => {
                   <ChevronDown 
                     size={13} 
                     className={`shrink-0 opacity-70 transition-transform duration-200 ${
-                      moreMenuOpen ? 'rotate-180 text-white' : ''
+                      moreMenuOpen ? 'rotate-180 text-slate-900 dark:text-white' : ''
                     }`} 
                   />
                 </button>
@@ -278,11 +278,11 @@ export const Navbar: React.FC = () => {
                           onClick={() => setMoreMenuOpen(false)}
                           className={`px-3 py-2 text-xs font-medium rounded-lg flex items-center gap-2.5 transition-all duration-150 ${
                             active
-                              ? 'text-white bg-white/[0.10] font-semibold'
-                              : 'text-text-secondary hover:text-white hover:bg-white/[0.05]'
+                              ? 'text-blue-600 dark:text-white bg-blue-50 dark:bg-white/[0.10] font-semibold'
+                              : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.05]'
                           }`}
                         >
-                          <Icon size={14} className={`shrink-0 ${active ? 'text-white' : 'text-zinc-400'}`} />
+                          <Icon size={14} className={`shrink-0 ${active ? 'text-blue-600 dark:text-white' : 'text-slate-500 dark:text-zinc-400'}`} />
                           <span>{link.label}</span>
                         </Link>
                       );
@@ -378,7 +378,7 @@ export const Navbar: React.FC = () => {
                 to="/"
                 onClick={() => setMobileMenuOpen(false)}
                 className={`px-3 py-2 text-sm font-medium rounded-lg flex items-center justify-between transition-colors ${
-                  isActive('/') ? 'text-white bg-white/[0.08]' : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
+                  isActive('/') ? 'text-blue-600 dark:text-white bg-blue-50 dark:bg-white/[0.08] font-semibold' : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
                 }`}
               >
                 <span>Home</span>
@@ -388,7 +388,7 @@ export const Navbar: React.FC = () => {
                 to="/jobs"
                 onClick={() => setMobileMenuOpen(false)}
                 className={`px-3 py-2 text-sm font-medium rounded-lg flex items-center justify-between transition-colors ${
-                  isActive('/jobs') ? 'text-white bg-white/[0.08]' : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
+                  isActive('/jobs') ? 'text-blue-600 dark:text-white bg-blue-50 dark:bg-white/[0.08] font-semibold' : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
                 }`}
               >
                 <span>Explore Jobs</span>
@@ -473,16 +473,16 @@ export const Navbar: React.FC = () => {
                     to={link.to}
                     onClick={() => setMobileMenuOpen(false)}
                     className={`px-3 py-2 text-sm font-medium rounded-lg flex items-center gap-2.5 transition-colors ${
-                      active ? 'text-white bg-white/[0.09] font-semibold' : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
+                      active ? 'text-blue-600 dark:text-white bg-blue-50 dark:bg-white/[0.09] font-semibold' : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
                     }`}
                   >
-                    <Icon size={16} className={`shrink-0 ${active ? 'text-white' : 'text-zinc-400'}`} />
+                    <Icon size={16} className={`shrink-0 ${active ? 'text-blue-600 dark:text-white' : 'text-slate-500 dark:text-zinc-400'}`} />
                     <span>{link.label}</span>
                   </Link>
                 );
               })}
 
-              <div className="h-px bg-white/10 my-1" />
+              <div className="h-px bg-slate-200 dark:bg-white/10 my-1" />
 
               {/* Secondary Tools & Intelligence */}
               <div className="text-[10px] font-mono uppercase tracking-wider text-text-muted px-3 pt-1">
@@ -497,16 +497,16 @@ export const Navbar: React.FC = () => {
                     to={link.to}
                     onClick={() => setMobileMenuOpen(false)}
                     className={`px-3 py-2 text-sm font-medium rounded-lg flex items-center gap-2.5 transition-colors ${
-                      active ? 'text-white bg-white/[0.09] font-semibold' : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
+                      active ? 'text-blue-600 dark:text-white bg-blue-50 dark:bg-white/[0.09] font-semibold' : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
                     }`}
                   >
-                    <Icon size={16} className={`shrink-0 ${active ? 'text-white' : 'text-zinc-400'}`} />
+                    <Icon size={16} className={`shrink-0 ${active ? 'text-blue-600 dark:text-white' : 'text-slate-500 dark:text-zinc-400'}`} />
                     <span>{link.label}</span>
                   </Link>
                 );
               })}
 
-              <div className="h-px bg-white/10 my-1.5" />
+              <div className="h-px bg-slate-200 dark:bg-white/10 my-1.5" />
 
               {/* Logout Action */}
               <button

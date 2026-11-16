@@ -31,9 +31,9 @@ export const GlassButton: React.FC<GlassButtonProps> = ({
     secondary:
       'bg-[#E8FF47] text-[#0A0A0A] font-medium border border-[#E8FF47] shadow-sm hover:bg-[#F0FF6A] hover:border-[#F0FF6A] active:scale-[0.98] transition-all',
     ghost:
-      'bg-[#E8FF47]/10 text-[#E8FF47] border border-[#E8FF47]/30 hover:bg-[#E8FF47]/20 hover:border-[#E8FF47]/60 transition-all',
+      'bg-slate-100 dark:bg-[#E8FF47]/10 text-slate-800 dark:text-[#E8FF47] border border-slate-300 dark:border-[#E8FF47]/30 hover:bg-slate-200 dark:hover:bg-[#E8FF47]/20 hover:border-slate-400 dark:hover:border-[#E8FF47]/60 transition-all',
     danger:
-      'bg-rose-500/10 text-rose-300 border border-rose-500/20 hover:bg-rose-500/20 active:scale-[0.98] transition-all',
+      'bg-rose-500/10 text-rose-600 dark:text-rose-300 border border-rose-500/20 hover:bg-rose-500/20 active:scale-[0.98] transition-all',
   }[variant];
 
   return (

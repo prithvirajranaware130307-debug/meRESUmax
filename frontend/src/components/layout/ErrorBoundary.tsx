@@ -40,7 +40,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 <AlertTriangle size={28} />
               </div>
 
-              <h1 className="text-xl font-bold text-white mb-2">
+              <h1 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
                 Interface Recovery Mode
               </h1>
 
@@ -49,7 +49,7 @@ export class ErrorBoundary extends Component<Props, State> {
               </p>
 
               {this.state.error?.message && (
-                <div className="mb-6 p-3 rounded-xl bg-black/40 border border-white/5 text-[11px] text-text-muted font-mono text-left overflow-x-auto max-h-24">
+                <div className="mb-6 p-3 rounded-xl bg-slate-100 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-[11px] text-slate-700 dark:text-text-muted font-mono text-left overflow-x-auto max-h-24">
                   {this.state.error.message}
                 </div>
               )}

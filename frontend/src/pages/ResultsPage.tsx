@@ -204,7 +204,7 @@ export const ResultsPage: React.FC = () => {
       {/* Top Breadcrumb & Actions Bar */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
         <div>
-          <Link to="/dashboard" className="inline-flex items-center gap-1.5 text-xs font-mono text-text-muted hover:text-white mb-2 transition-colors">
+          <Link to="/dashboard" className="inline-flex items-center gap-1.5 text-xs font-mono text-text-muted hover:text-slate-900 dark:hover:text-white mb-2 transition-colors">
             <ArrowLeft size={13} /> Back to Command Center
           </Link>
           <div className="flex flex-wrap items-center gap-3">
@@ -372,7 +372,7 @@ export const ResultsPage: React.FC = () => {
                     </div>
                     <button
                       onClick={() => copyToClipboard(item.better, `bullet-${idx}`)}
-                      className="text-xs text-text-secondary hover:text-white flex items-center gap-1 transition-colors"
+                      className="text-xs text-text-secondary hover:text-slate-900 dark:hover:text-white flex items-center gap-1 transition-colors"
                       title="Copy improved bullet"
                     >
                       {copiedKey === `bullet-${idx}` ? <Check size={13} className="text-brand-mint" /> : <Copy size={13} />}
@@ -452,7 +452,7 @@ export const ResultsPage: React.FC = () => {
                 <span>{kw}</span>
                 <button
                   onClick={() => copyToClipboard(kw, `kw-${i}`)}
-                  className="text-text-muted hover:text-white p-1"
+                  className="text-text-muted hover:text-slate-900 dark:hover:text-white p-1"
                   title="Copy keyword phrase"
                 >
                   {copiedKey === `kw-${i}` ? <Check size={13} className="text-brand-mint" /> : <Copy size={13} />}
@@ -491,7 +491,7 @@ export const ResultsPage: React.FC = () => {
             </div>
             <button
               onClick={() => copyToClipboard(ai.summary_rewrite || '', 'summary')}
-              className="text-xs text-text-secondary hover:text-white flex items-center gap-1.5 transition-colors"
+              className="text-xs text-text-secondary hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 transition-colors"
             >
               {copiedKey === 'summary' ? <Check size={14} className="text-brand-mint" /> : <Copy size={14} />}
               <span>{copiedKey === 'summary' ? 'Copied' : 'Copy'}</span>
