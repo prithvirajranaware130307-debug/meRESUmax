@@ -85,7 +85,7 @@ export const RoadmapPage: React.FC = () => {
             <Compass size={13} />
             <span>Target Trajectory</span>
           </div>
-          <h1 className="text-3xl font-extrabold text-white tracking-tight">
+          <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             Personalized Career Roadmap
           </h1>
           <p className="text-xs sm:text-sm text-text-secondary mt-1">
@@ -138,7 +138,7 @@ export const RoadmapPage: React.FC = () => {
       {/* Add Modal */}
       {showAddModal && (
         <GlassCard variant="elevated" className="p-6 mb-8 border border-brand-cyan/30">
-          <h3 className="text-sm font-bold text-white mb-3">Add Custom Career Milestone</h3>
+          <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-3">Add Custom Career Milestone</h3>
           <form onSubmit={handleCreateTask} className="space-y-3">
             <input
               type="text"
@@ -146,24 +146,24 @@ export const RoadmapPage: React.FC = () => {
               value={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
               placeholder="Milestone title (e.g. Master Docker container networking)"
-              className="w-full p-2.5 bg-black/40 border border-white/10 rounded-xl text-xs sm:text-sm text-white placeholder-text-muted focus:outline-none focus:border-brand-blue"
+              className="w-full p-2.5 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:border-blue-500"
             />
             <textarea
               value={newDesc}
               onChange={(e) => setNewDesc(e.target.value)}
               placeholder="Objective details, capstone requirements, or reference links..."
               rows={2}
-              className="w-full p-2.5 bg-black/40 border border-white/10 rounded-xl text-xs sm:text-sm text-white placeholder-text-muted focus:outline-none focus:border-brand-blue"
+              className="w-full p-2.5 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:border-blue-500"
             />
             <div className="flex items-center justify-between pt-1">
               <select
                 value={newPriority}
                 onChange={(e) => setNewPriority(e.target.value as any)}
-                className="px-3 py-1.5 bg-black/40 border border-white/10 rounded-xl text-xs text-white"
+                className="px-3 py-1.5 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white"
               >
-                <option value="high" className="bg-[#0B1020]">High Priority</option>
-                <option value="medium" className="bg-[#0B1020]">Medium Priority</option>
-                <option value="low" className="bg-[#0B1020]">Low Priority</option>
+                <option value="high" className="bg-white text-slate-900 dark:bg-[#0B1020] dark:text-white">High Priority</option>
+                <option value="medium" className="bg-white text-slate-900 dark:bg-[#0B1020] dark:text-white">Medium Priority</option>
+                <option value="low" className="bg-white text-slate-900 dark:bg-[#0B1020] dark:text-white">Low Priority</option>
               </select>
 
               <div className="flex items-center gap-2">
@@ -199,12 +199,12 @@ export const RoadmapPage: React.FC = () => {
                 {/* Node icon on timeline */}
                 <button
                   onClick={() => handleToggleTask(task)}
-                  className={`absolute left-2.5 top-3 w-5 h-5 rounded-full flex items-center justify-center transition-all bg-[#070912] border ${
+                  className={`absolute left-2.5 top-3 w-5 h-5 rounded-full flex items-center justify-center transition-all bg-white dark:bg-[#070912] border ${
                     isDone ? 'border-brand-mint text-brand-mint shadow-glow-mint' : 'border-white/20 text-text-muted hover:border-white/50'
                   }`}
                   title={isDone ? 'Mark Incomplete' : 'Mark Completed'}
                 >
-                  {isDone ? <CheckCircle2 size={16} fill="currentColor" className="text-brand-mint bg-[#070912]" /> : <Circle size={10} />}
+                  {isDone ? <CheckCircle2 size={16} fill="currentColor" className="text-brand-mint bg-white dark:bg-[#070912]" /> : <Circle size={10} />}
                 </button>
 
                 {/* Milestone Card */}
@@ -222,7 +222,7 @@ export const RoadmapPage: React.FC = () => {
                           Phase {index + 1}
                         </span>
                       </div>
-                      <h3 className={`text-sm sm:text-base font-bold ${isDone ? 'line-through text-text-muted' : 'text-white'}`}>
+                      <h3 className={`text-sm sm:text-base font-bold ${isDone ? 'line-through text-text-muted' : 'text-slate-900 dark:text-white'}`}>
                         {task.title}
                       </h3>
                       {task.description && (
@@ -248,7 +248,7 @@ export const RoadmapPage: React.FC = () => {
       ) : (
         <GlassCard variant="standard" className="p-12 text-center text-text-secondary">
           <Compass size={28} className="mx-auto mb-2 text-text-muted" />
-          <div className="text-sm font-semibold text-white">No roadmap tasks found</div>
+          <div className="text-sm font-semibold text-slate-900 dark:text-white">No roadmap tasks found</div>
           <p className="text-xs text-text-muted mt-1 max-w-sm mx-auto">
             Upload and analyze a resume to generate tailored learning milestones based on your skill gaps.
           </p>

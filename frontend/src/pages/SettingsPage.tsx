@@ -60,7 +60,7 @@ export const SettingsPage: React.FC = () => {
           <Settings size={13} />
           <span>System & Preferences</span>
         </div>
-        <h1 className="text-3xl font-extrabold text-white tracking-tight">Platform Settings</h1>
+        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Platform Settings</h1>
         <p className="text-xs text-text-secondary mt-1">
           Inspect backend integrations, telemetry privacy, and manage your account credentials.
         </p>
@@ -70,7 +70,7 @@ export const SettingsPage: React.FC = () => {
         {/* Backend & AI Integration Health */}
         <GlassCard variant="standard" className="p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-sm font-bold text-white flex items-center gap-2">
+            <h2 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
               <Cpu size={16} className="text-brand-blue" />
               <span>Service Integration Status</span>
             </h2>
@@ -88,7 +88,7 @@ export const SettingsPage: React.FC = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 space-y-1.5">
-              <div className="text-xs font-semibold text-white flex items-center justify-between">
+              <div className="text-xs font-semibold text-slate-900 dark:text-white flex items-center justify-between">
                 <span>AI Intelligence Engine</span>
                 <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
                   healthData?.ai_service?.configured 
@@ -101,23 +101,23 @@ export const SettingsPage: React.FC = () => {
                 </span>
               </div>
               <p className="text-[11px] text-text-secondary">
-                Model: <span className="font-mono text-white">{healthData?.ai_service?.model || 'gpt-4o-mini'}</span>
+                Model: <span className="font-mono text-slate-800 dark:text-white">{healthData?.ai_service?.model || 'gpt-4o-mini'}</span>
               </p>
             </div>
 
             <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 space-y-1.5">
-              <div className="text-xs font-semibold text-white flex items-center justify-between">
+              <div className="text-xs font-semibold text-slate-900 dark:text-white flex items-center justify-between">
                 <span>Job Recommendation Stream</span>
                 <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
                   healthData?.job_service?.configured 
                     ? 'bg-emerald-500/10 text-emerald-400' 
                     : 'bg-amber-500/10 text-amber-400'
                 }`}>
-                  {healthData?.job_service?.configured ? 'Live Adzuna' : 'Curated Demo Engine'}
+                  {healthData?.job_service?.configured ? 'Live JSearch' : 'Curated Demo Engine'}
                 </span>
               </div>
               <p className="text-[11px] text-text-secondary">
-                Region: <span className="font-mono text-white">{healthData?.job_service?.country?.toUpperCase() || 'IN'}</span>
+                Region: <span className="font-mono text-slate-800 dark:text-white">{healthData?.job_service?.country?.toUpperCase() || 'IN'}</span>
               </p>
             </div>
           </div>
@@ -125,7 +125,7 @@ export const SettingsPage: React.FC = () => {
 
         {/* Privacy & Document Security */}
         <GlassCard variant="standard" className="p-6">
-          <h2 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
+          <h2 className="text-sm font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
             <Lock size={16} className="text-emerald-400" />
             <span>Privacy & Storage Compliance</span>
           </h2>

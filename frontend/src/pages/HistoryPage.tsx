@@ -51,7 +51,7 @@ export const HistoryPage: React.FC = () => {
             <History size={13} />
             <span>Audit Archive</span>
           </div>
-          <h1 className="text-3xl font-extrabold text-white tracking-tight">Analysis History</h1>
+          <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Analysis History</h1>
           <p className="text-xs sm:text-sm text-text-secondary mt-1">
             Review past resume evaluations, track score improvements over time, and retrieve executive PDF reports.
           </p>
@@ -99,7 +99,7 @@ export const HistoryPage: React.FC = () => {
 
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <h3 className="text-base font-bold text-white tracking-tight">{a.target_role}</h3>
+                    <h3 className="text-base font-bold text-slate-900 dark:text-white tracking-tight">{a.target_role}</h3>
                     <span className="text-xs text-text-muted font-mono">•</span>
                     <span className="text-xs text-brand-cyan font-mono">{Math.round(a.job_match_score)}% Role Match</span>
                   </div>
@@ -145,7 +145,7 @@ export const HistoryPage: React.FC = () => {
       ) : (
         <GlassCard variant="standard" className="p-12 text-center text-text-secondary">
           <FileText size={32} className="mx-auto mb-3 text-text-muted opacity-60" />
-          <h3 className="text-base font-bold text-white mb-1">No Previous Audits Found</h3>
+          <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1">No Previous Audits Found</h3>
           <p className="text-xs text-text-secondary max-w-sm mx-auto mb-6">
             You haven't run any resume evaluations yet. Upload your resume to receive your first ATS score and actionable recommendations.
           </p>

@@ -164,20 +164,20 @@ export const FloatingAssistant: React.FC = () => {
         <div 
           className={`pointer-events-auto mb-3 w-[calc(100vw-1.5rem)] sm:w-[420px] max-w-[420px] transition-all duration-200 ease-out origin-bottom-right ${
             isMinimized 
-              ? 'h-13 overflow-hidden rounded-xl bg-[#0D0F14]/95 border border-white/10 shadow-elevated'
-              : 'h-[500px] max-h-[calc(100vh-6.5rem)] rounded-xl bg-[#0D0F14]/95 border border-white/10 shadow-elevated flex flex-col overflow-hidden'
+              ? 'h-13 overflow-hidden rounded-xl bg-white/98 dark:bg-[#0D0F14]/95 border border-slate-200 dark:border-white/10 shadow-elevated'
+              : 'h-[500px] max-h-[calc(100vh-6.5rem)] rounded-xl bg-white/98 dark:bg-[#0D0F14]/95 border border-slate-200 dark:border-white/10 shadow-elevated flex flex-col overflow-hidden'
           }`}
           role="dialog"
           aria-label="meRESUmax AI Career Assistant"
         >
           {/* Header */}
-          <div className="px-4 py-3 bg-white/[0.02] border-b border-white/[0.08] flex items-center justify-between shrink-0">
+          <div className="px-4 py-3 bg-slate-50/80 dark:bg-white/[0.02] border-b border-slate-200 dark:border-white/[0.08] flex items-center justify-between shrink-0">
             <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 rounded-lg bg-[#161922] border border-white/10 text-zinc-200 flex items-center justify-center shrink-0">
+              <div className="w-7 h-7 rounded-lg bg-slate-100 dark:bg-[#161922] border border-slate-200 dark:border-white/10 text-slate-800 dark:text-zinc-200 flex items-center justify-center shrink-0">
                 <Bot size={15} />
               </div>
               <div>
-                <div className="text-xs font-semibold text-white flex items-center gap-1.5 leading-tight">
+                <div className="text-xs font-semibold text-slate-900 dark:text-white flex items-center gap-1.5 leading-tight">
                   <span>Career Intelligence Assistant</span>
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                 </div>
@@ -332,7 +332,7 @@ export const FloatingAssistant: React.FC = () => {
               </div>
 
               {/* Chat Input Bar */}
-              <div className="p-3 bg-black/25 border-t border-white/[0.08] shrink-0">
+              <div className="p-3 bg-slate-50/90 dark:bg-black/25 border-t border-slate-200 dark:border-white/[0.08] shrink-0">
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
@@ -348,12 +348,12 @@ export const FloatingAssistant: React.FC = () => {
                     onKeyDown={handleKeyDown}
                     placeholder="Ask about resume, score, ATS, or interview..."
                     disabled={isLoading}
-                    className="flex-1 bg-[#090A0E] border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-text-muted focus:outline-none focus:border-blue-500 disabled:opacity-50 transition-colors"
+                    className="flex-1 bg-white dark:bg-[#090A0E] border border-slate-300 dark:border-white/10 rounded-lg px-3 py-2 text-xs text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:border-blue-500 disabled:opacity-50 transition-colors"
                   />
                   <button
                     type="submit"
                     disabled={!inputMessage.trim() || isLoading}
-                    className="p-2 rounded-lg bg-white text-[#090A0E] hover:bg-zinc-200 disabled:opacity-40 disabled:cursor-not-allowed transition-all shrink-0 cursor-pointer"
+                    className="p-2 rounded-lg bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-[#090A0E] dark:hover:bg-zinc-200 disabled:opacity-40 disabled:cursor-not-allowed transition-all shrink-0 cursor-pointer"
                     title="Send Message"
                     aria-label="Send Message"
                   >
@@ -373,8 +373,8 @@ export const FloatingAssistant: React.FC = () => {
           setIsOpen(prev => !prev);
           setIsMinimized(false);
         }}
-        className={`pointer-events-auto group relative flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-xl bg-[#111318]/95 border border-white/12 shadow-card transition-all duration-200 cursor-pointer ${
-          isOpen ? 'bg-[#161922] border-white/20' : 'hover:bg-[#161922] hover:border-white/20'
+        className={`pointer-events-auto group relative flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-xl bg-white/95 dark:bg-[#111318]/95 border border-slate-200 dark:border-white/12 shadow-card transition-all duration-200 cursor-pointer ${
+          isOpen ? 'bg-slate-100 dark:bg-[#161922] border-slate-300 dark:border-white/20' : 'hover:bg-slate-100 dark:hover:bg-[#161922] hover:border-slate-300 dark:hover:border-white/20'
         }`}
         aria-label="Open AI Career Assistant"
         aria-expanded={isOpen}
@@ -388,7 +388,7 @@ export const FloatingAssistant: React.FC = () => {
         </div>
 
         <div className="hidden sm:flex flex-col text-left">
-          <span className="text-xs font-semibold text-white tracking-tight flex items-center gap-1">
+          <span className="text-xs font-semibold text-slate-900 dark:text-white tracking-tight flex items-center gap-1">
             Assistant
           </span>
         </div>

@@ -181,75 +181,164 @@ CURATED_SAMPLE_JOBS = [
 
 class JobService:
     @classmethod
-    def is_adzuna_configured(cls) -> bool:
-        return bool(Config.ADZUNA_APP_ID and Config.ADZUNA_APP_KEY and not Config.ADZUNA_APP_ID.startswith("replace_"))
+    def is_jsearch_configured(cls) -> bool:
+        return bool(Config.RAPIDAPI_KEY and not Config.RAPIDAPI_KEY.startswith("replace_"))
 
     @classmethod
     def fetch_jobs(
         cls, 
-        query: str = 'software engineer', 
+        query: str = 'software developer', 
         location: str = '', 
         page: int = 1,
         job_type: str = 'all'
     ) -> Dict[str, Any]:
         """
-        Retrieves real job listings from Adzuna if credentials exist.
-        Otherwise provides curated sample listings with unambiguous demo labels.
+        Retrieves live job listings from JSearch Mega via RapidAPI if credentials exist.
+        Otherwise falls back to curated demonstration listings with unambiguous states:
+        - 'Live JSearch results'
+        - 'Curated demo jobs — connect JSearch in Render for live listings'
+        - 'Job service temporarily unavailable — showing curated demo jobs'
         """
-        if cls.is_adzuna_configured():
+        jsearch_available = cls.is_jsearch_configured()
+        had_api_error = False
+
+        if jsearch_available:
             try:
-                country = Config.ADZUNA_COUNTRY or 'in'
-                url = f"https://api.adzuna.com/v1/api/jobs/{country}/search/{page}"
-                params = {
-                    'app_id': Config.ADZUNA_APP_ID,
-                    'app_key': Config.ADZUNA_APP_KEY,
-                    'what': query,
-                    'where': location,
-                    'results_per_page': 10,
-                    'content-type': 'application/json'
+                host = Config.JSEARCH_API_HOST or 'jsearch-mega.p.rapidapi.com'
+                url = f"https://{host}/search"
+                
+                # Build sensible query using role and location
+                q_clean = (query or '').strip()
+                loc_clean = (location or '').strip()
+
+                if q_clean and loc_clean:
+                    search_query = f"{q_clean} jobs in {loc_clean}"
+                elif q_clean:
+                    search_query = f"{q_clean} jobs in India" if " in " not in q_clean.lower() else q_clean
+                elif loc_clean:
+                    search_query = f"software developer jobs in {loc_clean}"
+                else:
+                    search_query = "software developer jobs in India"
+
+                params: Dict[str, Any] = {
+                    'query': search_query,
+                    'page': str(page),
+                    'num_pages': 1,
                 }
-                response = requests.get(url, params=params, timeout=10)
+
+                if job_type and job_type.lower() == 'full-time':
+                    params['employment_types'] = 'FULLTIME'
+                elif job_type and job_type.lower() == 'internship':
+                    params['employment_types'] = 'INTERN'
+
+                headers = {
+                    'x-rapidapi-key': Config.RAPIDAPI_KEY,
+                    'x-rapidapi-host': host
+                }
+
+                # Strict connect and read timeouts (5s connect, 8s read)
+                response = requests.get(url, headers=headers, params=params, timeout=(5.0, 8.0))
+
                 if response.status_code == 200:
                     data = response.json()
-                    results = data.get('results', [])
-                    normalized = []
-                    for item in results:
-                        salary_min = item.get('salary_min')
-                        salary_max = item.get('salary_max')
-                        company = item.get('company', {}).get('display_name', 'Tech Employer')
-                        loc = item.get('location', {}).get('display_name', 'Various Locations')
-                        
-                        normalized.append({
-                            'external_id': f"adzuna_{item.get('id')}",
-                            'provider': 'adzuna',
-                            'title': item.get('title', 'Software Role'),
-                            'company': company,
-                            'location': loc,
-                            'description': item.get('description', ''),
-                            'required_skills': cls._extract_skills_from_text(item.get('description', '')),
-                            'salary_min': salary_min,
-                            'salary_max': salary_max,
-                            'salary_currency': 'INR' if country == 'in' else 'USD',
-                            'job_type': 'Full-time',
-                            'experience_level': 'Direct Hire',
-                            'url': item.get('redirect_url', '#'),
-                            'is_demo': False,
-                            'posted_at': item.get('created', datetime.utcnow().isoformat())
-                        })
+                    raw_items = data.get('data', []) if isinstance(data, dict) else []
                     
-                    return {
-                        'provider': 'adzuna',
-                        'is_live': True,
-                        'total': data.get('count', len(normalized)),
-                        'page': page,
-                        'jobs': normalized
-                    }
-                else:
-                    logger.warning(f"Adzuna API returned {response.status_code}: {response.text}")
-            except Exception as e:
-                logger.error(f"Error querying Adzuna API: {e}")
+                    if raw_items:
+                        normalized = []
+                        for item in raw_items:
+                            if not isinstance(item, dict):
+                                continue
 
-        # Curated Sample Job Listings with Explicit Demo Labeling
+                            # Defensive extraction of fields
+                            job_id = item.get('job_id') or str(hash(item.get('job_title', '') + item.get('employer_name', '')))
+                            title = item.get('job_title') or 'Software Developer'
+                            company = item.get('employer_name') or 'Tech Employer'
+
+                            # Location resolution
+                            loc_parts = [
+                                item.get('job_city'),
+                                item.get('job_state'),
+                                item.get('job_country')
+                            ]
+                            formatted_loc = ', '.join([p for p in loc_parts if p])
+                            if not formatted_loc:
+                                formatted_loc = item.get('job_location') or ('Remote' if item.get('job_is_remote') else 'India')
+                            elif item.get('job_is_remote'):
+                                formatted_loc = f"{formatted_loc} (Remote Available)"
+
+                            # Description & required skills
+                            description = item.get('job_description') or ''
+                            skills = item.get('job_required_skills')
+                            if not skills or not isinstance(skills, list):
+                                skills = cls._extract_skills_from_text(description)
+                            else:
+                                skills = [str(s) for s in skills[:6]]
+
+                            # Salary fields
+                            salary_min = item.get('job_min_salary')
+                            salary_max = item.get('job_max_salary')
+                            salary_curr = item.get('job_salary_currency') or 'INR'
+
+                            # Normalize employment type
+                            emp_type = item.get('job_employment_type') or 'Full-time'
+                            if emp_type.upper() == 'FULLTIME':
+                                emp_type = 'Full-time'
+                            elif emp_type.upper() == 'INTERN':
+                                emp_type = 'Internship'
+                            elif emp_type.upper() == 'CONTRACTOR':
+                                emp_type = 'Contract'
+
+                            # Experience level
+                            req_exp = item.get('job_required_experience') or {}
+                            if isinstance(req_exp, dict) and req_exp.get('no_experience_required'):
+                                exp_level = 'Entry Level'
+                            else:
+                                exp_level = 'Direct Hire'
+
+                            # Trusted external URL
+                            apply_url = item.get('job_apply_link') or item.get('job_google_link') or '#'
+
+                            posted_at = item.get('job_posted_at_datetime_utc') or datetime.utcnow().isoformat()
+
+                            normalized.append({
+                                'external_id': f"jsearch_{job_id}",
+                                'provider': 'jsearch',
+                                'title': title,
+                                'company': company,
+                                'location': formatted_loc,
+                                'description': description[:800],
+                                'required_skills': skills,
+                                'salary_min': float(salary_min) if salary_min is not None else None,
+                                'salary_max': float(salary_max) if salary_max is not None else None,
+                                'salary_currency': salary_curr,
+                                'job_type': emp_type,
+                                'experience_level': exp_level,
+                                'url': apply_url,
+                                'is_demo': False,
+                                'posted_at': posted_at
+                            })
+
+                        if normalized:
+                            return {
+                                'provider': 'jsearch',
+                                'is_live': True,
+                                'message': 'Live JSearch results',
+                                'total': len(normalized),
+                                'page': page,
+                                'jobs': normalized
+                            }
+                        else:
+                            had_api_error = True
+                    else:
+                        had_api_error = True
+                else:
+                    logger.warning(f"JSearch API returned HTTP {response.status_code}")
+                    had_api_error = True
+            except Exception as e:
+                logger.warning(f"Error querying JSearch API: {e}")
+                had_api_error = True
+
+        # Fallback to Curated Demonstration Job Listings
         filtered = list(CURATED_SAMPLE_JOBS)
         if query:
             q_lower = query.lower()
@@ -267,10 +356,16 @@ class JobService:
         if job_type and job_type.lower() != 'all':
             filtered = [j for j in filtered if job_type.lower() in j['job_type'].lower()] or filtered
 
+        # Accurate status message mapping
+        if jsearch_available and had_api_error:
+            fallback_message = 'Job service temporarily unavailable — showing curated demo jobs'
+        else:
+            fallback_message = 'Curated demo jobs — connect JSearch in Render for live listings'
+
         return {
             'provider': 'curated_demo',
             'is_live': False,
-            'message': 'Displaying curated demo jobs. To connect live external jobs, configure ADZUNA_APP_ID and ADZUNA_APP_KEY in your environment.',
+            'message': fallback_message,
             'total': len(filtered),
             'page': page,
             'jobs': [j.copy() for j in filtered]

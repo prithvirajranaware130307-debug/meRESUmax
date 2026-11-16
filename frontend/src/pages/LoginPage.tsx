@@ -69,10 +69,10 @@ export const LoginPage: React.FC = () => {
   return (
     <div className="min-h-screen pt-24 pb-16 flex items-center justify-center px-4 relative z-10">
       <div className="w-full max-w-md">
-        <GlassCard variant="elevated" className="p-8 border border-white/[0.12] shadow-elevated">
+        <GlassCard variant="elevated" className="p-8 border border-slate-200 dark:border-white/[0.12] shadow-elevated">
           <div className="text-center mb-8">
             <Logo textSize="text-xl" className="justify-center mb-3" />
-            <h1 className="text-xl font-bold text-white tracking-tight">Sign in to your account</h1>
+            <h1 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Sign in to your account</h1>
             <p className="text-text-secondary text-xs mt-1">Access your resume analytics & career command center</p>
           </div>
 
@@ -82,7 +82,7 @@ export const LoginPage: React.FC = () => {
               <div className="font-sans leading-tight">
                 <span>{error}</span>
                 {error.includes('credentials') && (
-                  <div className="mt-1 font-mono text-[11px] text-zinc-400">
+                  <div className="mt-1 font-mono text-[11px] text-zinc-500 dark:text-zinc-400">
                     Need a test profile? Try the one-click instant demo below.
                   </div>
                 )}
@@ -103,9 +103,9 @@ export const LoginPage: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@domain.com"
-                  className="w-full pl-9 pr-4 py-2 bg-[#0D0F14] border border-white/10 rounded-lg text-sm text-white placeholder-text-muted focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all disabled:opacity-50"
+                  className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#0D0F14] border border-slate-300 dark:border-white/10 rounded-lg text-sm text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all disabled:opacity-50"
                 />
-                <Mail size={15} className="absolute left-3 top-2.5 text-zinc-500 pointer-events-none" />
+                <Mail size={15} className="absolute left-3 top-2.5 text-slate-400 dark:text-zinc-500 pointer-events-none" />
               </div>
             </div>
 
@@ -121,9 +121,9 @@ export const LoginPage: React.FC = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full pl-9 pr-4 py-2 bg-[#0D0F14] border border-white/10 rounded-lg text-sm text-white placeholder-text-muted focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all disabled:opacity-50"
+                  className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#0D0F14] border border-slate-300 dark:border-white/10 rounded-lg text-sm text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all disabled:opacity-50"
                 />
-                <Lock size={15} className="absolute left-3 top-2.5 text-zinc-500 pointer-events-none" />
+                <Lock size={15} className="absolute left-3 top-2.5 text-slate-400 dark:text-zinc-500 pointer-events-none" />
               </div>
             </div>
 
@@ -141,12 +141,12 @@ export const LoginPage: React.FC = () => {
           </form>
 
           {/* Quick Demo Credentials */}
-          <div className="mt-5 pt-4 border-t border-white/[0.08] space-y-2">
+          <div className="mt-5 pt-4 border-t border-slate-200 dark:border-white/[0.08] space-y-2">
             <button
               type="button"
               disabled={isLoading}
               onClick={handleInstantDemoLogin}
-              className="w-full py-2 px-3 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-xs font-mono text-text-secondary hover:text-white flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-2 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.04] dark:hover:bg-white/[0.08] border border-slate-300 dark:border-white/10 text-xs font-mono text-text-secondary hover:text-slate-900 dark:hover:text-white flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Sparkles size={13} className="text-[#E8FF47]" />
               <span>{isLoading ? 'Authenticating...' : 'One-Click Instant Demo Login'}</span>
@@ -155,7 +155,7 @@ export const LoginPage: React.FC = () => {
 
           <div className="mt-6 text-center text-xs text-text-secondary">
             Don't have an account?{' '}
-            <Link to="/register" className="text-white hover:text-blue-400 font-medium transition-colors">
+            <Link to="/register" className="text-blue-600 dark:text-blue-400 hover:underline font-medium transition-colors">
               Create Account
             </Link>
           </div>

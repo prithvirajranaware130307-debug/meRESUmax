@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -8,10 +9,10 @@ export default {
     extend: {
       colors: {
         bg: {
-          main: '#090A0E',
-          surface: '#111318',
-          elevated: '#161922',
-          subtle: '#1D212C',
+          main: 'var(--bg-main)',
+          surface: 'var(--bg-surface)',
+          elevated: 'var(--bg-elevated)',
+          subtle: 'var(--bg-subtle)',
         },
         glass: {
           surface: 'rgba(255, 255, 255, 0.035)',
@@ -21,9 +22,9 @@ export default {
           deep: 'rgba(17, 19, 24, 0.90)',
         },
         text: {
-          primary: '#F3F4F6',
-          secondary: '#8E94A4',
-          muted: '#525866',
+          primary: 'var(--text-primary)',
+          secondary: 'var(--text-secondary)',
+          muted: 'var(--text-muted)',
         },
         brand: {
           blue: '#3B82F6',
@@ -47,7 +48,8 @@ export default {
         'glow-blue': '0 0 20px -5px rgba(59, 130, 246, 0.15)',
         'glow-cyan': '0 0 20px -5px rgba(6, 182, 212, 0.15)',
         'glow-violet': '0 0 20px -5px rgba(139, 92, 246, 0.15)',
-        'card': '0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 4px 12px -2px rgba(0, 0, 0, 0.3)',
+        'card': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 4px 12px -2px rgba(0, 0, 0, 0.1)',
+        'elevated': '0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
       },
       transitionTimingFunction: {
         'editorial': 'cubic-bezier(0.22, 1, 0.36, 1)',

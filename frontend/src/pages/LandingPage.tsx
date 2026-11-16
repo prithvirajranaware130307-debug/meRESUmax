@@ -31,7 +31,7 @@ export const LandingPage: React.FC = () => {
     },
     {
       q: "Where do the job recommendations originate from?",
-      a: "meRESUmax integrates with the official Adzuna job search API for live postings when configured, alongside curated role opportunities. Every listing clearly specifies its archetype fit and matched skill coverage."
+      a: "meRESUmax integrates with the official JSearch Mega API for live postings when configured, alongside curated role opportunities. Every listing clearly specifies its archetype fit and matched skill coverage."
     }
   ];
 

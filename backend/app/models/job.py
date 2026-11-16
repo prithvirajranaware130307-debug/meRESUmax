@@ -7,7 +7,7 @@ class Job(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     external_id = db.Column(db.String(100), unique=True, index=True)
-    provider = db.Column(db.String(50), default='adzuna')  # adzuna, jsearch, curated
+    provider = db.Column(db.String(50), default='jsearch')  # jsearch, curated
     
     title = db.Column(db.String(255), nullable=False)
     company = db.Column(db.String(255), nullable=False)

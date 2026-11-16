@@ -321,7 +321,7 @@ export const ApplicationTrackerPage: React.FC = () => {
             <Kanban size={13} />
             <span>Application Pipeline</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             Job Application Tracker
           </h1>
           <p className="text-text-secondary text-xs sm:text-sm mt-1 max-w-2xl">
@@ -341,7 +341,7 @@ export const ApplicationTrackerPage: React.FC = () => {
             <button
               onClick={() => setViewMode('kanban')}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
-                viewMode === 'kanban' ? 'bg-brand-blue/30 text-white shadow-sm' : 'text-text-muted hover:text-white'
+                viewMode === 'kanban' ? 'bg-blue-600/20 text-slate-900 dark:text-white shadow-sm' : 'text-text-muted hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               <Kanban size={13} />
@@ -350,7 +350,7 @@ export const ApplicationTrackerPage: React.FC = () => {
             <button
               onClick={() => setViewMode('table')}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
-                viewMode === 'table' ? 'bg-brand-blue/30 text-white shadow-sm' : 'text-text-muted hover:text-white'
+                viewMode === 'table' ? 'bg-blue-600/20 text-slate-900 dark:text-white shadow-sm' : 'text-text-muted hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               <ListFilter size={13} />
@@ -371,7 +371,7 @@ export const ApplicationTrackerPage: React.FC = () => {
             <Layers size={20} />
           </div>
           <div>
-            <div className="text-2xl font-black text-white">{stats.total}</div>
+            <div className="text-2xl font-black text-slate-900 dark:text-white">{stats.total}</div>
             <div className="text-xs text-text-muted">Total Opportunities</div>
           </div>
         </GlassCard>
@@ -381,7 +381,7 @@ export const ApplicationTrackerPage: React.FC = () => {
             <Mic size={20} />
           </div>
           <div>
-            <div className="text-2xl font-black text-white flex items-center gap-1.5">
+            <div className="text-2xl font-black text-slate-900 dark:text-white flex items-center gap-1.5">
               <span>{stats.interviewing}</span>
               {stats.interviewing > 0 && <span className="w-2 h-2 rounded-full bg-purple-400 animate-ping" />}
             </div>
@@ -394,7 +394,7 @@ export const ApplicationTrackerPage: React.FC = () => {
             <Trophy size={20} />
           </div>
           <div>
-            <div className="text-2xl font-black text-white">{stats.offer}</div>
+            <div className="text-2xl font-black text-slate-900 dark:text-white">{stats.offer}</div>
             <div className="text-xs text-text-muted">Offers Secured</div>
           </div>
         </GlassCard>
@@ -404,7 +404,7 @@ export const ApplicationTrackerPage: React.FC = () => {
             <Sparkles size={20} />
           </div>
           <div>
-            <div className="text-2xl font-black text-white">{stats.conversion_rate}%</div>
+            <div className="text-2xl font-black text-slate-900 dark:text-white">{stats.conversion_rate}%</div>
             <div className="text-xs text-text-muted">Applied-to-Interview</div>
           </div>
         </GlassCard>
@@ -421,7 +421,7 @@ export const ApplicationTrackerPage: React.FC = () => {
               <div className="text-xs uppercase font-bold tracking-wider text-purple-300">
                 Upcoming Interview Scheduled
               </div>
-              <div className="text-sm font-semibold text-white">
+              <div className="text-sm font-semibold text-slate-900 dark:text-white">
                 {upcomingInterviews[0].company} - {upcomingInterviews[0].role}
                 <span className="text-purple-300 font-normal ml-2">
                   ({formatInterviewDate(upcomingInterviews[0].interview_date)})
@@ -450,7 +450,7 @@ export const ApplicationTrackerPage: React.FC = () => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search company, role, or note..."
-              className="w-full pl-9 pr-4 py-2 rounded-xl liquid-input text-xs text-white placeholder-text-muted focus:outline-none focus:border-brand-blue/50"
+              className="w-full pl-9 pr-4 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:border-brand-blue/50"
             />
             <Search size={14} className="absolute left-3 top-2.5 text-text-muted" />
           </form>
@@ -463,12 +463,12 @@ export const ApplicationTrackerPage: React.FC = () => {
             <select
               value={priorityFilter}
               onChange={(e) => setPriorityFilter(e.target.value as any)}
-              className="px-3 py-1.5 rounded-xl liquid-input text-xs text-white bg-transparent focus:outline-none"
+              className="px-3 py-1.5 rounded-xl liquid-input text-xs text-slate-900 dark:text-white bg-transparent focus:outline-none"
             >
-              <option value="all" className="bg-surface-elevated text-white">All Priorities</option>
-              <option value="high" className="bg-surface-elevated text-white">High Priority</option>
-              <option value="medium" className="bg-surface-elevated text-white">Medium Priority</option>
-              <option value="low" className="bg-surface-elevated text-white">Low Priority</option>
+              <option value="all" className="bg-white text-slate-900 dark:bg-surface-elevated dark:text-white">All Priorities</option>
+              <option value="high" className="bg-white text-slate-900 dark:bg-surface-elevated dark:text-white">High Priority</option>
+              <option value="medium" className="bg-white text-slate-900 dark:bg-surface-elevated dark:text-white">Medium Priority</option>
+              <option value="low" className="bg-white text-slate-900 dark:bg-surface-elevated dark:text-white">Low Priority</option>
             </select>
 
             {/* Export Buttons */}
@@ -523,7 +523,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                 <div className={`p-3.5 border-b border-white/5 bg-gradient-to-b ${col.headerGlow} flex items-center justify-between`}>
                   <div className="flex items-center gap-2">
                     {col.icon}
-                    <h2 className="text-xs font-bold text-white tracking-wide">{col.title}</h2>
+                    <h2 className="text-xs font-bold text-slate-900 dark:text-white tracking-wide">{col.title}</h2>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <span className={`px-2 py-0.5 rounded-full text-[11px] font-bold border ${col.badgeColor}`}>
@@ -582,7 +582,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                         </div>
 
                         {/* Title & Company */}
-                        <div className="text-sm font-bold text-white leading-tight">
+                        <div className="text-sm font-bold text-slate-900 dark:text-white leading-tight">
                           {app.role}
                         </div>
                         <div className="text-xs text-brand-cyan font-medium flex items-center gap-1 mt-1">
@@ -616,7 +616,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                         {/* Next Step Note */}
                         {app.next_step && (
                           <div className="mt-2 text-[11px] text-text-secondary bg-white/5 p-2 rounded-lg border border-white/5">
-                            <span className="text-white font-medium">Next: </span>
+                            <span className="text-slate-900 dark:text-white font-medium">Next: </span>
                             {app.next_step}
                           </div>
                         )}
@@ -715,14 +715,14 @@ export const ApplicationTrackerPage: React.FC = () => {
                   applications.map((app) => (
                     <tr key={app.id} className="hover:bg-white/5 transition-colors">
                       <td className="py-3 px-4">
-                        <div className="font-bold text-white text-sm">{app.role}</div>
+                        <div className="font-bold text-slate-900 dark:text-white text-sm">{app.role}</div>
                         <div className="text-brand-cyan text-xs font-medium">{app.company}</div>
                       </td>
                       <td className="py-3 px-4">
                         <select
                           value={app.status}
                           onChange={(e) => handleStatusChange(app.id, e.target.value as ApplicationStatus)}
-                          className="bg-surface-card border border-white/10 text-white rounded-lg px-2.5 py-1 text-xs focus:outline-none"
+                          className="bg-slate-50 dark:bg-surface-card border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-lg px-2.5 py-1 text-xs focus:outline-none"
                         >
                           <option value="saved">Wishlist & Saved</option>
                           <option value="applied">Applied</option>
@@ -734,7 +734,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                       <td className="py-3 px-4">
                         {getPriorityBadge(app.priority)}
                       </td>
-                      <td className="py-3 px-4 text-white">
+                      <td className="py-3 px-4 text-slate-900 dark:text-white">
                         {app.location || 'Remote'}
                       </td>
                       <td className="py-3 px-4 text-brand-mint font-semibold">
@@ -787,10 +787,10 @@ export const ApplicationTrackerPage: React.FC = () => {
       {/* ADD / EDIT GLASS MODAL */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-fade-in">
-          <GlassCard variant="elevated" className="max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 border-white/20">
+          <GlassCard variant="elevated" className="max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 border-slate-200 dark:border-white/20">
             <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/10">
               <div>
-                <h3 className="text-lg font-bold text-white">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">
                   {editingApp ? 'Edit Job Application' : 'Track New Opportunity'}
                 </h3>
                 <p className="text-xs text-text-secondary">
@@ -815,7 +815,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                     value={formData.company}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                     placeholder="e.g. Stripe, Google, Airbnb"
-                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-white placeholder-text-muted focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder-text-muted focus:outline-none"
                   />
                 </div>
 
@@ -827,7 +827,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                     value={formData.role}
                     onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                     placeholder="e.g. Senior Frontend Engineer"
-                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-white placeholder-text-muted focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder-text-muted focus:outline-none"
                   />
                 </div>
               </div>
@@ -838,13 +838,13 @@ export const ApplicationTrackerPage: React.FC = () => {
                   <select
                     value={formData.status}
                     onChange={(e) => setFormData({ ...formData, status: e.target.value as ApplicationStatus })}
-                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-white bg-transparent focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white bg-transparent focus:outline-none"
                   >
-                    <option value="saved" className="bg-surface-elevated text-white">Wishlist & Saved</option>
-                    <option value="applied" className="bg-surface-elevated text-white">Applied</option>
-                    <option value="interviewing" className="bg-surface-elevated text-white">Interviewing</option>
-                    <option value="offer" className="bg-surface-elevated text-white">Offer Received</option>
-                    <option value="rejected" className="bg-surface-elevated text-white">Archived / Rejected</option>
+                    <option value="saved" className="bg-white text-slate-900 dark:bg-surface-elevated dark:text-white">Wishlist & Saved</option>
+                    <option value="applied" className="bg-white text-slate-900 dark:bg-surface-elevated dark:text-white">Applied</option>
+                    <option value="interviewing" className="bg-white text-slate-900 dark:bg-surface-elevated dark:text-white">Interviewing</option>
+                    <option value="offer" className="bg-white text-slate-900 dark:bg-surface-elevated dark:text-white">Offer Received</option>
+                    <option value="rejected" className="bg-white text-slate-900 dark:bg-surface-elevated dark:text-white">Archived / Rejected</option>
                   </select>
                 </div>
 
@@ -853,11 +853,11 @@ export const ApplicationTrackerPage: React.FC = () => {
                   <select
                     value={formData.priority}
                     onChange={(e) => setFormData({ ...formData, priority: e.target.value as ApplicationPriority })}
-                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-white bg-transparent focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white bg-transparent focus:outline-none"
                   >
-                    <option value="high" className="bg-surface-elevated text-white">High Priority</option>
-                    <option value="medium" className="bg-surface-elevated text-white">Medium Priority</option>
-                    <option value="low" className="bg-surface-elevated text-white">Low Priority</option>
+                    <option value="high" className="bg-white text-slate-900 dark:bg-surface-elevated dark:text-white">High Priority</option>
+                    <option value="medium" className="bg-white text-slate-900 dark:bg-surface-elevated dark:text-white">Medium Priority</option>
+                    <option value="low" className="bg-white text-slate-900 dark:bg-surface-elevated dark:text-white">Low Priority</option>
                   </select>
                 </div>
 
@@ -868,7 +868,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                     value={formData.location}
                     onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                     placeholder="e.g. Remote / New York"
-                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-white placeholder-text-muted focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder-text-muted focus:outline-none"
                   />
                 </div>
               </div>
@@ -881,7 +881,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                     value={formData.salary_range}
                     onChange={(e) => setFormData({ ...formData, salary_range: e.target.value })}
                     placeholder="e.g. $140,000 - $165,000 or ₹20LPA"
-                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-white placeholder-text-muted focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder-text-muted focus:outline-none"
                   />
                 </div>
 
@@ -892,7 +892,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                     value={formData.url}
                     onChange={(e) => setFormData({ ...formData, url: e.target.value })}
                     placeholder="https://..."
-                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-white placeholder-text-muted focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder-text-muted focus:outline-none"
                   />
                 </div>
               </div>
@@ -904,7 +904,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                     type="datetime-local"
                     value={formData.interview_date}
                     onChange={(e) => setFormData({ ...formData, interview_date: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-white focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white focus:outline-none"
                   />
                 </div>
 
@@ -914,7 +914,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                     type="date"
                     value={formData.applied_date}
                     onChange={(e) => setFormData({ ...formData, applied_date: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-white focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white focus:outline-none"
                   />
                 </div>
               </div>
@@ -927,7 +927,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                     value={formData.contact_name}
                     onChange={(e) => setFormData({ ...formData, contact_name: e.target.value })}
                     placeholder="e.g. Jessica Miller"
-                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-white placeholder-text-muted focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder-text-muted focus:outline-none"
                   />
                 </div>
 
@@ -938,7 +938,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                     value={formData.contact_email}
                     onChange={(e) => setFormData({ ...formData, contact_email: e.target.value })}
                     placeholder="recruiting@company.com"
-                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-white placeholder-text-muted focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder-text-muted focus:outline-none"
                   />
                 </div>
               </div>
@@ -950,7 +950,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                   value={formData.next_step}
                   onChange={(e) => setFormData({ ...formData, next_step: e.target.value })}
                   placeholder="e.g. Prepare system design for 45-min panel with Director of Engineering"
-                  className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-white placeholder-text-muted focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder-text-muted focus:outline-none"
                 />
               </div>
 
@@ -961,7 +961,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                   placeholder="Recruiter notes, referral details, tech stack specifics..."
-                  className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-white placeholder-text-muted focus:outline-none resize-none"
+                  className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder-text-muted focus:outline-none resize-none"
                 />
               </div>
 

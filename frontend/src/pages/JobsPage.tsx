@@ -98,7 +98,7 @@ export const JobsPage: React.FC = () => {
           <Briefcase size={13} className="text-zinc-400" />
           <span>OPPORTUNITY RADAR</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+        <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
           Explore Tailored Tech Jobs
         </h1>
         <p className="text-text-secondary text-sm mt-2">
@@ -107,16 +107,16 @@ export const JobsPage: React.FC = () => {
       </div>
 
       {/* Provider Status Banner */}
-      <div className="mb-6 p-3 rounded-lg bg-[#111318] border border-white/10 flex items-center justify-between text-xs text-text-secondary font-mono">
-        <div className="flex items-center gap-2">
-          <div className={`w-2 h-2 rounded-full ${isLive ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`} />
-          <span>
-            STREAM: <strong className="text-white font-medium">{isLive ? 'Live Adzuna API Stream' : 'Curated Demonstration Database'}</strong>
+      <div className="mb-6 p-3 sm:p-3.5 rounded-xl bg-slate-100 dark:bg-[#111318] border border-slate-200 dark:border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 text-xs text-text-secondary font-mono shadow-sm">
+        <div className="flex items-center gap-2 flex-wrap">
+          <div className={`w-2.5 h-2.5 rounded-full shrink-0 ${isLive ? 'bg-emerald-500 animate-pulse' : 'bg-amber-400'}`} />
+          <span className="break-words">
+            STREAM: <strong className="text-slate-900 dark:text-white font-medium">{isLive ? 'Live JSearch results' : (providerMessage || 'Curated demo jobs — connect JSearch in Render for live listings')}</strong>
           </span>
         </div>
         {!isLive && (
-          <span className="text-[11px] text-text-muted hidden sm:inline">
-            Connect Adzuna API credentials for live external feed
+          <span className="text-[11px] text-text-muted break-words leading-relaxed">
+            {providerMessage || 'Curated demo jobs — connect JSearch in Render for live listings'}
           </span>
         )}
       </div>
@@ -130,7 +130,7 @@ export const JobsPage: React.FC = () => {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Job title, keywords, or skills..."
-              className="w-full pl-9 pr-4 py-2 bg-[#0D0F14] border border-white/10 rounded-lg text-xs sm:text-sm text-white placeholder-text-muted focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
+              className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#0D0F14] border border-slate-200 dark:border-white/10 rounded-lg text-xs sm:text-sm text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
             />
             <Search size={14} className="absolute left-3 top-2.5 text-zinc-500" />
           </div>
@@ -141,7 +141,7 @@ export const JobsPage: React.FC = () => {
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               placeholder="City, region, or Remote"
-              className="w-full pl-9 pr-4 py-2 bg-[#0D0F14] border border-white/10 rounded-lg text-xs sm:text-sm text-white placeholder-text-muted focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
+              className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#0D0F14] border border-slate-200 dark:border-white/10 rounded-lg text-xs sm:text-sm text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
             />
             <MapPin size={14} className="absolute left-3 top-2.5 text-zinc-500" />
           </div>
@@ -150,11 +150,11 @@ export const JobsPage: React.FC = () => {
             <select
               value={jobType}
               onChange={(e) => setJobType(e.target.value)}
-              className="w-full px-3 py-2 bg-[#0D0F14] border border-white/10 rounded-lg text-xs sm:text-sm text-white focus:outline-none focus:border-blue-500 cursor-pointer"
+              className="w-full px-3 py-2 bg-slate-50 dark:bg-[#0D0F14] border border-slate-200 dark:border-white/10 rounded-lg text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 cursor-pointer"
             >
-              <option value="all" className="bg-[#111318]">All Types</option>
-              <option value="full-time" className="bg-[#111318]">Full-Time</option>
-              <option value="internship" className="bg-[#111318]">Internships</option>
+              <option value="all" className="bg-white dark:bg-[#111318] text-slate-900 dark:text-white">All Types</option>
+              <option value="full-time" className="bg-white dark:bg-[#111318] text-slate-900 dark:text-white">Full-Time</option>
+              <option value="internship" className="bg-white dark:bg-[#111318] text-slate-900 dark:text-white">Internships</option>
             </select>
             <GlassButton type="submit" variant="primary" size="sm" disabled={isLoading}>
               Search
@@ -196,8 +196,19 @@ export const JobsPage: React.FC = () => {
                 <div>
                   <div className="flex items-start justify-between gap-3 mb-2">
                     <div>
-                      <div className="text-base font-bold text-white leading-snug">{job.title}</div>
-                      <div className="text-xs text-brand-cyan flex items-center gap-1.5 mt-1 font-medium">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <div className="text-base font-bold text-slate-900 dark:text-white leading-snug">{job.title}</div>
+                        {job.is_demo ? (
+                          <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-300 shrink-0">
+                            DEMO
+                          </span>
+                        ) : (
+                          <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 shrink-0">
+                            LIVE
+                          </span>
+                        )}
+                      </div>
+                      <div className="text-xs text-cyan-600 dark:text-brand-cyan flex items-center gap-1.5 mt-1 font-medium">
                         <Building size={13} />
                         <span>{job.company}</span>
                         <span className="text-text-muted">•</span>
@@ -222,7 +233,7 @@ export const JobsPage: React.FC = () => {
                   {/* Skills badges */}
                   <div className="flex flex-wrap gap-1.5 mt-3">
                     {job.required_skills?.slice(0, 5).map((sk) => (
-                      <span key={sk} className="text-[11px] px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-white font-medium">
+                      <span key={sk} className="text-[11px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white font-medium">
                         {sk}
                       </span>
                     ))}
@@ -268,7 +279,7 @@ export const JobsPage: React.FC = () => {
                       href={job.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium text-xs transition-colors"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white dark:bg-white/10 dark:hover:bg-white/20 dark:text-white font-medium text-xs transition-colors"
                     >
                       <span>Apply</span>
                       <ExternalLink size={12} />
@@ -282,7 +293,7 @@ export const JobsPage: React.FC = () => {
       ) : (
         <GlassCard variant="standard" className="p-12 text-center text-text-secondary">
           <Briefcase size={28} className="mx-auto mb-2 text-text-muted" />
-          <div className="text-sm font-semibold text-white">No listings match your search criteria</div>
+          <div className="text-sm font-semibold text-slate-900 dark:text-white">No listings match your search criteria</div>
           <div className="text-xs text-text-muted mt-1">Try broadening your search keyword or clearing the location filter.</div>
         </GlassCard>
       )}

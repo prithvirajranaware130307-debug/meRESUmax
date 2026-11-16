@@ -32,13 +32,9 @@ class Config:
     OPENAI_API_KEY = os.getenv('OPENAI_API_KEY', '')
     OPENAI_MODEL = os.getenv('OPENAI_MODEL', 'gpt-4o-mini')
     
-    # Job Provider Credentials
-    ADZUNA_APP_ID = os.getenv('ADZUNA_APP_ID', '')
-    ADZUNA_APP_KEY = os.getenv('ADZUNA_APP_KEY', '')
-    ADZUNA_COUNTRY = os.getenv('ADZUNA_COUNTRY', 'in')
-    
+    # Job Provider Credentials (JSearch Mega RapidAPI)
     RAPIDAPI_KEY = os.getenv('RAPIDAPI_KEY', '')
-    JSEARCH_API_HOST = os.getenv('JSEARCH_API_HOST', 'jsearch.p.rapidapi.com')
+    JSEARCH_API_HOST = os.getenv('JSEARCH_API_HOST', 'jsearch-mega.p.rapidapi.com')
 
     # Security
     ALLOWED_EXTENSIONS = {'pdf', 'docx'}

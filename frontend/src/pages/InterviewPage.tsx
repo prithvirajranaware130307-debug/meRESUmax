@@ -271,7 +271,7 @@ export const InterviewPage: React.FC = () => {
           <BrainCircuit size={13} className="text-zinc-400" />
           <span>SIMULATOR // MOCK INTERVIEWS</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
           Technical & Behavioral Mock Interview
         </h1>
         <p className="text-text-secondary text-sm sm:text-base max-w-2xl mx-auto">
@@ -290,7 +290,7 @@ export const InterviewPage: React.FC = () => {
       {!sessionActive && !sessionCompleted && (
         <GlassCard className="p-6 sm:p-8 space-y-6 max-w-2xl mx-auto border-white/10">
           <div className="space-y-4">
-            <h2 className="text-xl font-bold text-white flex items-center gap-2">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
               <Compass size={18} className="text-zinc-400" />
               <span>Configure Your Interview Simulation</span>
             </h2>
@@ -305,10 +305,10 @@ export const InterviewPage: React.FC = () => {
               <select
                 value={targetRole}
                 onChange={(e) => setTargetRole(e.target.value)}
-                className="w-full bg-[#0D0F14] border border-white/10 rounded-lg px-3.5 py-2 text-white text-sm focus:outline-none focus:border-blue-500 transition-colors"
+                className="w-full bg-slate-50 dark:bg-[#0D0F14] border border-slate-300 dark:border-white/10 rounded-lg px-3.5 py-2 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-blue-500 transition-colors"
               >
                 {TARGET_ROLES.map(role => (
-                  <option key={role} value={role} className="bg-[#111318] text-white">
+                  <option key={role} value={role} className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">
                     {role}
                   </option>
                 ))}
@@ -327,8 +327,8 @@ export const InterviewPage: React.FC = () => {
                     onClick={() => setDifficulty(level)}
                     className={`py-2 px-3 rounded-lg text-xs font-mono transition-all cursor-pointer ${
                       difficulty === level
-                        ? 'bg-white text-black font-semibold shadow-sm'
-                        : 'bg-[#161922] border border-white/10 text-text-secondary hover:text-white hover:bg-[#1D212C]'
+                        ? 'bg-blue-600 text-white dark:bg-white dark:text-black font-semibold shadow-sm'
+                        : 'bg-slate-100 dark:bg-[#161922] border border-slate-300 dark:border-white/10 text-slate-600 dark:text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-[#1D212C]'
                     }`}
                   >
                     {level}
@@ -338,7 +338,7 @@ export const InterviewPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-surface-elevated/60 border border-white/5 space-y-2 text-xs text-text-muted">
+          <div className="p-4 rounded-xl bg-slate-50 dark:bg-surface-elevated/60 border border-slate-200 dark:border-white/5 space-y-2 text-xs text-text-muted">
             <div className="flex items-center gap-2 text-brand-cyan font-medium">
               <Sparkles size={14} />
               <span>What to Expect in This Loop:</span>
@@ -380,7 +380,7 @@ export const InterviewPage: React.FC = () => {
               <span className="text-xs uppercase tracking-wider text-brand-cyan font-bold">
                 Question {currentIndex + 1} of {questions.length}
               </span>
-              <h2 className="text-lg font-bold text-white flex items-center gap-2 mt-0.5">
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 mt-0.5">
                 <span>{targetRole}</span>
                 <span className="text-xs px-2 py-0.5 rounded-full bg-white/10 text-text-muted font-normal">
                   {difficulty}
@@ -408,11 +408,11 @@ export const InterviewPage: React.FC = () => {
                 {currentIndex + 1}
               </div>
               <div className="space-y-2 flex-1">
-                <h3 className="text-lg sm:text-xl font-semibold text-white leading-relaxed">
+                <h3 className="text-lg sm:text-xl font-semibold text-slate-900 dark:text-white leading-relaxed">
                   {questions[currentIndex].question}
                 </h3>
                 {questions[currentIndex].tips && (
-                  <div className="text-xs text-text-muted bg-white/5 p-3 rounded-xl border border-white/5 flex items-start gap-2">
+                  <div className="text-xs text-text-muted bg-slate-100 dark:bg-white/5 p-3 rounded-xl border border-slate-200 dark:border-white/5 flex items-start gap-2">
                     <Volume2 size={15} className="text-brand-cyan shrink-0 mt-0.5" />
                     <span><strong className="text-text-secondary">Interviewer Context:</strong> {questions[currentIndex].tips}</span>
                   </div>
@@ -464,7 +464,7 @@ export const InterviewPage: React.FC = () => {
                 onChange={(e) => setCurrentAnswer(e.target.value)}
                 placeholder="Structure your answer with clear context, specific actions taken, technical tooling used, and measurable results achieved (STAR method)..."
                 rows={7}
-                className="w-full bg-surface-elevated/70 border border-white/10 rounded-2xl p-4 text-white placeholder-text-muted/60 text-sm focus:outline-none focus:border-brand-cyan/50 transition-colors resize-y leading-relaxed"
+                className="w-full bg-slate-50 dark:bg-surface-elevated/70 border border-slate-300 dark:border-white/10 rounded-2xl p-4 text-slate-900 dark:text-white placeholder-text-muted/60 text-sm focus:outline-none focus:border-blue-500 dark:focus:border-brand-cyan/50 transition-colors resize-y leading-relaxed"
               />
 
               <div className="flex items-center justify-between pt-2">
@@ -499,7 +499,7 @@ export const InterviewPage: React.FC = () => {
                     <span className="text-xs uppercase tracking-wider text-brand-cyan font-bold">
                       Response Evaluation
                     </span>
-                    <h4 className="text-lg font-bold text-white mt-1">
+                    <h4 className="text-lg font-bold text-slate-900 dark:text-white mt-1">
                       {currentEvaluation.feedback_summary}
                     </h4>
                   </div>
@@ -608,7 +608,7 @@ export const InterviewPage: React.FC = () => {
               <span className="text-xs font-bold uppercase tracking-wider text-brand-cyan">
                 Simulation Debrief Report
               </span>
-              <h2 className="text-3xl font-extrabold text-white">
+              <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white">
                 Interview Performance Scorecard
               </h2>
               <p className="text-sm text-text-secondary max-w-md mx-auto">
@@ -685,7 +685,7 @@ export const InterviewPage: React.FC = () => {
 
           {/* Question-by-Question Detailed Review */}
           <div className="space-y-4">
-            <h3 className="text-lg font-bold text-white">Question-by-Question Breakdown</h3>
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white">Question-by-Question Breakdown</h3>
             <div className="space-y-4">
               {sessionRecords.map((r, i) => (
                 <GlassCard key={i} className="p-6 space-y-4 border-white/10">
@@ -694,7 +694,7 @@ export const InterviewPage: React.FC = () => {
                       <span className="text-[10px] font-bold uppercase tracking-wider text-purple-300 bg-purple-500/10 px-2 py-0.5 rounded-md border border-purple-500/20">
                         {r.question.category}
                       </span>
-                      <h4 className="text-base font-semibold text-white mt-1">
+                      <h4 className="text-base font-semibold text-slate-900 dark:text-white mt-1">
                         Q{i + 1}: {r.question.question}
                       </h4>
                     </div>
@@ -706,7 +706,7 @@ export const InterviewPage: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="bg-surface-elevated/60 p-3 rounded-xl border border-white/5 text-xs text-text-muted leading-relaxed">
+                  <div className="bg-slate-50 dark:bg-surface-elevated/60 p-3 rounded-xl border border-slate-200 dark:border-white/5 text-xs text-text-muted leading-relaxed">
                     <strong className="text-text-secondary">Your Response: </strong>
                     {r.answer}
                   </div>

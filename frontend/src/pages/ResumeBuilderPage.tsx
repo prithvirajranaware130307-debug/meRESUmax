@@ -200,20 +200,20 @@ export const ResumeBuilderPage: React.FC = () => {
   return (
     <div className="pt-24 pb-16 px-4 sm:px-6 max-w-7xl mx-auto space-y-8 animate-fadeIn">
       {/* Top Action Bar - Hidden in Print */}
-      <div className="print:hidden flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/10">
+      <div className="print:hidden flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-white/10">
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-cyan/10 border border-brand-cyan/20 text-brand-cyan text-xs font-medium mb-1">
             <Layout size={14} />
             <span>Interactive ATS Resume Builder</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
             Resume Architect & Live Preview
           </h1>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
           {/* Template Switcher */}
-          <div className="p-1 rounded-xl bg-surface-elevated/80 border border-white/10 flex items-center gap-1 text-xs font-semibold">
+          <div className="p-1 rounded-xl bg-surface-elevated/80 border border-slate-200 dark:border-white/10 flex items-center gap-1 text-xs font-semibold">
             <button
               onClick={() => setTemplate('modern')}
               className={`px-3 py-1.5 rounded-lg transition-colors ${
@@ -242,7 +242,7 @@ export const ResumeBuilderPage: React.FC = () => {
 
           <button
             onClick={exportTxt}
-            className="px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-text-secondary hover:text-white border border-white/10 text-xs font-medium flex items-center gap-1.5 transition-colors"
+            className="px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-text-secondary hover:text-white border border-slate-200 dark:border-white/10 text-xs font-medium flex items-center gap-1.5 transition-colors"
           >
             <Download size={14} />
             <span>ATS Plaintext</span>
@@ -250,7 +250,7 @@ export const ResumeBuilderPage: React.FC = () => {
 
           <button
             onClick={exportJson}
-            className="px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-text-secondary hover:text-white border border-white/10 text-xs font-medium flex items-center gap-1.5 transition-colors"
+            className="px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-text-secondary hover:text-white border border-slate-200 dark:border-white/10 text-xs font-medium flex items-center gap-1.5 transition-colors"
           >
             <Download size={14} />
             <span>JSON</span>
@@ -277,7 +277,7 @@ export const ResumeBuilderPage: React.FC = () => {
                 {atsScore}
               </div>
               <div>
-                <h4 className="text-xs font-bold text-white uppercase tracking-wider">
+                <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
                   Real-time ATS Health Score
                 </h4>
                 <p className="text-[11px] text-text-muted">
@@ -291,85 +291,109 @@ export const ResumeBuilderPage: React.FC = () => {
           </GlassCard>
 
           {/* Contact Details */}
-          <GlassCard className="p-5 space-y-4 border-white/10">
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+          <GlassCard className="p-5 space-y-4 border-slate-200 dark:border-slate-200 dark:border-white/10">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-900 dark:text-white uppercase tracking-wider">
               1. Contact Information
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <input
-                type="text"
-                placeholder="Full Name"
-                value={resume.fullName}
-                onChange={e => setResume({ ...resume, fullName: e.target.value })}
-                className="bg-surface-elevated border border-white/10 rounded-xl px-3 py-2 text-xs text-white"
-              />
-              <input
-                type="email"
-                placeholder="Email Address"
-                value={resume.email}
-                onChange={e => setResume({ ...resume, email: e.target.value })}
-                className="bg-surface-elevated border border-white/10 rounded-xl px-3 py-2 text-xs text-white"
-              />
-              <input
-                type="text"
-                placeholder="Phone Number"
-                value={resume.phone}
-                onChange={e => setResume({ ...resume, phone: e.target.value })}
-                className="bg-surface-elevated border border-white/10 rounded-xl px-3 py-2 text-xs text-white"
-              />
-              <input
-                type="text"
-                placeholder="Location (City, State)"
-                value={resume.location}
-                onChange={e => setResume({ ...resume, location: e.target.value })}
-                className="bg-surface-elevated border border-white/10 rounded-xl px-3 py-2 text-xs text-white"
-              />
-              <input
-                type="text"
-                placeholder="LinkedIn URL"
-                value={resume.linkedin}
-                onChange={e => setResume({ ...resume, linkedin: e.target.value })}
-                className="bg-surface-elevated border border-white/10 rounded-xl px-3 py-2 text-xs text-white"
-              />
-              <input
-                type="text"
-                placeholder="GitHub or Portfolio"
-                value={resume.github}
-                onChange={e => setResume({ ...resume, github: e.target.value })}
-                className="bg-surface-elevated border border-white/10 rounded-xl px-3 py-2 text-xs text-white"
-              />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div className="space-y-1">
+                <label className="text-[11px] font-semibold uppercase tracking-wider text-slate-700 dark:text-text-secondary">Full Name</label>
+                <input
+                  type="text"
+                  placeholder="e.g. Alex Mercer"
+                  value={resume.fullName}
+                  onChange={e => setResume({ ...resume, fullName: e.target.value })}
+                  className="w-full bg-slate-50 dark:bg-surface-elevated border border-slate-200 dark:border-slate-200 dark:border-white/10 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-blue"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-[11px] font-semibold uppercase tracking-wider text-slate-700 dark:text-text-secondary">Email Address</label>
+                <input
+                  type="email"
+                  placeholder="e.g. alex.mercer@example.com"
+                  value={resume.email}
+                  onChange={e => setResume({ ...resume, email: e.target.value })}
+                  className="w-full bg-slate-50 dark:bg-surface-elevated border border-slate-200 dark:border-slate-200 dark:border-white/10 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-blue"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-[11px] font-semibold uppercase tracking-wider text-slate-700 dark:text-text-secondary">Phone Number</label>
+                <input
+                  type="text"
+                  placeholder="e.g. +1 (555) 234-5678"
+                  value={resume.phone}
+                  onChange={e => setResume({ ...resume, phone: e.target.value })}
+                  className="w-full bg-slate-50 dark:bg-surface-elevated border border-slate-200 dark:border-slate-200 dark:border-white/10 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-blue"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-[11px] font-semibold uppercase tracking-wider text-slate-700 dark:text-text-secondary">Location</label>
+                <input
+                  type="text"
+                  placeholder="e.g. San Francisco, CA"
+                  value={resume.location}
+                  onChange={e => setResume({ ...resume, location: e.target.value })}
+                  className="w-full bg-slate-50 dark:bg-surface-elevated border border-slate-200 dark:border-slate-200 dark:border-white/10 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-blue"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-[11px] font-semibold uppercase tracking-wider text-slate-700 dark:text-text-secondary">LinkedIn URL</label>
+                <input
+                  type="text"
+                  placeholder="e.g. linkedin.com/in/alexmercer"
+                  value={resume.linkedin}
+                  onChange={e => setResume({ ...resume, linkedin: e.target.value })}
+                  className="w-full bg-slate-50 dark:bg-surface-elevated border border-slate-200 dark:border-slate-200 dark:border-white/10 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-blue"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-[11px] font-semibold uppercase tracking-wider text-slate-700 dark:text-text-secondary">GitHub or Portfolio</label>
+                <input
+                  type="text"
+                  placeholder="e.g. github.com/alexmercer"
+                  value={resume.github}
+                  onChange={e => setResume({ ...resume, github: e.target.value })}
+                  className="w-full bg-slate-50 dark:bg-surface-elevated border border-slate-200 dark:border-slate-200 dark:border-white/10 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-blue"
+                />
+              </div>
             </div>
           </GlassCard>
 
           {/* Professional Summary */}
-          <GlassCard className="p-5 space-y-3 border-white/10">
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+          <GlassCard className="p-5 space-y-3 border-slate-200 dark:border-slate-200 dark:border-white/10">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-900 dark:text-white uppercase tracking-wider">
               2. Executive Summary
             </h3>
+            <label className="text-[11px] font-semibold uppercase tracking-wider text-slate-700 dark:text-text-secondary block">
+              Professional Pitch & Career Overview
+            </label>
             <textarea
               rows={4}
               value={resume.summary}
               onChange={e => setResume({ ...resume, summary: e.target.value })}
-              className="w-full bg-surface-elevated border border-white/10 rounded-xl p-3 text-xs text-white resize-y"
+              className="w-full bg-slate-50 dark:bg-surface-elevated border border-slate-200 dark:border-slate-200 dark:border-white/10 rounded-xl p-3 text-xs text-slate-900 dark:text-white resize-y focus:outline-none focus:border-brand-blue leading-relaxed"
             />
           </GlassCard>
 
           {/* Technical Skills */}
-          <GlassCard className="p-5 space-y-3 border-white/10">
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+          <GlassCard className="p-5 space-y-3 border-slate-200 dark:border-slate-200 dark:border-white/10">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-900 dark:text-white uppercase tracking-wider">
               3. Technical Skills
             </h3>
+            <label className="text-[11px] font-semibold uppercase tracking-wider text-slate-700 dark:text-text-secondary block">
+              Add Verified Skills & Toolsets
+            </label>
             <form onSubmit={handleAddSkill} className="flex gap-2">
               <input
                 type="text"
-                placeholder="Add skill (e.g. Docker, GraphQL)"
+                placeholder="e.g. Docker, GraphQL, Kubernetes"
                 value={newSkill}
                 onChange={e => setNewSkill(e.target.value)}
-                className="flex-1 bg-surface-elevated border border-white/10 rounded-xl px-3 py-2 text-xs text-white"
+                className="flex-1 bg-slate-50 dark:bg-surface-elevated border border-slate-200 dark:border-slate-200 dark:border-white/10 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-blue"
               />
               <button
                 type="submit"
-                className="px-3 py-2 rounded-xl bg-brand-cyan/20 text-brand-cyan text-xs font-semibold hover:bg-brand-cyan/30"
+                className="px-3.5 py-2 rounded-xl bg-cyan-500/15 text-cyan-600 dark:text-brand-cyan text-xs font-semibold hover:bg-cyan-500/25 border border-cyan-500/30 transition-colors"
               >
                 Add
               </button>
@@ -378,7 +402,7 @@ export const ResumeBuilderPage: React.FC = () => {
               {resume.skills.map(s => (
                 <span
                   key={s}
-                  className="text-xs px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-text-secondary flex items-center gap-1.5"
+                  className="text-xs px-2.5 py-1 rounded-lg bg-white/5 border border-slate-200 dark:border-white/10 text-text-secondary flex items-center gap-1.5"
                 >
                   <span>{s}</span>
                   <button
@@ -394,9 +418,9 @@ export const ResumeBuilderPage: React.FC = () => {
           </GlassCard>
 
           {/* Experience Section */}
-          <GlassCard className="p-5 space-y-4 border-white/10">
+          <GlassCard className="p-5 space-y-4 border-slate-200 dark:border-white/10">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">
                 4. Work Experience
               </h3>
               <button
@@ -417,7 +441,7 @@ export const ResumeBuilderPage: React.FC = () => {
                       value={exp.role}
                       onChange={e => updateExperience(exp.id, 'role', e.target.value)}
                       placeholder="Role Title"
-                      className="bg-transparent text-xs font-bold text-white border-b border-white/10 focus:border-brand-cyan outline-none pb-0.5"
+                      className="bg-transparent text-xs font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-white/10 focus:border-brand-cyan outline-none pb-0.5"
                     />
                     <button
                       type="button"
@@ -433,14 +457,14 @@ export const ResumeBuilderPage: React.FC = () => {
                       value={exp.company}
                       onChange={e => updateExperience(exp.id, 'company', e.target.value)}
                       placeholder="Company"
-                      className="bg-transparent text-xs text-text-muted border-b border-white/10 outline-none pb-0.5"
+                      className="bg-transparent text-xs text-text-muted border-b border-slate-200 dark:border-white/10 outline-none pb-0.5"
                     />
                     <input
                       type="text"
                       value={exp.duration}
                       onChange={e => updateExperience(exp.id, 'duration', e.target.value)}
                       placeholder="Duration"
-                      className="bg-transparent text-xs text-text-muted border-b border-white/10 outline-none pb-0.5 text-right"
+                      className="bg-transparent text-xs text-text-muted border-b border-slate-200 dark:border-white/10 outline-none pb-0.5 text-right"
                     />
                   </div>
                   <textarea
@@ -456,9 +480,9 @@ export const ResumeBuilderPage: React.FC = () => {
           </GlassCard>
 
           {/* Projects & Education */}
-          <GlassCard className="p-5 space-y-4 border-white/10">
+          <GlassCard className="p-5 space-y-4 border-slate-200 dark:border-white/10">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">
                 5. Key Projects
               </h3>
               <button
@@ -480,7 +504,7 @@ export const ResumeBuilderPage: React.FC = () => {
                       projects: prev.projects.map(p => p.id === proj.id ? { ...p, title: e.target.value } : p)
                     }))}
                     placeholder="Project Title"
-                    className="bg-transparent text-xs font-bold text-white border-b border-white/10 outline-none pb-0.5"
+                    className="bg-transparent text-xs font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-white/10 outline-none pb-0.5"
                   />
                   <button
                     type="button"
@@ -498,7 +522,7 @@ export const ResumeBuilderPage: React.FC = () => {
                     projects: prev.projects.map(p => p.id === proj.id ? { ...p, technologies: e.target.value } : p)
                   }))}
                   placeholder="Technologies used"
-                  className="w-full bg-transparent text-xs text-text-muted border-b border-white/10 outline-none pb-0.5"
+                  className="w-full bg-transparent text-xs text-text-muted border-b border-slate-200 dark:border-white/10 outline-none pb-0.5"
                 />
               </div>
             ))}

@@ -70,13 +70,13 @@ export const ProfilePage: React.FC = () => {
           <User size={13} />
           <span>Candidate Information</span>
         </div>
-        <h1 className="text-3xl font-extrabold text-white tracking-tight">Your Career Profile</h1>
+        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Your Career Profile</h1>
         <p className="text-xs text-text-secondary mt-1">
           Customize your target preferences to calibrate resume audits and job match scoring.
         </p>
       </div>
 
-      <GlassCard variant="elevated" className="p-6 sm:p-8 border border-white/20 shadow-glass-lg">
+      <GlassCard variant="elevated" className="p-6 sm:p-8 border border-slate-200 dark:border-white/20 shadow-glass-lg">
         {savedSuccess && (
           <div className="mb-6 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs flex items-center gap-2 font-mono">
             <CheckCircle2 size={16} />
@@ -104,7 +104,7 @@ export const ProfilePage: React.FC = () => {
                   disabled={isLoading}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2 bg-black/40 border border-white/10 rounded-xl text-xs sm:text-sm text-white focus:outline-none focus:border-brand-blue disabled:opacity-50"
+                  className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 disabled:opacity-50"
                 />
                 <User size={14} className="absolute left-3 top-2.5 text-text-muted" />
               </div>
@@ -119,7 +119,7 @@ export const ProfilePage: React.FC = () => {
                   type="email"
                   disabled
                   value={user?.email || ''}
-                  className="w-full pl-9 pr-4 py-2 bg-black/20 border border-white/5 rounded-xl text-xs sm:text-sm text-text-muted cursor-not-allowed"
+                  className="w-full pl-9 pr-4 py-2 bg-slate-100 dark:bg-black/20 border border-slate-200 dark:border-white/5 rounded-xl text-xs sm:text-sm text-slate-500 dark:text-text-muted cursor-not-allowed"
                 />
                 <Mail size={14} className="absolute left-3 top-2.5 text-text-muted" />
               </div>
@@ -136,18 +136,18 @@ export const ProfilePage: React.FC = () => {
                   value={targetRole}
                   disabled={isLoading}
                   onChange={(e) => setTargetRole(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2 bg-black/40 border border-white/10 rounded-xl text-xs sm:text-sm text-white focus:outline-none focus:border-brand-blue appearance-none cursor-pointer disabled:opacity-50"
+                  className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 appearance-none cursor-pointer disabled:opacity-50"
                 >
-                  <option value="Software Developer" className="bg-[#0B1020]">Software Developer</option>
-                  <option value="Frontend Developer" className="bg-[#0B1020]">Frontend Developer</option>
-                  <option value="Backend Developer" className="bg-[#0B1020]">Backend Developer</option>
-                  <option value="Python Developer" className="bg-[#0B1020]">Python Developer</option>
-                  <option value="AI/ML Engineer" className="bg-[#0B1020]">AI/ML Engineer</option>
-                  <option value="Data Analyst" className="bg-[#0B1020]">Data Analyst</option>
-                  <option value="Data Scientist" className="bg-[#0B1020]">Data Scientist</option>
-                  <option value="Cybersecurity Analyst" className="bg-[#0B1020]">Cybersecurity Analyst</option>
-                  <option value="Cloud Engineer" className="bg-[#0B1020]">Cloud Engineer</option>
-                  <option value="UI/UX Designer" className="bg-[#0B1020]">UI/UX Designer</option>
+                  <option value="Software Developer" className="bg-white text-slate-900 dark:bg-[#0B1020] dark:text-white">Software Developer</option>
+                  <option value="Frontend Developer" className="bg-white text-slate-900 dark:bg-[#0B1020] dark:text-white">Frontend Developer</option>
+                  <option value="Backend Developer" className="bg-white text-slate-900 dark:bg-[#0B1020] dark:text-white">Backend Developer</option>
+                  <option value="Python Developer" className="bg-white text-slate-900 dark:bg-[#0B1020] dark:text-white">Python Developer</option>
+                  <option value="AI/ML Engineer" className="bg-white text-slate-900 dark:bg-[#0B1020] dark:text-white">AI/ML Engineer</option>
+                  <option value="Data Analyst" className="bg-white text-slate-900 dark:bg-[#0B1020] dark:text-white">Data Analyst</option>
+                  <option value="Data Scientist" className="bg-white text-slate-900 dark:bg-[#0B1020] dark:text-white">Data Scientist</option>
+                  <option value="Cybersecurity Analyst" className="bg-white text-slate-900 dark:bg-[#0B1020] dark:text-white">Cybersecurity Analyst</option>
+                  <option value="Cloud Engineer" className="bg-white text-slate-900 dark:bg-[#0B1020] dark:text-white">Cloud Engineer</option>
+                  <option value="UI/UX Designer" className="bg-white text-slate-900 dark:bg-[#0B1020] dark:text-white">UI/UX Designer</option>
                 </select>
                 <Briefcase size={14} className="absolute left-3 top-2.5 text-text-muted pointer-events-none" />
               </div>
@@ -164,7 +164,7 @@ export const ProfilePage: React.FC = () => {
                   value={preferredLocation}
                   onChange={(e) => setPreferredLocation(e.target.value)}
                   placeholder="e.g. Remote, Hybrid, Bangalore, San Francisco"
-                  className="w-full pl-9 pr-4 py-2 bg-black/40 border border-white/10 rounded-xl text-xs sm:text-sm text-white focus:outline-none focus:border-brand-blue disabled:opacity-50"
+                  className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 disabled:opacity-50"
                 />
                 <MapPin size={14} className="absolute left-3 top-2.5 text-text-muted" />
               </div>
@@ -182,7 +182,7 @@ export const ProfilePage: React.FC = () => {
                 value={education}
                 onChange={(e) => setEducation(e.target.value)}
                 placeholder="e.g. Stanford University"
-                className="w-full p-2.5 bg-black/40 border border-white/10 rounded-xl text-xs sm:text-sm text-white focus:outline-none focus:border-brand-blue disabled:opacity-50"
+                className="w-full p-2.5 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 disabled:opacity-50"
               />
             </div>
 
@@ -196,7 +196,7 @@ export const ProfilePage: React.FC = () => {
                 value={degree}
                 onChange={(e) => setDegree(e.target.value)}
                 placeholder="e.g. B.S. Computer Science"
-                className="w-full p-2.5 bg-black/40 border border-white/10 rounded-xl text-xs sm:text-sm text-white focus:outline-none focus:border-brand-blue disabled:opacity-50"
+                className="w-full p-2.5 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 disabled:opacity-50"
               />
             </div>
 
@@ -210,7 +210,7 @@ export const ProfilePage: React.FC = () => {
                 value={graduationYear}
                 onChange={(e) => setGraduationYear(e.target.value)}
                 placeholder="e.g. 2025"
-                className="w-full p-2.5 bg-black/40 border border-white/10 rounded-xl text-xs sm:text-sm text-white focus:outline-none focus:border-brand-blue disabled:opacity-50"
+                className="w-full p-2.5 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 disabled:opacity-50"
               />
             </div>
           </div>
@@ -225,7 +225,7 @@ export const ProfilePage: React.FC = () => {
               onChange={(e) => setCareerInterests(e.target.value)}
               placeholder="e.g. Interested in LLM agent systems, distributed backend architectures, and high-frequency data pipelines..."
               rows={3}
-              className="w-full p-2.5 bg-black/40 border border-white/10 rounded-xl text-xs sm:text-sm text-white focus:outline-none focus:border-brand-blue disabled:opacity-50"
+              className="w-full p-2.5 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 disabled:opacity-50"
             />
           </div>
 

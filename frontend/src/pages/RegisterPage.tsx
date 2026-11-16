@@ -110,10 +110,10 @@ export const RegisterPage: React.FC = () => {
   return (
     <div className="min-h-screen pt-24 pb-16 flex items-center justify-center px-4 relative z-10">
       <div className="w-full max-w-md">
-        <GlassCard variant="elevated" className="p-8 border border-white/[0.12] shadow-elevated">
+        <GlassCard variant="elevated" className="p-8 border border-slate-200 dark:border-white/[0.12] shadow-elevated">
           <div className="text-center mb-8">
             <Logo textSize="text-xl" className="justify-center mb-3" />
-            <h1 className="text-xl font-bold text-white tracking-tight">Create your account</h1>
+            <h1 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Create your account</h1>
             <p className="text-text-secondary text-xs mt-1">Accelerate your career trajectory with meRESUmax</p>
           </div>
 
@@ -149,13 +149,13 @@ export const RegisterPage: React.FC = () => {
                     if (fieldErrors.name) setFieldErrors(prev => ({ ...prev, name: undefined }));
                   }}
                   placeholder="e.g. Maya Chen"
-                  className={`w-full pl-9 pr-4 py-2 bg-[#0D0F14] border rounded-lg text-sm text-white placeholder-text-muted focus:outline-none focus:ring-1 transition-all disabled:opacity-50 ${
+                  className={`w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#0D0F14] border rounded-lg text-sm text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:ring-1 transition-all disabled:opacity-50 ${
                     fieldErrors.name 
                       ? 'border-rose-500/60 focus:border-rose-500 focus:ring-rose-500/30' 
-                      : 'border-white/10 focus:border-blue-500 focus:ring-blue-500/30'
+                      : 'border-slate-300 dark:border-white/10 focus:border-blue-500 focus:ring-blue-500/30'
                   }`}
                 />
-                <User size={15} className="absolute left-3 top-2.5 text-zinc-500 pointer-events-none" />
+                <User size={15} className="absolute left-3 top-2.5 text-slate-400 dark:text-zinc-500 pointer-events-none" />
               </div>
               {fieldErrors.name && (
                 <p className="mt-1 text-[11px] text-rose-400 font-mono flex items-center gap-1">
@@ -179,13 +179,13 @@ export const RegisterPage: React.FC = () => {
                     if (fieldErrors.email) setFieldErrors(prev => ({ ...prev, email: undefined }));
                   }}
                   placeholder="you@domain.com"
-                  className={`w-full pl-9 pr-4 py-2 bg-[#0D0F14] border rounded-lg text-sm text-white placeholder-text-muted focus:outline-none focus:ring-1 transition-all disabled:opacity-50 ${
+                  className={`w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#0D0F14] border rounded-lg text-sm text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:ring-1 transition-all disabled:opacity-50 ${
                     fieldErrors.email 
                       ? 'border-rose-500/60 focus:border-rose-500 focus:ring-rose-500/30' 
-                      : 'border-white/10 focus:border-blue-500 focus:ring-blue-500/30'
+                      : 'border-slate-300 dark:border-white/10 focus:border-blue-500 focus:ring-blue-500/30'
                   }`}
                 />
-                <Mail size={15} className="absolute left-3 top-2.5 text-zinc-500 pointer-events-none" />
+                <Mail size={15} className="absolute left-3 top-2.5 text-slate-400 dark:text-zinc-500 pointer-events-none" />
               </div>
               {fieldErrors.email && (
                 <p className="mt-1 text-[11px] text-rose-400 font-mono flex items-center gap-1">
@@ -206,20 +206,20 @@ export const RegisterPage: React.FC = () => {
                     setTargetRole(e.target.value);
                     if (fieldErrors.targetRole) setFieldErrors(prev => ({ ...prev, targetRole: undefined }));
                   }}
-                  className="w-full pl-9 pr-4 py-2 bg-[#0D0F14] border border-white/10 rounded-lg text-sm text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all appearance-none cursor-pointer disabled:opacity-50"
+                  className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#0D0F14] border border-slate-300 dark:border-white/10 rounded-lg text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all appearance-none cursor-pointer disabled:opacity-50"
                 >
-                  <option value="Software Developer" className="bg-[#111318]">Software Developer</option>
-                  <option value="Frontend Developer" className="bg-[#111318]">Frontend Developer</option>
-                  <option value="Backend Developer" className="bg-[#111318]">Backend Developer</option>
-                  <option value="Python Developer" className="bg-[#111318]">Python Developer</option>
-                  <option value="AI/ML Engineer" className="bg-[#111318]">AI/ML Engineer</option>
-                  <option value="Data Analyst" className="bg-[#111318]">Data Analyst</option>
-                  <option value="Data Scientist" className="bg-[#111318]">Data Scientist</option>
-                  <option value="Cybersecurity Analyst" className="bg-[#111318]">Cybersecurity Analyst</option>
-                  <option value="Cloud Engineer" className="bg-[#111318]">Cloud Engineer</option>
-                  <option value="UI/UX Designer" className="bg-[#111318]">UI/UX Designer</option>
+                  <option value="Software Developer" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">Software Developer</option>
+                  <option value="Frontend Developer" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">Frontend Developer</option>
+                  <option value="Backend Developer" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">Backend Developer</option>
+                  <option value="Python Developer" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">Python Developer</option>
+                  <option value="AI/ML Engineer" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">AI/ML Engineer</option>
+                  <option value="Data Analyst" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">Data Analyst</option>
+                  <option value="Data Scientist" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">Data Scientist</option>
+                  <option value="Cybersecurity Analyst" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">Cybersecurity Analyst</option>
+                  <option value="Cloud Engineer" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">Cloud Engineer</option>
+                  <option value="UI/UX Designer" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">UI/UX Designer</option>
                 </select>
-                <Briefcase size={15} className="absolute left-3 top-2.5 text-zinc-500 pointer-events-none" />
+                <Briefcase size={15} className="absolute left-3 top-2.5 text-slate-400 dark:text-zinc-500 pointer-events-none" />
               </div>
               {fieldErrors.targetRole && (
                 <p className="mt-1 text-[11px] text-rose-400 font-mono flex items-center gap-1">
@@ -243,13 +243,13 @@ export const RegisterPage: React.FC = () => {
                     if (fieldErrors.password) setFieldErrors(prev => ({ ...prev, password: undefined }));
                   }}
                   placeholder="••••••••"
-                  className={`w-full pl-9 pr-4 py-2 bg-[#0D0F14] border rounded-lg text-sm text-white placeholder-text-muted focus:outline-none focus:ring-1 transition-all disabled:opacity-50 ${
+                  className={`w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#0D0F14] border rounded-lg text-sm text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:ring-1 transition-all disabled:opacity-50 ${
                     fieldErrors.password 
                       ? 'border-rose-500/60 focus:border-rose-500 focus:ring-rose-500/30' 
-                      : 'border-white/10 focus:border-blue-500 focus:ring-blue-500/30'
+                      : 'border-slate-300 dark:border-white/10 focus:border-blue-500 focus:ring-blue-500/30'
                   }`}
                 />
-                <Lock size={15} className="absolute left-3 top-2.5 text-zinc-500 pointer-events-none" />
+                <Lock size={15} className="absolute left-3 top-2.5 text-slate-400 dark:text-zinc-500 pointer-events-none" />
               </div>
               {fieldErrors.password ? (
                 <p className="mt-1 text-[11px] text-rose-400 font-mono flex items-center gap-1">
@@ -277,7 +277,7 @@ export const RegisterPage: React.FC = () => {
 
           <div className="mt-6 text-center text-xs text-text-secondary">
             Already have an account?{' '}
-            <Link to="/login" className="text-white hover:text-blue-400 font-medium transition-colors">
+            <Link to="/login" className="text-blue-600 dark:text-blue-400 hover:underline font-medium transition-colors">
               Sign In
             </Link>
           </div>

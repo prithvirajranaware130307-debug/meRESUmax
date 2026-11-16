@@ -34,7 +34,7 @@
    - Interactive timeline with priority badges, status toggles, and database persistence.
 
 6. **Job Discovery & Bookmarking**
-   - Adzuna API integration for live postings.
+   - JSearch Mega (RapidAPI) integration for live postings.
    - Transparent labeling distinguishing live listings from curated demonstrations.
    - Direct outbound application links and favorite bookmarks.
 
@@ -96,9 +96,8 @@ Configure your keys (optional):
 ```env
 OPENAI_API_KEY=your_openai_api_key_here
 OPENAI_MODEL=gpt-4o-mini
-ADZUNA_APP_ID=your_adzuna_app_id
-ADZUNA_APP_KEY=your_adzuna_app_key
-ADZUNA_COUNTRY=in
+RAPIDAPI_KEY=your_rapidapi_key
+JSEARCH_API_HOST=jsearch-mega.p.rapidapi.com
 ```
 *(If no API keys are provided, meRESUmax automatically activates its explainable heuristic scoring and curated demo job engine.)*
 

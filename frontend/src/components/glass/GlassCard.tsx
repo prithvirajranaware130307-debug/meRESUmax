@@ -18,13 +18,13 @@ export const GlassCard: React.FC<GlassCardProps> = ({
 }) => {
   const baseVariant = 
     variant === 'elevated' 
-      ? 'bg-[#161922]/95 border border-white/[0.10] shadow-card' 
+      ? 'bg-white/95 dark:bg-[#161922]/95 border border-slate-200/80 dark:border-white/[0.10] shadow-card' 
       : variant === 'subtle' 
-        ? 'bg-white/[0.025] border border-white/[0.06]' 
-        : 'bg-[#111318]/90 border border-white/[0.08] shadow-sm';
+        ? 'bg-slate-100/70 dark:bg-white/[0.025] border border-slate-200/70 dark:border-white/[0.06]' 
+        : 'bg-white/90 dark:bg-[#111318]/90 border border-slate-200/80 dark:border-white/[0.08] shadow-sm';
 
   const interactiveStyles = interactive 
-    ? 'hover:border-white/[0.18] hover:bg-[#151821] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer' 
+    ? 'hover:border-slate-300 dark:hover:border-white/[0.18] hover:bg-slate-50 dark:hover:bg-[#151821] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer' 
     : '';
 
   return (

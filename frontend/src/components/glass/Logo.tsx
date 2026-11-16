@@ -16,16 +16,16 @@ export const Logo: React.FC<LogoProps> = ({
   return (
     <Link to="/" className={`inline-flex items-center gap-2.5 group select-none ${className}`}>
       {/* Precision Geometric Monogram */}
-      <div className="relative flex items-center justify-center w-8 h-8 rounded-lg bg-[#161922] border border-white/12 shadow-sm transition-all duration-200 group-hover:border-white/25 group-hover:bg-[#1D212C]">
-        <FileText size={iconSize} className="text-zinc-200 transition-transform duration-200 group-hover:scale-105" />
+      <div className="relative flex items-center justify-center w-8 h-8 rounded-lg bg-slate-100 dark:bg-[#161922] border border-slate-300 dark:border-white/12 shadow-sm transition-all duration-200 group-hover:border-slate-400 dark:group-hover:border-white/25 group-hover:bg-slate-200 dark:group-hover:bg-[#1D212C]">
+        <FileText size={iconSize} className="text-slate-700 dark:text-zinc-200 transition-transform duration-200 group-hover:scale-105" />
         {/* Subtle status indicator dot */}
-        <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-blue-500 border border-[#090A0E]" />
+        <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-blue-500 border border-white dark:border-[#090A0E]" />
       </div>
 
       {/* Crafted Wordmark */}
-      <span className={`font-medium tracking-tight text-white flex items-center ${textSize}`}>
+      <span className={`font-medium tracking-tight text-slate-900 dark:text-white flex items-center ${textSize}`}>
         <span className="text-text-secondary font-normal">me</span>
-        <span className="font-bold tracking-tight text-white px-0.5">RESU</span>
+        <span className="font-bold tracking-tight text-slate-900 dark:text-white px-0.5">RESU</span>
         <span className="font-light text-text-muted">max</span>
       </span>
     </Link>

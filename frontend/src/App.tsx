@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
@@ -44,123 +45,125 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 
 export const App: React.FC = () => {
   return (
-    <AuthProvider>
-      <Router>
-        <div className="min-h-screen flex flex-col relative selection:bg-brand-blue/30 selection:text-white">
-          <BackgroundAtmosphere />
-          <Navbar />
-          
-          <main className="flex-1">
-            <ErrorBoundary>
-              <Routes>
-              {/* Public Routes */}
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="/jobs" element={<JobsPage />} />
+    <ThemeProvider>
+      <AuthProvider>
+        <Router>
+          <div className="min-h-screen flex flex-col relative selection:bg-brand-blue/30 selection:text-white bg-[var(--bg-main)] text-[var(--text-primary)] transition-colors duration-200">
+            <BackgroundAtmosphere />
+            <Navbar />
+            
+            <main className="flex-1">
+              <ErrorBoundary>
+                <Routes>
+                {/* Public Routes */}
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/jobs" element={<JobsPage />} />
 
-              {/* Protected Routes */}
-              <Route
-                path="/dashboard"
-                element={
-                  <ProtectedRoute>
-                    <DashboardPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/analyze"
-                element={
-                  <ProtectedRoute>
-                    <AnalyzePage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/results/:analysisId"
-                element={
-                  <ProtectedRoute>
-                    <ResultsPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/roadmap"
-                element={
-                  <ProtectedRoute>
-                    <RoadmapPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/profile"
-                element={
-                  <ProtectedRoute>
-                    <ProfilePage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/history"
-                element={
-                  <ProtectedRoute>
-                    <HistoryPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/interview"
-                element={
-                  <ProtectedRoute>
-                    <InterviewPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/tools"
-                element={
-                  <ProtectedRoute>
-                    <CareerToolsPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/builder"
-                element={
-                  <ProtectedRoute>
-                    <ResumeBuilderPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/tracker"
-                element={
-                  <ProtectedRoute>
-                    <ApplicationTrackerPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/settings"
-                element={
-                  <ProtectedRoute>
-                    <SettingsPage />
-                  </ProtectedRoute>
-                }
-              />
+                {/* Protected Routes */}
+                <Route
+                  path="/dashboard"
+                  element={
+                    <ProtectedRoute>
+                      <DashboardPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/analyze"
+                  element={
+                    <ProtectedRoute>
+                      <AnalyzePage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/results/:analysisId"
+                  element={
+                    <ProtectedRoute>
+                      <ResultsPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/roadmap"
+                  element={
+                    <ProtectedRoute>
+                      <RoadmapPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/profile"
+                  element={
+                    <ProtectedRoute>
+                      <ProfilePage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/history"
+                  element={
+                    <ProtectedRoute>
+                      <HistoryPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/interview"
+                  element={
+                    <ProtectedRoute>
+                      <InterviewPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/tools"
+                  element={
+                    <ProtectedRoute>
+                      <CareerToolsPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/builder"
+                  element={
+                    <ProtectedRoute>
+                      <ResumeBuilderPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/tracker"
+                  element={
+                    <ProtectedRoute>
+                      <ApplicationTrackerPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/settings"
+                  element={
+                    <ProtectedRoute>
+                      <SettingsPage />
+                    </ProtectedRoute>
+                  }
+                />
 
-              {/* Catch all fallback */}
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </ErrorBoundary>
-        </main>
+                {/* Catch all fallback */}
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </ErrorBoundary>
+          </main>
 
-          <Footer />
-          <FloatingAssistant />
-          <CustomCursor />
-        </div>
-      </Router>
-    </AuthProvider>
+            <Footer />
+            <FloatingAssistant />
+            <CustomCursor />
+          </div>
+        </Router>
+      </AuthProvider>
+    </ThemeProvider>
   );
 };
 

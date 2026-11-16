@@ -105,7 +105,7 @@ export const ResultsPage: React.FC = () => {
           <div className="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center mx-auto mb-4">
             <ShieldAlert size={24} />
           </div>
-          <h1 className="text-white text-lg font-bold mb-1.5">Analysis Unavailable</h1>
+          <h1 className="text-slate-900 dark:text-white text-lg font-bold mb-1.5">Analysis Unavailable</h1>
           <p className="text-xs text-text-secondary mb-6 leading-relaxed">
             {error || 'The requested career intelligence audit could not be loaded. Please retry or run a new resume audit.'}
           </p>
@@ -208,7 +208,7 @@ export const ResultsPage: React.FC = () => {
             <ArrowLeft size={13} /> Back to Command Center
           </Link>
           <div className="flex flex-wrap items-center gap-3">
-            <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
               Audit Results: {analysis.target_role}
             </h1>
             {!ai.is_live_ai && (
@@ -218,7 +218,7 @@ export const ResultsPage: React.FC = () => {
             )}
           </div>
           <p className="text-xs font-mono text-text-secondary mt-1">
-            DOCUMENT: <span className="text-white font-medium">{analysis.resume_filename}</span> • {analysis.created_at?.slice(0, 10)}
+            DOCUMENT: <span className="text-slate-900 dark:text-white font-medium">{analysis.resume_filename}</span> • {analysis.created_at?.slice(0, 10)}
           </p>
         </div>
 
@@ -291,11 +291,11 @@ export const ResultsPage: React.FC = () => {
 
       {/* Category Breakdown Bars */}
       <GlassCard variant="standard" className="p-6 mb-8">
-        <h2 className="text-base font-bold text-white mb-4">Heuristic Category Breakdown</h2>
+        <h2 className="text-base font-bold text-slate-900 dark:text-white mb-4">Heuristic Category Breakdown</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           {Object.entries(categoryScores).map(([key, item]: [string, any]) => (
             <div key={key} className="p-4 rounded-xl bg-white/[0.03] border border-white/5 space-y-2">
-              <div className="flex items-center justify-between text-xs font-semibold text-white">
+              <div className="flex items-center justify-between text-xs font-semibold text-slate-900 dark:text-white">
                 <span className="truncate">{item?.title || key}</span>
                 <span className="text-brand-cyan shrink-0">{item?.score ?? 0}/{item?.max ?? 20}</span>
               </div>
@@ -315,7 +315,7 @@ export const ResultsPage: React.FC = () => {
       <GlassCard variant="standard" className="p-6 mb-8 border border-amber-500/20">
         <div className="flex items-center gap-2 mb-4">
           <ShieldAlert size={18} className="text-amber-400" />
-          <h2 className="text-base font-bold text-white">High Priority Fixes</h2>
+          <h2 className="text-base font-bold text-slate-900 dark:text-white">High Priority Fixes</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {highPriorityFixes.map((fix, idx) => (
@@ -344,7 +344,7 @@ export const ResultsPage: React.FC = () => {
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <TrendingUp size={18} className="text-brand-cyan" />
-            <h2 className="text-base font-bold text-white">Better Bullet Examples (Realistic Transformations)</h2>
+            <h2 className="text-base font-bold text-slate-900 dark:text-white">Better Bullet Examples (Realistic Transformations)</h2>
           </div>
           <span className="text-xs text-text-muted hidden sm:inline">Weak vs. Quantified STAR Transformations</span>
         </div>
@@ -379,7 +379,7 @@ export const ResultsPage: React.FC = () => {
                       <span className="text-[10px]">{copiedKey === `bullet-${idx}` ? 'Copied' : 'Copy'}</span>
                     </button>
                   </div>
-                  <div className="text-xs sm:text-sm text-white font-medium pr-10">
+                  <div className="text-xs sm:text-sm text-slate-900 dark:text-white font-medium pr-10">
                     "{item.better}"
                   </div>
                 </div>
@@ -441,7 +441,7 @@ export const ResultsPage: React.FC = () => {
         <GlassCard variant="standard" className="p-6">
           <div className="flex items-center gap-2 mb-3">
             <Tag size={16} className="text-brand-blue" />
-            <h2 className="text-sm font-bold text-white uppercase tracking-wider">ATS-Friendly Keywords (No Stuffing)</h2>
+            <h2 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">ATS-Friendly Keywords (No Stuffing)</h2>
           </div>
           <p className="text-xs text-text-secondary mb-3">
             Incorporate these contextual phrases naturally into your experience bullet points to match automated applicant tracking filters:
@@ -466,7 +466,7 @@ export const ResultsPage: React.FC = () => {
         <GlassCard variant="standard" className="p-6">
           <div className="flex items-center gap-2 mb-3">
             <ListOrdered size={16} className="text-brand-mint" />
-            <h2 className="text-sm font-bold text-white uppercase tracking-wider">Recommended Next Steps</h2>
+            <h2 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">Recommended Next Steps</h2>
           </div>
           <div className="space-y-3">
             {nextSteps.map((step, idx) => (
@@ -497,7 +497,7 @@ export const ResultsPage: React.FC = () => {
               <span>{copiedKey === 'summary' ? 'Copied' : 'Copy'}</span>
             </button>
           </div>
-          <p className="text-sm text-white italic bg-black/30 p-4 rounded-xl border border-white/10 leading-relaxed">
+          <p className="text-sm text-slate-900 dark:text-white italic bg-slate-100 dark:bg-black/30 p-4 rounded-xl border border-slate-200 dark:border-white/10 leading-relaxed">
             "{ai.summary_rewrite}"
           </p>
         </GlassCard>
@@ -508,7 +508,7 @@ export const ResultsPage: React.FC = () => {
         <GlassCard variant="standard" className="p-6 mb-8">
           <div className="flex items-center gap-2 mb-4">
             <HelpCircle size={18} className="text-brand-violet" />
-            <h2 className="text-base font-bold text-white">Role-Specific Interview Prep Questions</h2>
+            <h2 className="text-base font-bold text-slate-900 dark:text-white">Role-Specific Interview Prep Questions</h2>
           </div>
           <div className="space-y-3">
             {ai.interview_prep_tips.map((tip, idx) => (

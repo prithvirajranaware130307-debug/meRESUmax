@@ -23,8 +23,8 @@ def health():
             'model': Config.GEMINI_MODEL if Config.GEMINI_API_KEY else Config.OPENAI_MODEL
         },
         'job_service': {
-            'provider': 'Adzuna' if (Config.ADZUNA_APP_ID and not Config.ADZUNA_APP_ID.startswith('replace_')) else 'Curated Demo Engine',
-            'configured': bool(Config.ADZUNA_APP_ID and not Config.ADZUNA_APP_ID.startswith('replace_')),
-            'country': Config.ADZUNA_COUNTRY
+            'provider': 'JSearch (RapidAPI)' if (Config.RAPIDAPI_KEY and not Config.RAPIDAPI_KEY.startswith('replace_')) else 'Curated Demo Engine',
+            'configured': bool(Config.RAPIDAPI_KEY and not Config.RAPIDAPI_KEY.startswith('replace_')),
+            'host': Config.JSEARCH_API_HOST
         }
     }), 200

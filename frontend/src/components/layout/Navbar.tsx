@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { useTheme } from '../../context/ThemeContext';
 import { Logo } from '../glass/Logo';
 import { GlassButton } from '../glass/GlassButton';
 import { 
   Menu, X, Sparkles, LayoutDashboard, FileUp, 
   Briefcase, Compass, History, User, LogOut, ChevronRight,
-  Mic, Wand2, Layout, Kanban, ChevronDown, LucideIcon
+  Mic, Wand2, Layout, Kanban, ChevronDown, LucideIcon, Sun, Moon
 } from 'lucide-react';
 
 interface NavItem {
@@ -30,6 +31,27 @@ const MORE_AUTH_LINKS: NavItem[] = [
   { to: '/history', label: 'History', icon: History },
   { to: '/profile', label: 'Profile', icon: User },
 ];
+
+const ThemeToggle: React.FC<{ className?: string }> = ({ className = '' }) => {
+  const { theme, toggleTheme } = useTheme();
+  return (
+    <button
+      type="button"
+      onClick={toggleTheme}
+      className={`p-2 rounded-lg text-text-secondary hover:text-slate-900 dark:hover:text-white bg-slate-100/80 dark:bg-white/[0.05] hover:bg-slate-200/80 dark:hover:bg-white/[0.1] border border-slate-200 dark:border-white/10 transition-all cursor-pointer relative shrink-0 ${className}`}
+      title={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
+      aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
+    >
+      <div className="relative w-4 h-4 flex items-center justify-center">
+        {theme === 'dark' ? (
+          <Sun size={15} className="text-amber-400 rotate-0 transition-transform duration-300 hover:rotate-45" />
+        ) : (
+          <Moon size={15} className="text-slate-700 transition-transform duration-300 hover:-rotate-12" />
+        )}
+      </div>
+    </button>
+  );
+};
 
 export const Navbar: React.FC = () => {
   const { user, isAuthenticated, logout } = useAuth();
@@ -138,7 +160,7 @@ export const Navbar: React.FC = () => {
   return (
     <header className="fixed top-0 inset-x-0 z-50 flex justify-center px-3 sm:px-4 md:px-6 pt-3 pointer-events-none">
       <nav 
-        className="w-full max-w-6xl rounded-xl bg-[#0D0F14]/90 backdrop-blur-md border border-white/10 shadow-card px-3 sm:px-4 py-2 flex items-center justify-between pointer-events-auto transition-all duration-200"
+        className="w-full max-w-6xl rounded-xl bg-white/95 dark:bg-[#0D0F14]/90 backdrop-blur-md border border-slate-200 dark:border-white/10 shadow-card px-3 sm:px-4 py-2 flex items-center justify-between pointer-events-auto transition-all duration-200"
         aria-label="Main Navigation"
       >
         {/* Brand Logo */}
@@ -154,21 +176,21 @@ export const Navbar: React.FC = () => {
                 to="/"
                 className={`px-3 py-1.5 text-xs lg:text-sm font-medium rounded-lg transition-all duration-150 ${
                   isActive('/') 
-                    ? 'text-white bg-white/[0.08] shadow-sm' 
-                    : 'text-text-secondary hover:text-white hover:bg-white/[0.04]'
+                    ? 'text-slate-900 dark:text-white bg-slate-200/80 dark:bg-white/[0.08] shadow-sm font-semibold' 
+                    : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
                 }`}
               >
                 Home
               </Link>
               <a
                 href="/#features"
-                className="px-3 py-1.5 text-xs lg:text-sm font-medium text-text-secondary hover:text-white hover:bg-white/[0.04] rounded-lg transition-all duration-150"
+                className="px-3 py-1.5 text-xs lg:text-sm font-medium text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04] rounded-lg transition-all duration-150"
               >
                 Features
               </a>
               <a
                 href="/#how-it-works"
-                className="px-3 py-1.5 text-xs lg:text-sm font-medium text-text-secondary hover:text-white hover:bg-white/[0.04] rounded-lg transition-all duration-150"
+                className="px-3 py-1.5 text-xs lg:text-sm font-medium text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04] rounded-lg transition-all duration-150"
               >
                 Workflow
               </a>
@@ -176,15 +198,15 @@ export const Navbar: React.FC = () => {
                 to="/jobs"
                 className={`px-3 py-1.5 text-xs lg:text-sm font-medium rounded-lg transition-all duration-150 ${
                   isActive('/jobs') 
-                    ? 'text-white bg-white/[0.08] shadow-sm' 
-                    : 'text-text-secondary hover:text-white hover:bg-white/[0.04]'
+                    ? 'text-slate-900 dark:text-white bg-slate-200/80 dark:bg-white/[0.08] shadow-sm font-semibold' 
+                    : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
                 }`}
               >
                 Jobs
               </Link>
               <a
                 href="/#faq"
-                className="px-3 py-1.5 text-xs lg:text-sm font-medium text-text-secondary hover:text-white hover:bg-white/[0.04] rounded-lg transition-all duration-150"
+                className="px-3 py-1.5 text-xs lg:text-sm font-medium text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04] rounded-lg transition-all duration-150"
               >
                 FAQ
               </a>
@@ -201,8 +223,8 @@ export const Navbar: React.FC = () => {
                     to={link.to}
                     className={`px-2.5 lg:px-3 py-1.5 text-xs lg:text-sm font-medium rounded-lg flex items-center gap-1.5 transition-all duration-150 shrink-0 ${
                       active 
-                        ? 'text-white bg-white/[0.09] shadow-sm font-semibold' 
-                        : 'text-text-secondary hover:text-white hover:bg-white/[0.04]'
+                        ? 'text-slate-900 dark:text-white bg-slate-200/80 dark:bg-white/[0.09] shadow-sm font-semibold' 
+                        : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
                     }`}
                   >
                     <Icon size={14} className={`shrink-0 ${active ? 'text-white' : 'text-zinc-400'}`} />
@@ -223,8 +245,8 @@ export const Navbar: React.FC = () => {
                   onClick={() => setMoreMenuOpen(prev => !prev)}
                   className={`px-2.5 lg:px-3 py-1.5 text-xs lg:text-sm font-medium rounded-lg flex items-center gap-1.5 transition-all duration-150 cursor-pointer shrink-0 ${
                     isMoreActive
-                      ? 'text-white bg-white/[0.09] shadow-sm font-semibold'
-                      : 'text-text-secondary hover:text-white hover:bg-white/[0.04]'
+                      ? 'text-slate-900 dark:text-white bg-slate-200/80 dark:bg-white/[0.09] shadow-sm font-semibold'
+                      : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
                   }`}
                 >
                   <span>More</span>
@@ -242,7 +264,7 @@ export const Navbar: React.FC = () => {
                     role="menu"
                     aria-labelledby="more-menu-trigger"
                     onKeyDown={handleMoreMenuKeyDown}
-                    className="absolute left-0 mt-2 w-52 rounded-xl bg-[#0D0F14]/95 backdrop-blur-md border border-white/10 shadow-elevated p-1.5 z-50 flex flex-col gap-0.5 animate-in fade-in zoom-in-95 duration-100"
+                    className="absolute left-0 mt-2 w-52 rounded-xl bg-white/98 dark:bg-[#0D0F14]/95 backdrop-blur-md border border-slate-200 dark:border-white/10 shadow-elevated p-1.5 z-50 flex flex-col gap-0.5 animate-in fade-in zoom-in-95 duration-100"
                   >
                     {MORE_AUTH_LINKS.map((link, idx) => {
                       const Icon = link.icon;
@@ -274,6 +296,7 @@ export const Navbar: React.FC = () => {
 
         {/* Right Actions */}
         <div className="hidden md:flex items-center gap-2 shrink-0">
+          <ThemeToggle />
           {!isAuthenticated ? (
             <>
               <Link to="/login">
@@ -294,14 +317,14 @@ export const Navbar: React.FC = () => {
                 title="Profile & Settings"
                 className={`flex items-center gap-2 px-2.5 py-1 rounded-lg border transition-all ${
                   isActive('/profile')
-                    ? 'bg-white/[0.09] border-white/20 text-white'
-                    : 'bg-white/[0.04] hover:bg-white/[0.08] border-white/10 text-white'
+                    ? 'bg-slate-200/80 dark:bg-white/[0.09] border-slate-300 dark:border-white/20 text-slate-900 dark:text-white'
+                    : 'bg-slate-100 dark:bg-white/[0.04] hover:bg-slate-200/80 dark:hover:bg-white/[0.08] border-slate-200 dark:border-white/10 text-slate-800 dark:text-white'
                 }`}
               >
-                <div className="w-5 h-5 rounded-md bg-white/10 text-zinc-200 flex items-center justify-center font-semibold text-[11px] font-mono">
+                <div className="w-5 h-5 rounded-md bg-slate-200 dark:bg-white/10 text-slate-700 dark:text-zinc-200 flex items-center justify-center font-semibold text-[11px] font-mono">
                   {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
                 </div>
-                <span className="text-xs font-medium text-white max-w-[100px] truncate">{user?.name || 'User'}</span>
+                <span className="text-xs font-medium text-slate-800 dark:text-white max-w-[100px] truncate">{user?.name || 'User'}</span>
               </Link>
               <button
                 type="button"
@@ -321,7 +344,7 @@ export const Navbar: React.FC = () => {
           ref={hamburgerButtonRef}
           type="button"
           onClick={() => setMobileMenuOpen(prev => !prev)}
-          className="md:hidden p-2 rounded-lg text-text-secondary hover:text-white bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 transition-all cursor-pointer shrink-0"
+          className="md:hidden p-2 rounded-lg text-text-secondary hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-white/[0.05] hover:bg-slate-200 dark:hover:bg-white/[0.1] border border-slate-200 dark:border-white/10 transition-all cursor-pointer shrink-0"
           aria-label="Toggle Navigation Menu"
           aria-expanded={mobileMenuOpen}
           aria-controls="mobile-nav-drawer"
@@ -347,7 +370,7 @@ export const Navbar: React.FC = () => {
           role="dialog"
           aria-modal="true"
           aria-label="Mobile Navigation Drawer"
-          className="md:hidden fixed top-16 inset-x-3 sm:inset-x-4 max-h-[calc(100vh-5rem)] overflow-y-auto bg-[#0D0F14]/95 backdrop-blur-xl rounded-xl p-3 sm:p-4 shadow-elevated border border-white/10 pointer-events-auto flex flex-col gap-1.5 z-50 animate-in fade-in zoom-in-95 duration-150"
+          className="md:hidden fixed top-16 inset-x-3 sm:inset-x-4 max-h-[calc(100vh-5rem)] overflow-y-auto bg-white/98 dark:bg-[#0D0F14]/95 backdrop-blur-xl rounded-xl p-3 sm:p-4 shadow-elevated border border-slate-200 dark:border-white/10 pointer-events-auto flex flex-col gap-1.5 z-50 animate-in fade-in zoom-in-95 duration-150"
         >
           {!isAuthenticated ? (
             <>
@@ -355,7 +378,7 @@ export const Navbar: React.FC = () => {
                 to="/"
                 onClick={() => setMobileMenuOpen(false)}
                 className={`px-3 py-2 text-sm font-medium rounded-lg flex items-center justify-between transition-colors ${
-                  isActive('/') ? 'text-white bg-white/[0.08]' : 'text-text-secondary hover:text-white hover:bg-white/[0.04]'
+                  isActive('/') ? 'text-white bg-white/[0.08]' : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
                 }`}
               >
                 <span>Home</span>
@@ -365,7 +388,7 @@ export const Navbar: React.FC = () => {
                 to="/jobs"
                 onClick={() => setMobileMenuOpen(false)}
                 className={`px-3 py-2 text-sm font-medium rounded-lg flex items-center justify-between transition-colors ${
-                  isActive('/jobs') ? 'text-white bg-white/[0.08]' : 'text-text-secondary hover:text-white hover:bg-white/[0.04]'
+                  isActive('/jobs') ? 'text-white bg-white/[0.08]' : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
                 }`}
               >
                 <span>Explore Jobs</span>
@@ -374,7 +397,7 @@ export const Navbar: React.FC = () => {
               <a
                 href="/#features"
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 text-sm font-medium text-text-secondary hover:text-white hover:bg-white/[0.04] rounded-lg flex items-center justify-between transition-colors"
+                className="px-3 py-2 text-sm font-medium text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04] rounded-lg flex items-center justify-between transition-colors"
               >
                 <span>Features</span>
                 <ChevronRight size={14} className="text-text-muted" />
@@ -382,7 +405,7 @@ export const Navbar: React.FC = () => {
               <a
                 href="/#how-it-works"
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 text-sm font-medium text-text-secondary hover:text-white hover:bg-white/[0.04] rounded-lg flex items-center justify-between transition-colors"
+                className="px-3 py-2 text-sm font-medium text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04] rounded-lg flex items-center justify-between transition-colors"
               >
                 <span>Workflow</span>
                 <ChevronRight size={14} className="text-text-muted" />
@@ -390,13 +413,18 @@ export const Navbar: React.FC = () => {
               <a
                 href="/#faq"
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 text-sm font-medium text-text-secondary hover:text-white hover:bg-white/[0.04] rounded-lg flex items-center justify-between transition-colors"
+                className="px-3 py-2 text-sm font-medium text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04] rounded-lg flex items-center justify-between transition-colors"
               >
                 <span>FAQ</span>
                 <ChevronRight size={14} className="text-text-muted" />
               </a>
 
-              <div className="h-px bg-white/10 my-1.5" />
+              <div className="flex items-center justify-between px-3 py-1 text-xs text-text-secondary">
+                <span>Theme</span>
+                <ThemeToggle />
+              </div>
+
+              <div className="h-px bg-slate-200 dark:bg-white/10 my-1.5" />
 
               <div className="flex flex-col gap-2 pt-1">
                 <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="w-full">
@@ -414,19 +442,22 @@ export const Navbar: React.FC = () => {
           ) : (
             <>
               {/* User Identity Header Card */}
-              <div className="px-3 py-2.5 mb-1 flex items-center gap-2.5 bg-white/[0.03] rounded-lg border border-white/5">
-                <div className="w-8 h-8 rounded-md bg-white/10 text-white flex items-center justify-center font-bold text-xs font-mono shrink-0">
-                  {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
+              <div className="px-3 py-2.5 mb-1 flex items-center justify-between bg-slate-100/70 dark:bg-white/[0.03] rounded-lg border border-slate-200/80 dark:border-white/5">
+                <div className="flex items-center gap-2.5 truncate">
+                  <div className="w-8 h-8 rounded-md bg-slate-200 dark:bg-white/10 text-slate-800 dark:text-white flex items-center justify-center font-bold text-xs font-mono shrink-0">
+                    {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                  </div>
+                  <div className="truncate">
+                    <div className="text-sm font-semibold text-slate-900 dark:text-white truncate">{user?.name}</div>
+                    <div className="text-[11px] text-text-secondary truncate">{user?.email}</div>
+                    {user?.target_role && (
+                      <div className="text-[10px] text-brand-blue font-mono mt-0.5 truncate">
+                        {user.target_role}
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div className="truncate">
-                  <div className="text-sm font-semibold text-white truncate">{user?.name}</div>
-                  <div className="text-[11px] text-text-secondary truncate">{user?.email}</div>
-                  {user?.target_role && (
-                    <div className="text-[10px] text-blue-400 font-mono mt-0.5 truncate">
-                      {user.target_role}
-                    </div>
-                  )}
-                </div>
+                <ThemeToggle />
               </div>
 
               {/* Primary Links */}
@@ -442,7 +473,7 @@ export const Navbar: React.FC = () => {
                     to={link.to}
                     onClick={() => setMobileMenuOpen(false)}
                     className={`px-3 py-2 text-sm font-medium rounded-lg flex items-center gap-2.5 transition-colors ${
-                      active ? 'text-white bg-white/[0.09] font-semibold' : 'text-text-secondary hover:text-white hover:bg-white/[0.04]'
+                      active ? 'text-white bg-white/[0.09] font-semibold' : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
                     }`}
                   >
                     <Icon size={16} className={`shrink-0 ${active ? 'text-white' : 'text-zinc-400'}`} />
@@ -466,7 +497,7 @@ export const Navbar: React.FC = () => {
                     to={link.to}
                     onClick={() => setMobileMenuOpen(false)}
                     className={`px-3 py-2 text-sm font-medium rounded-lg flex items-center gap-2.5 transition-colors ${
-                      active ? 'text-white bg-white/[0.09] font-semibold' : 'text-text-secondary hover:text-white hover:bg-white/[0.04]'
+                      active ? 'text-white bg-white/[0.09] font-semibold' : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
                     }`}
                   >
                     <Icon size={16} className={`shrink-0 ${active ? 'text-white' : 'text-zinc-400'}`} />

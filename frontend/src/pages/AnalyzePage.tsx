@@ -126,7 +126,7 @@ export const AnalyzePage: React.FC = () => {
           <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
           <span>ATS AUDIT ENGINE</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+        <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
           Analyze Your Resume
         </h1>
         <p className="text-text-secondary text-sm mt-2">
@@ -134,7 +134,7 @@ export const AnalyzePage: React.FC = () => {
         </p>
       </div>
 
-      <GlassCard variant="elevated" className="p-6 sm:p-8 border border-white/[0.12] shadow-elevated">
+      <GlassCard variant="elevated" className="p-6 sm:p-8 border border-slate-200 dark:border-white/[0.12] shadow-elevated">
         {error && (
           <div className="mb-6 p-4 rounded-lg bg-rose-500/10 border border-rose-500/25 text-rose-300 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 font-mono">
             <div className="flex items-center gap-2.5">
@@ -160,7 +160,7 @@ export const AnalyzePage: React.FC = () => {
           <div className="py-14 flex flex-col items-center justify-center text-center space-y-5">
             <div className="w-10 h-10 rounded-full border-2 border-white/10 border-t-white animate-spin" />
             <div className="space-y-1.5 max-w-md">
-              <h3 className="text-base font-semibold text-white tracking-tight">Running Document Audit</h3>
+              <h3 className="text-base font-semibold text-slate-900 dark:text-white tracking-tight">Running Document Audit</h3>
               <p className="text-xs text-blue-400 font-mono">{processingStage}</p>
               <p className="text-[11px] text-text-muted mt-2">
                 Running heuristic parser, role taxonomy benchmark, and intelligence feedback.
@@ -184,7 +184,7 @@ export const AnalyzePage: React.FC = () => {
                   className={`border border-dashed rounded-xl p-8 text-center cursor-pointer transition-all duration-200 ${
                     isDragging
                       ? 'border-blue-500 bg-blue-500/5'
-                      : 'border-white/15 bg-white/[0.015] hover:bg-white/[0.035] hover:border-white/25'
+                      : 'border-slate-300 dark:border-white/15 bg-slate-50/50 dark:bg-white/[0.015] hover:bg-slate-100/50 dark:hover:bg-white/[0.035] hover:border-slate-400 dark:hover:border-white/25'
                   }`}
                 >
                   <input
@@ -195,10 +195,10 @@ export const AnalyzePage: React.FC = () => {
                     disabled={isProcessing}
                     onChange={(e) => e.target.files?.[0] && handleFileChange(e.target.files[0])}
                   />
-                  <div className="w-10 h-10 rounded-lg bg-[#161922] text-zinc-300 flex items-center justify-center mx-auto mb-3 border border-white/10">
+                  <div className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-[#161922] text-slate-700 dark:text-zinc-300 flex items-center justify-center mx-auto mb-3 border border-slate-200 dark:border-white/10">
                     <FileUp size={18} />
                   </div>
-                  <div className="text-sm font-semibold text-white mb-1">
+                  <div className="text-sm font-semibold text-slate-900 dark:text-white mb-1">
                     Click to browse or drag and drop your file here
                   </div>
                   <div className="text-xs text-text-muted font-mono">
@@ -207,13 +207,13 @@ export const AnalyzePage: React.FC = () => {
                 </div>
               ) : (
                 /* Selected File Preview Box */
-                <div className="p-4 rounded-xl bg-[#161922] border border-white/10 flex items-center justify-between">
+                <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#161922] border border-slate-200 dark:border-white/10 flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-lg bg-[#0D0F14] text-zinc-200 flex items-center justify-center font-bold text-xs uppercase font-mono border border-white/10">
+                    <div className="w-9 h-9 rounded-lg bg-slate-200 dark:bg-[#0D0F14] text-slate-800 dark:text-zinc-200 flex items-center justify-center font-bold text-xs uppercase font-mono border border-slate-300 dark:border-white/10">
                       {selectedFile.name.split('.').pop()}
                     </div>
                     <div>
-                      <div className="text-sm font-semibold text-white truncate max-w-xs sm:max-w-md">
+                      <div className="text-sm font-semibold text-slate-900 dark:text-white truncate max-w-xs sm:max-w-md">
                         {selectedFile.name}
                       </div>
                       <div className="text-xs text-text-muted font-mono">
@@ -244,10 +244,10 @@ export const AnalyzePage: React.FC = () => {
                   value={targetRole}
                   onChange={(e) => setTargetRole(e.target.value)}
                   disabled={isProcessing}
-                  className="w-full px-3.5 py-2.5 bg-[#0D0F14] border border-white/10 rounded-lg text-sm text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all cursor-pointer disabled:opacity-50"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-[#0D0F14] border border-slate-300 dark:border-white/10 rounded-lg text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all cursor-pointer disabled:opacity-50"
                 >
                   {TARGET_ROLES.map((role) => (
-                    <option key={role} value={role} className="bg-[#111318]">
+                    <option key={role} value={role} className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">
                       {role}
                     </option>
                   ))}
@@ -265,7 +265,7 @@ export const AnalyzePage: React.FC = () => {
                     onChange={(e) => setCustomRoleText(e.target.value)}
                     disabled={isProcessing}
                     placeholder="e.g. Solutions Architect"
-                    className="w-full px-3.5 py-2.5 bg-[#0D0F14] border border-white/10 rounded-lg text-sm text-white placeholder-text-muted focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 disabled:opacity-50"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-[#0D0F14] border border-slate-300 dark:border-white/10 rounded-lg text-sm text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 disabled:opacity-50"
                   />
                 </div>
               )}
@@ -286,7 +286,7 @@ export const AnalyzePage: React.FC = () => {
                 disabled={isProcessing}
                 placeholder="Paste the target job description or core responsibilities here to evaluate precise skill overlap..."
                 rows={4}
-                className="w-full p-3 bg-[#0D0F14] border border-white/10 rounded-lg text-xs sm:text-sm text-white placeholder-text-muted focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all disabled:opacity-50"
+                className="w-full p-3 bg-slate-50 dark:bg-[#0D0F14] border border-slate-300 dark:border-white/10 rounded-lg text-xs sm:text-sm text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all disabled:opacity-50"
               />
             </div>
 
