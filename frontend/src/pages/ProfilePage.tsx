@@ -104,7 +104,7 @@ export const ProfilePage: React.FC = () => {
                   disabled={isLoading}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 disabled:opacity-50"
+                  className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500 disabled:opacity-50"
                 />
                 <User size={14} className="absolute left-3 top-2.5 text-text-muted" />
               </div>
@@ -136,7 +136,7 @@ export const ProfilePage: React.FC = () => {
                   value={targetRole}
                   disabled={isLoading}
                   onChange={(e) => setTargetRole(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 appearance-none cursor-pointer disabled:opacity-50"
+                  className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500 appearance-none cursor-pointer disabled:opacity-50"
                 >
                   <option value="Software Developer" className="bg-white text-slate-900 dark:bg-[#0B1020] dark:text-white">Software Developer</option>
                   <option value="Frontend Developer" className="bg-white text-slate-900 dark:bg-[#0B1020] dark:text-white">Frontend Developer</option>
@@ -164,7 +164,7 @@ export const ProfilePage: React.FC = () => {
                   value={preferredLocation}
                   onChange={(e) => setPreferredLocation(e.target.value)}
                   placeholder="e.g. Remote, Hybrid, Bangalore, San Francisco"
-                  className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 disabled:opacity-50"
+                  className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500 disabled:opacity-50"
                 />
                 <MapPin size={14} className="absolute left-3 top-2.5 text-text-muted" />
               </div>
@@ -182,7 +182,7 @@ export const ProfilePage: React.FC = () => {
                 value={education}
                 onChange={(e) => setEducation(e.target.value)}
                 placeholder="e.g. Stanford University"
-                className="w-full p-2.5 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 disabled:opacity-50"
+                className="w-full p-2.5 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500 disabled:opacity-50"
               />
             </div>
 
@@ -196,7 +196,7 @@ export const ProfilePage: React.FC = () => {
                 value={degree}
                 onChange={(e) => setDegree(e.target.value)}
                 placeholder="e.g. B.S. Computer Science"
-                className="w-full p-2.5 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 disabled:opacity-50"
+                className="w-full p-2.5 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500 disabled:opacity-50"
               />
             </div>
 
@@ -210,7 +210,7 @@ export const ProfilePage: React.FC = () => {
                 value={graduationYear}
                 onChange={(e) => setGraduationYear(e.target.value)}
                 placeholder="e.g. 2025"
-                className="w-full p-2.5 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 disabled:opacity-50"
+                className="w-full p-2.5 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500 disabled:opacity-50"
               />
             </div>
           </div>
@@ -225,7 +225,7 @@ export const ProfilePage: React.FC = () => {
               onChange={(e) => setCareerInterests(e.target.value)}
               placeholder="e.g. Interested in LLM agent systems, distributed backend architectures, and high-frequency data pipelines..."
               rows={3}
-              className="w-full p-2.5 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 disabled:opacity-50"
+              className="w-full p-2.5 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500 disabled:opacity-50"
             />
           </div>
 

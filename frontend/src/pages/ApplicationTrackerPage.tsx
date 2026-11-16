@@ -340,7 +340,7 @@ export const ApplicationTrackerPage: React.FC = () => {
           <div className="flex items-center rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 p-0.5">
             <button
               onClick={() => setViewMode('kanban')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
                 viewMode === 'kanban' ? 'bg-blue-600/20 text-slate-900 dark:text-white shadow-sm' : 'text-text-muted hover:text-slate-900 dark:hover:text-white'
               }`}
             >
@@ -349,7 +349,7 @@ export const ApplicationTrackerPage: React.FC = () => {
             </button>
             <button
               onClick={() => setViewMode('table')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
                 viewMode === 'table' ? 'bg-blue-600/20 text-slate-900 dark:text-white shadow-sm' : 'text-text-muted hover:text-slate-900 dark:hover:text-white'
               }`}
             >
@@ -450,9 +450,9 @@ export const ApplicationTrackerPage: React.FC = () => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search company, role, or note..."
-              className="w-full pl-9 pr-4 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:border-brand-blue/50"
+              className="w-full pl-9 pr-4 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-brand-blue/50"
             />
-            <Search size={14} className="absolute left-3 top-2.5 text-text-muted" />
+            <Search size={14} className="absolute left-3 top-2.5 text-slate-400 dark:text-zinc-500" />
           </form>
 
           <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
@@ -463,26 +463,26 @@ export const ApplicationTrackerPage: React.FC = () => {
             <select
               value={priorityFilter}
               onChange={(e) => setPriorityFilter(e.target.value as any)}
-              className="px-3 py-1.5 rounded-xl liquid-input text-xs text-slate-900 dark:text-white bg-transparent focus:outline-none"
+              className="px-3 py-1.5 rounded-xl liquid-input text-xs text-slate-900 dark:text-white focus:outline-none cursor-pointer"
             >
-              <option value="all" className="bg-white text-slate-900 dark:bg-surface-elevated dark:text-white">All Priorities</option>
-              <option value="high" className="bg-white text-slate-900 dark:bg-surface-elevated dark:text-white">High Priority</option>
-              <option value="medium" className="bg-white text-slate-900 dark:bg-surface-elevated dark:text-white">Medium Priority</option>
-              <option value="low" className="bg-white text-slate-900 dark:bg-surface-elevated dark:text-white">Low Priority</option>
+              <option value="all" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">All Priorities</option>
+              <option value="high" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">High Priority</option>
+              <option value="medium" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">Medium Priority</option>
+              <option value="low" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">Low Priority</option>
             </select>
 
             {/* Export Buttons */}
             <button
               onClick={handleExportCSV}
               title="Export to CSV"
-              className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 text-slate-600 hover:text-slate-900 dark:text-text-muted dark:hover:text-white border border-slate-200 dark:border-white/10 transition-colors"
+              className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 text-slate-600 hover:text-slate-900 dark:text-text-muted dark:hover:text-white border border-slate-200 dark:border-white/10 transition-colors cursor-pointer"
             >
               <FileSpreadsheet size={15} />
             </button>
             <button
               onClick={handleExportJSON}
               title="Export to JSON"
-              className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 text-slate-600 hover:text-slate-900 dark:text-text-muted dark:hover:text-white border border-slate-200 dark:border-white/10 transition-colors"
+              className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 text-slate-600 hover:text-slate-900 dark:text-text-muted dark:hover:text-white border border-slate-200 dark:border-white/10 transition-colors cursor-pointer"
             >
               <Download size={15} />
             </button>
@@ -517,7 +517,7 @@ export const ApplicationTrackerPage: React.FC = () => {
             return (
               <div 
                 key={col.id} 
-                className="flex flex-col rounded-2xl liquid-glass border border-slate-200 dark:border-white/10 overflow-hidden min-h-[580px] bg-surface-card/40"
+                className="flex flex-col rounded-2xl liquid-glass border border-slate-200 dark:border-white/10 overflow-hidden min-h-[580px] bg-slate-50/40 dark:bg-[#111318]/40"
               >
                 {/* Column Header */}
                 <div className={`p-3.5 border-b border-slate-200 dark:border-white/5 bg-gradient-to-b ${col.headerGlow} flex items-center justify-between`}>
@@ -531,7 +531,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                     </span>
                     <button
                       onClick={() => handleOpenAddModal(col.id)}
-                      className="p-1 rounded-md text-slate-500 hover:text-slate-900 dark:text-text-muted dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
+                      className="p-1 rounded-md text-slate-500 hover:text-slate-900 dark:text-text-muted dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-colors cursor-pointer"
                       title={`Add to ${col.title}`}
                     >
                       <Plus size={14} />
@@ -546,7 +546,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                       <p className="text-xs text-text-muted">No applications in this stage</p>
                       <button
                         onClick={() => handleOpenAddModal(col.id)}
-                        className="text-[11px] text-brand-cyan font-semibold hover:underline mt-2 flex items-center gap-1"
+                        className="text-[11px] text-brand-cyan font-semibold hover:underline mt-2 flex items-center gap-1 cursor-pointer"
                       >
                         <Plus size={12} />
                         Add opportunity
@@ -566,14 +566,14 @@ export const ApplicationTrackerPage: React.FC = () => {
                           <div className="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
                             <button
                               onClick={() => handleOpenEditModal(app)}
-                              className="p-1 rounded text-slate-400 hover:text-brand-cyan dark:text-text-muted dark:hover:text-brand-cyan hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
+                              className="p-1 rounded text-slate-400 hover:text-brand-cyan dark:text-text-muted dark:hover:text-brand-cyan hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer"
                               title="Edit application"
                             >
                               <Edit3 size={13} />
                             </button>
                             <button
                               onClick={() => handleDeleteApplication(app.id, app.company)}
-                              className="p-1 rounded text-slate-400 hover:text-rose-600 dark:text-text-muted dark:hover:text-rose-400 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
+                              className="p-1 rounded text-slate-400 hover:text-rose-600 dark:text-text-muted dark:hover:text-rose-400 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer"
                               title="Delete"
                             >
                               <Trash2 size={13} />
@@ -626,14 +626,14 @@ export const ApplicationTrackerPage: React.FC = () => {
                           <div className="flex items-center gap-1.5">
                             <button
                               onClick={() => navigate(`/interview?role=${encodeURIComponent(app.role)}`)}
-                              className="p-1 rounded text-text-muted hover:text-purple-600 dark:hover:text-purple-300 hover:bg-purple-500/10 transition-colors"
+                              className="p-1 rounded text-text-muted hover:text-purple-600 dark:hover:text-purple-300 hover:bg-purple-500/10 transition-colors cursor-pointer"
                               title="Practice Mock Interview"
                             >
                               <Mic size={13} />
                             </button>
                             <button
                               onClick={() => navigate(`/tools?role=${encodeURIComponent(app.role)}&company=${encodeURIComponent(app.company)}`)}
-                              className="p-1 rounded text-text-muted hover:text-blue-600 dark:hover:text-blue-300 hover:bg-blue-500/10 transition-colors"
+                              className="p-1 rounded text-text-muted hover:text-blue-600 dark:hover:text-blue-300 hover:bg-blue-500/10 transition-colors cursor-pointer"
                               title="Tailor Cover Letter"
                             >
                               <Wand2 size={13} />
@@ -659,7 +659,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                                   const idx = COLUMNS.findIndex(c => c.id === col.id);
                                   if (idx > 0) handleStatusChange(app.id, COLUMNS[idx - 1].id);
                                 }}
-                                className="p-1 rounded bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 text-slate-500 hover:text-slate-900 dark:text-text-muted dark:hover:text-white transition-colors"
+                                className="p-1 rounded bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 text-slate-500 hover:text-slate-900 dark:text-text-muted dark:hover:text-white transition-colors cursor-pointer"
                                 title="Move Back"
                               >
                                 <ArrowLeft size={11} />
@@ -672,7 +672,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                                   const idx = COLUMNS.findIndex(c => c.id === col.id);
                                   if (idx < COLUMNS.length - 1) handleStatusChange(app.id, COLUMNS[idx + 1].id);
                                 }}
-                                className="p-1 rounded bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 text-slate-500 hover:text-slate-900 dark:text-text-muted dark:hover:text-white transition-colors"
+                                className="p-1 rounded bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 text-slate-500 hover:text-slate-900 dark:text-text-muted dark:hover:text-white transition-colors cursor-pointer"
                                 title="Advance Stage"
                               >
                                 <ArrowRight size={11} />
@@ -722,13 +722,13 @@ export const ApplicationTrackerPage: React.FC = () => {
                         <select
                           value={app.status}
                           onChange={(e) => handleStatusChange(app.id, e.target.value as ApplicationStatus)}
-                          className="bg-slate-50 dark:bg-surface-card border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-lg px-2.5 py-1 text-xs focus:outline-none"
+                          className="bg-white dark:bg-[#0D0F14] border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-lg px-2.5 py-1 text-xs focus:outline-none cursor-pointer"
                         >
-                          <option value="saved">Wishlist & Saved</option>
-                          <option value="applied">Applied</option>
-                          <option value="interviewing">Interviewing</option>
-                          <option value="offer">Offer Received</option>
-                          <option value="rejected">Archived / Rejected</option>
+                          <option value="saved" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">Wishlist & Saved</option>
+                          <option value="applied" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">Applied</option>
+                          <option value="interviewing" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">Interviewing</option>
+                          <option value="offer" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">Offer Received</option>
+                          <option value="rejected" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">Archived / Rejected</option>
                         </select>
                       </td>
                       <td className="py-3 px-4">
@@ -754,21 +754,28 @@ export const ApplicationTrackerPage: React.FC = () => {
                         <div className="flex items-center justify-end gap-1.5">
                           <button
                             onClick={() => navigate(`/interview?role=${encodeURIComponent(app.role)}`)}
-                            className="p-1.5 rounded-lg text-text-muted hover:text-purple-600 dark:hover:text-purple-300 hover:bg-purple-500/10 transition-colors"
+                            className="p-1.5 rounded-lg text-text-muted hover:text-purple-600 dark:hover:text-purple-300 hover:bg-purple-500/10 transition-colors cursor-pointer"
                             title="Mock Interview"
                           >
                             <Mic size={14} />
                           </button>
                           <button
+                            onClick={() => navigate(`/tools?role=${encodeURIComponent(app.role)}&company=${encodeURIComponent(app.company)}`)}
+                            className="p-1.5 rounded-lg text-text-muted hover:text-blue-600 dark:hover:text-blue-300 hover:bg-blue-500/10 transition-colors cursor-pointer"
+                            title="Tailor Cover Letter"
+                          >
+                            <Wand2 size={14} />
+                          </button>
+                          <button
                             onClick={() => handleOpenEditModal(app)}
-                            className="p-1.5 rounded-lg text-text-muted hover:text-brand-cyan hover:bg-cyan-500/10 transition-colors"
+                            className="p-1.5 rounded-lg text-text-muted hover:text-brand-cyan hover:bg-cyan-500/10 transition-colors cursor-pointer"
                             title="Edit"
                           >
                             <Edit3 size={14} />
                           </button>
                           <button
                             onClick={() => handleDeleteApplication(app.id, app.company)}
-                            className="p-1.5 rounded-lg text-text-muted hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-500/10 transition-colors"
+                            className="p-1.5 rounded-lg text-text-muted hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-500/10 transition-colors cursor-pointer"
                             title="Delete"
                           >
                             <Trash2 size={14} />
@@ -784,22 +791,20 @@ export const ApplicationTrackerPage: React.FC = () => {
         </GlassCard>
       )}
 
-      {/* ADD / EDIT GLASS MODAL */}
+      {/* CREATE / EDIT APPLICATION MODAL */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-fade-in">
-          <GlassCard variant="elevated" className="max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 border-slate-200 dark:border-white/20">
-            <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-200 dark:border-white/10">
-              <div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-                  {editingApp ? 'Edit Job Application' : 'Track New Opportunity'}
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
+          <GlassCard variant="elevated" className="w-full max-w-xl max-h-[90vh] overflow-y-auto p-6 border-slate-200 dark:border-white/20 shadow-2xl space-y-5">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-white/10">
+              <div className="flex items-center gap-2">
+                <Building2 size={18} className="text-brand-cyan" />
+                <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                  {editingApp ? 'Edit Job Application' : 'Track New Application'}
                 </h3>
-                <p className="text-xs text-text-secondary">
-                  Fill in the role details to keep your pipeline accurate.
-                </p>
               </div>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="p-1.5 rounded-xl text-slate-500 hover:text-slate-900 dark:text-text-muted dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
+                className="p-1.5 rounded-xl text-slate-500 hover:text-slate-900 dark:text-text-muted dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-colors cursor-pointer"
               >
                 <X size={18} />
               </button>
@@ -815,7 +820,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                     value={formData.company}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                     placeholder="e.g. Stripe, Google, Airbnb"
-                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder-text-muted focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none"
                   />
                 </div>
 
@@ -827,7 +832,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                     value={formData.role}
                     onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                     placeholder="e.g. Senior Frontend Engineer"
-                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder-text-muted focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none"
                   />
                 </div>
               </div>
@@ -838,13 +843,13 @@ export const ApplicationTrackerPage: React.FC = () => {
                   <select
                     value={formData.status}
                     onChange={(e) => setFormData({ ...formData, status: e.target.value as ApplicationStatus })}
-                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white bg-transparent focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white focus:outline-none cursor-pointer"
                   >
-                    <option value="saved" className="bg-white text-slate-900 dark:bg-surface-elevated dark:text-white">Wishlist & Saved</option>
-                    <option value="applied" className="bg-white text-slate-900 dark:bg-surface-elevated dark:text-white">Applied</option>
-                    <option value="interviewing" className="bg-white text-slate-900 dark:bg-surface-elevated dark:text-white">Interviewing</option>
-                    <option value="offer" className="bg-white text-slate-900 dark:bg-surface-elevated dark:text-white">Offer Received</option>
-                    <option value="rejected" className="bg-white text-slate-900 dark:bg-surface-elevated dark:text-white">Archived / Rejected</option>
+                    <option value="saved" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">Wishlist & Saved</option>
+                    <option value="applied" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">Applied</option>
+                    <option value="interviewing" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">Interviewing</option>
+                    <option value="offer" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">Offer Received</option>
+                    <option value="rejected" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">Archived / Rejected</option>
                   </select>
                 </div>
 
@@ -853,11 +858,11 @@ export const ApplicationTrackerPage: React.FC = () => {
                   <select
                     value={formData.priority}
                     onChange={(e) => setFormData({ ...formData, priority: e.target.value as ApplicationPriority })}
-                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white bg-transparent focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white focus:outline-none cursor-pointer"
                   >
-                    <option value="high" className="bg-white text-slate-900 dark:bg-surface-elevated dark:text-white">High Priority</option>
-                    <option value="medium" className="bg-white text-slate-900 dark:bg-surface-elevated dark:text-white">Medium Priority</option>
-                    <option value="low" className="bg-white text-slate-900 dark:bg-surface-elevated dark:text-white">Low Priority</option>
+                    <option value="high" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">High Priority</option>
+                    <option value="medium" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">Medium Priority</option>
+                    <option value="low" className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">Low Priority</option>
                   </select>
                 </div>
 
@@ -868,7 +873,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                     value={formData.location}
                     onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                     placeholder="e.g. Remote / New York"
-                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder-text-muted focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none"
                   />
                 </div>
               </div>
@@ -881,7 +886,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                     value={formData.salary_range}
                     onChange={(e) => setFormData({ ...formData, salary_range: e.target.value })}
                     placeholder="e.g. $140,000 - $165,000 or ₹20LPA"
-                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder-text-muted focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none"
                   />
                 </div>
 
@@ -892,7 +897,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                     value={formData.url}
                     onChange={(e) => setFormData({ ...formData, url: e.target.value })}
                     placeholder="https://..."
-                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder-text-muted focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none"
                   />
                 </div>
               </div>
@@ -904,7 +909,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                     type="datetime-local"
                     value={formData.interview_date}
                     onChange={(e) => setFormData({ ...formData, interview_date: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white focus:outline-none cursor-pointer"
                   />
                 </div>
 
@@ -914,7 +919,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                     type="date"
                     value={formData.applied_date}
                     onChange={(e) => setFormData({ ...formData, applied_date: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white focus:outline-none cursor-pointer"
                   />
                 </div>
               </div>
@@ -927,7 +932,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                     value={formData.contact_name}
                     onChange={(e) => setFormData({ ...formData, contact_name: e.target.value })}
                     placeholder="e.g. Jessica Miller"
-                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder-text-muted focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none"
                   />
                 </div>
 
@@ -938,7 +943,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                     value={formData.contact_email}
                     onChange={(e) => setFormData({ ...formData, contact_email: e.target.value })}
                     placeholder="recruiting@company.com"
-                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder-text-muted focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none"
                   />
                 </div>
               </div>
@@ -950,7 +955,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                   value={formData.next_step}
                   onChange={(e) => setFormData({ ...formData, next_step: e.target.value })}
                   placeholder="e.g. Prepare system design for 45-min panel with Director of Engineering"
-                  className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder-text-muted focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none"
                 />
               </div>
 
@@ -961,7 +966,7 @@ export const ApplicationTrackerPage: React.FC = () => {
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                   placeholder="Recruiter notes, referral details, tech stack specifics..."
-                  className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder-text-muted focus:outline-none resize-none"
+                  className="w-full px-3 py-2 rounded-xl liquid-input text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none resize-none"
                 />
               </div>
 

@@ -149,7 +149,7 @@ export const RegisterPage: React.FC = () => {
                     if (fieldErrors.name) setFieldErrors(prev => ({ ...prev, name: undefined }));
                   }}
                   placeholder="e.g. Maya Chen"
-                  className={`w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#0D0F14] border rounded-lg text-sm text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:ring-1 transition-all disabled:opacity-50 ${
+                  className={`w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#0D0F14] border rounded-lg text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-1 transition-all disabled:opacity-50 ${
                     fieldErrors.name 
                       ? 'border-rose-500/60 focus:border-rose-500 focus:ring-rose-500/30' 
                       : 'border-slate-300 dark:border-white/10 focus:border-blue-500 focus:ring-blue-500/30'
@@ -179,7 +179,7 @@ export const RegisterPage: React.FC = () => {
                     if (fieldErrors.email) setFieldErrors(prev => ({ ...prev, email: undefined }));
                   }}
                   placeholder="you@domain.com"
-                  className={`w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#0D0F14] border rounded-lg text-sm text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:ring-1 transition-all disabled:opacity-50 ${
+                  className={`w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#0D0F14] border rounded-lg text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-1 transition-all disabled:opacity-50 ${
                     fieldErrors.email 
                       ? 'border-rose-500/60 focus:border-rose-500 focus:ring-rose-500/30' 
                       : 'border-slate-300 dark:border-white/10 focus:border-blue-500 focus:ring-blue-500/30'
@@ -243,7 +243,7 @@ export const RegisterPage: React.FC = () => {
                     if (fieldErrors.password) setFieldErrors(prev => ({ ...prev, password: undefined }));
                   }}
                   placeholder="••••••••"
-                  className={`w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#0D0F14] border rounded-lg text-sm text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:ring-1 transition-all disabled:opacity-50 ${
+                  className={`w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#0D0F14] border rounded-lg text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-1 transition-all disabled:opacity-50 ${
                     fieldErrors.password 
                       ? 'border-rose-500/60 focus:border-rose-500 focus:ring-rose-500/30' 
                       : 'border-slate-300 dark:border-white/10 focus:border-blue-500 focus:ring-blue-500/30'

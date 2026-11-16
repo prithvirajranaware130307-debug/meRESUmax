@@ -265,7 +265,7 @@ export const AnalyzePage: React.FC = () => {
                     onChange={(e) => setCustomRoleText(e.target.value)}
                     disabled={isProcessing}
                     placeholder="e.g. Solutions Architect"
-                    className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-[#0D0F14] border border-slate-300 dark:border-white/10 rounded-lg text-sm text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 disabled:opacity-50"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-[#0D0F14] border border-slate-300 dark:border-white/10 rounded-lg text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 disabled:opacity-50"
                   />
                 </div>
               )}
@@ -286,7 +286,7 @@ export const AnalyzePage: React.FC = () => {
                 disabled={isProcessing}
                 placeholder="Paste the target job description or core responsibilities here to evaluate precise skill overlap..."
                 rows={4}
-                className="w-full p-3 bg-slate-50 dark:bg-[#0D0F14] border border-slate-300 dark:border-white/10 rounded-lg text-xs sm:text-sm text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all disabled:opacity-50"
+                className="w-full p-3 bg-slate-50 dark:bg-[#0D0F14] border border-slate-300 dark:border-white/10 rounded-lg text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all disabled:opacity-50"
               />
             </div>
 

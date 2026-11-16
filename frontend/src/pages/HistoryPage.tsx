@@ -74,7 +74,7 @@ export const HistoryPage: React.FC = () => {
           <button
             type="button"
             onClick={loadAnalyses}
-            className="px-3 py-1.5 rounded-md bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shrink-0"
+            className="px-3 py-1.5 rounded-md bg-rose-500/20 hover:bg-rose-500/30 text-rose-700 dark:text-rose-200 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shrink-0"
           >
             <RotateCcw size={12} />
             <span>Retry</span>

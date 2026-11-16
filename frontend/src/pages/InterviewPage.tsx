@@ -305,7 +305,7 @@ export const InterviewPage: React.FC = () => {
               <select
                 value={targetRole}
                 onChange={(e) => setTargetRole(e.target.value)}
-                className="w-full bg-slate-50 dark:bg-[#0D0F14] border border-slate-300 dark:border-white/10 rounded-lg px-3.5 py-2 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-blue-500 transition-colors"
+                className="w-full bg-white dark:bg-[#0D0F14] border border-slate-300 dark:border-white/15 rounded-lg px-3.5 py-2 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
               >
                 {TARGET_ROLES.map(role => (
                   <option key={role} value={role} className="bg-white text-slate-900 dark:bg-[#111318] dark:text-white">
@@ -338,7 +338,7 @@ export const InterviewPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-slate-50 dark:bg-surface-elevated/60 border border-slate-200 dark:border-white/5 space-y-2 text-xs text-text-muted">
+          <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#161922]/60 border border-slate-200 dark:border-white/5 space-y-2 text-xs text-text-muted">
             <div className="flex items-center gap-2 text-brand-cyan font-medium">
               <Sparkles size={14} />
               <span>What to Expect in This Loop:</span>
@@ -375,14 +375,14 @@ export const InterviewPage: React.FC = () => {
       {sessionActive && questions.length > 0 && (
         <div className="space-y-6 animate-fadeIn">
           {/* Progress Bar & Header */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-white/10">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200 dark:border-white/10">
             <div>
               <span className="text-xs uppercase tracking-wider text-brand-cyan font-bold">
                 Question {currentIndex + 1} of {questions.length}
               </span>
               <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 mt-0.5">
                 <span>{targetRole}</span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-white/10 text-text-muted font-normal">
+                <span className="text-xs px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-text-muted font-normal">
                   {difficulty}
                 </span>
               </h2>
@@ -393,7 +393,7 @@ export const InterviewPage: React.FC = () => {
               </span>
               <button
                 onClick={handleRestart}
-                className="text-xs text-text-muted hover:text-slate-900 dark:hover:text-white px-3 py-1 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors flex items-center gap-1"
+                className="text-xs text-text-muted hover:text-slate-900 dark:hover:text-white px-3 py-1 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors flex items-center gap-1 cursor-pointer"
               >
                 <RotateCcw size={12} />
                 Exit
@@ -402,7 +402,7 @@ export const InterviewPage: React.FC = () => {
           </div>
 
           {/* Question Card */}
-          <GlassCard className="p-6 sm:p-8 space-y-4 border-brand-cyan/20 bg-gradient-to-br from-brand-card/90 to-surface-elevated/70">
+          <GlassCard className="p-6 sm:p-8 space-y-4 border-brand-cyan/20 bg-white/90 dark:bg-[#111318]/90">
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/30 flex items-center justify-center text-brand-cyan shrink-0 font-bold text-lg">
                 {currentIndex + 1}
@@ -423,7 +423,7 @@ export const InterviewPage: React.FC = () => {
 
           {/* Answer Input or Feedback */}
           {!currentEvaluation ? (
-            <GlassCard className="p-6 space-y-4 border-white/10">
+            <GlassCard className="p-6 space-y-4 border-slate-200 dark:border-white/10">
               <div className="flex items-center justify-between">
                 <label className="text-xs font-semibold uppercase tracking-wider text-text-secondary flex items-center gap-2">
                   <MessageSquare size={14} className="text-brand-cyan" />
@@ -434,7 +434,7 @@ export const InterviewPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={toggleVoiceRecording}
-                      className={`text-xs px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all ${
+                      className={`text-xs px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all cursor-pointer ${
                         isListening
                           ? 'bg-rose-500/20 border-rose-500 text-rose-700 dark:text-rose-300 animate-pulse'
                           : 'bg-slate-100 dark:bg-white/5 border-slate-200 dark:border-white/10 text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-white/10'
@@ -464,7 +464,7 @@ export const InterviewPage: React.FC = () => {
                 onChange={(e) => setCurrentAnswer(e.target.value)}
                 placeholder="Structure your answer with clear context, specific actions taken, technical tooling used, and measurable results achieved (STAR method)..."
                 rows={7}
-                className="w-full bg-slate-50 dark:bg-surface-elevated/70 border border-slate-300 dark:border-white/10 rounded-2xl p-4 text-slate-900 dark:text-white placeholder-text-muted/60 text-sm focus:outline-none focus:border-blue-500 dark:focus:border-brand-cyan/50 transition-colors resize-y leading-relaxed"
+                className="w-full bg-white dark:bg-[#0D0F14] border border-slate-300 dark:border-white/15 rounded-2xl p-4 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 text-sm focus:outline-none focus:border-blue-500 dark:focus:border-brand-cyan/50 transition-colors resize-y leading-relaxed"
               />
 
               <div className="flex items-center justify-between pt-2">
@@ -493,7 +493,7 @@ export const InterviewPage: React.FC = () => {
           ) : (
             /* EVALUATION CARD FOR CURRENT QUESTION */
             <div className="space-y-6 animate-fadeIn">
-              <GlassCard className="p-6 sm:p-8 space-y-6 border-brand-cyan/30 bg-surface-elevated/80">
+              <GlassCard className="p-6 sm:p-8 space-y-6 border-brand-cyan/30 bg-white/90 dark:bg-[#161922]/80">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-white/10">
                   <div>
                     <span className="text-xs uppercase tracking-wider text-brand-cyan font-bold">
@@ -518,65 +518,73 @@ export const InterviewPage: React.FC = () => {
                 {/* Metric Dials / Badges */}
                 <div className="grid grid-cols-3 gap-3">
                   <div className="p-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/5 text-center">
-                    <div className="text-lg font-bold text-purple-700 dark:text-purple-300">
+                    <div className="text-lg font-bold text-slate-900 dark:text-white">
                       {currentEvaluation.star_score}/100
                     </div>
-                    <div className="text-[10px] text-text-muted uppercase">STAR Structure</div>
+                    <div className="text-[10px] uppercase text-text-muted font-medium mt-0.5">
+                      STAR Method
+                    </div>
                   </div>
                   <div className="p-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/5 text-center">
-                    <div className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                    <div className="text-lg font-bold text-slate-900 dark:text-white">
                       {currentEvaluation.technical_depth}/100
                     </div>
-                    <div className="text-[10px] text-text-muted uppercase">Technical Depth</div>
+                    <div className="text-[10px] uppercase text-text-muted font-medium mt-0.5">
+                      Tech Depth
+                    </div>
                   </div>
                   <div className="p-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/5 text-center">
-                    <div className="text-lg font-bold text-emerald-600 dark:text-emerald-400">
+                    <div className="text-lg font-bold text-slate-900 dark:text-white">
                       {currentEvaluation.clarity_score}/100
                     </div>
-                    <div className="text-[10px] text-text-muted uppercase">Clarity</div>
+                    <div className="text-[10px] uppercase text-text-muted font-medium mt-0.5">
+                      Clarity
+                    </div>
                   </div>
                 </div>
 
                 {/* Strengths & Improvements */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <h5 className="text-xs font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 space-y-2">
+                    <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
                       <CheckCircle2 size={14} />
-                      Key Strengths
-                    </h5>
-                    <ul className="space-y-1.5">
+                      <span>Key Strengths</span>
+                    </div>
+                    <ul className="text-xs space-y-1.5 text-slate-800 dark:text-text-secondary">
                       {currentEvaluation.strengths.map((s, idx) => (
-                        <li key={idx} className="text-xs text-text-secondary bg-emerald-500/5 p-2.5 rounded-xl border border-emerald-500/10">
-                          {s}
+                        <li key={idx} className="flex items-start gap-1.5">
+                          <span className="text-emerald-600 dark:text-emerald-400">•</span>
+                          <span>{s}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
 
-                  <div className="space-y-2">
-                    <h5 className="text-xs font-semibold uppercase tracking-wider text-amber-600 dark:text-amber-400 flex items-center gap-1.5">
+                  <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 space-y-2">
+                    <div className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 flex items-center gap-1.5">
                       <AlertCircle size={14} />
-                      Actionable Improvements
-                    </h5>
-                    <ul className="space-y-1.5">
+                      <span>Areas for Improvement</span>
+                    </div>
+                    <ul className="text-xs space-y-1.5 text-slate-800 dark:text-text-secondary">
                       {currentEvaluation.areas_for_improvement.map((a, idx) => (
-                        <li key={idx} className="text-xs text-text-secondary bg-amber-500/5 p-2.5 rounded-xl border border-amber-500/10">
-                          {a}
+                        <li key={idx} className="flex items-start gap-1.5">
+                          <span className="text-amber-600 dark:text-amber-400">•</span>
+                          <span>{a}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                 </div>
 
-                {/* Model Answer Disclosure */}
-                <div className="p-4 rounded-2xl bg-brand-cyan/5 border border-brand-cyan/20 space-y-2">
-                  <div className="flex items-center gap-2 text-xs font-semibold text-brand-cyan uppercase tracking-wider">
+                {/* Model Exemplar Response */}
+                <div className="space-y-2 pt-2">
+                  <div className="text-xs font-bold uppercase tracking-wider text-brand-cyan flex items-center gap-1.5">
                     <Sparkles size={14} />
-                    <span>Senior Exemplar STAR Answer</span>
+                    <span>Exemplar STAR Response Model</span>
                   </div>
-                  <p className="text-xs text-text-secondary leading-relaxed italic">
+                  <div className="p-4 rounded-xl bg-slate-50 dark:bg-black/30 border border-slate-200 dark:border-white/5 text-xs sm:text-sm text-slate-800 dark:text-text-secondary leading-relaxed italic">
                     "{currentEvaluation.suggested_exemplar_answer}"
-                  </p>
+                  </div>
                 </div>
 
                 <div className="flex justify-end pt-2">
@@ -585,9 +593,9 @@ export const InterviewPage: React.FC = () => {
                     className="px-6 py-2.5 text-xs sm:text-sm font-semibold"
                   >
                     <span>
-                      {currentIndex + 1 < questions.length ? 'Next Interview Question' : 'Complete Interview & View Scorecard'}
+                      {currentIndex + 1 < questions.length ? 'Next Question' : 'View Session Scorecard'}
                     </span>
-                    <ChevronRight size={15} />
+                    <ChevronRight size={16} />
                   </GlassButton>
                 </div>
               </GlassCard>
@@ -599,7 +607,7 @@ export const InterviewPage: React.FC = () => {
       {/* 3. FINAL SESSION SCORECARD */}
       {sessionCompleted && (
         <div className="space-y-8 animate-fadeIn max-w-4xl mx-auto">
-          <GlassCard className="p-8 text-center space-y-6 border-brand-cyan/30 bg-gradient-to-b from-brand-card/90 via-surface-elevated/80 to-surface-card/90">
+          <GlassCard className="p-8 text-center space-y-6 border-brand-cyan/30 bg-white/90 dark:bg-[#111318]/90">
             <div className="w-16 h-16 rounded-3xl bg-brand-cyan/15 border border-brand-cyan/30 flex items-center justify-center text-brand-cyan mx-auto">
               <Award size={36} />
             </div>
@@ -618,26 +626,24 @@ export const InterviewPage: React.FC = () => {
 
             {/* Scorecard Hero Numbers */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-xl mx-auto">
-              <div className="p-5 rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-center">
-                <div className="text-4xl font-black text-brand-cyan">
+              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-center">
+                <div className="text-3xl font-black text-brand-cyan">
                   {avgOverallScore}
                 </div>
                 <div className="text-xs uppercase text-text-muted mt-1 font-semibold">
-                  Readiness Index
+                  Overall Index
                 </div>
               </div>
-
-              <div className="p-5 rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-center">
-                <div className="text-4xl font-black text-purple-600 dark:text-purple-400">
+              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-center">
+                <div className="text-3xl font-black text-emerald-600 dark:text-emerald-400">
                   {avgStarScore}
                 </div>
                 <div className="text-xs uppercase text-text-muted mt-1 font-semibold">
-                  STAR Technique
+                  STAR Rigor
                 </div>
               </div>
-
-              <div className="p-5 rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-center">
-                <div className="text-4xl font-black text-blue-600 dark:text-blue-400">
+              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-center">
+                <div className="text-3xl font-black text-purple-600 dark:text-purple-400">
                   {avgTechScore}
                 </div>
                 <div className="text-xs uppercase text-text-muted mt-1 font-semibold">
@@ -646,31 +652,31 @@ export const InterviewPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Verdict Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl border text-sm font-semibold mx-auto">
-              <ShieldCheck size={18} className="text-brand-cyan" />
-              <span>Hiring Panel Assessment: </span>
-              <span className={`px-2.5 py-0.5 rounded-lg border text-xs font-bold ${getVerdict(avgOverallScore).color}`}>
-                {getVerdict(avgOverallScore).label}
+            {/* Overall Verdict Badge */}
+            <div className="flex justify-center">
+              <span className={`px-4 py-1.5 rounded-full text-xs font-bold border uppercase tracking-wider ${getVerdict(avgOverallScore).color}`}>
+                Readiness: {getVerdict(avgOverallScore).label}
               </span>
             </div>
 
-            {/* Action Buttons */}
-            <div className="flex flex-wrap items-center justify-center gap-3 pt-4 border-t border-white/10">
+            {/* Action Bar */}
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
               <button
+                type="button"
                 onClick={copyDebrief}
-                className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-text-secondary hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-white/10 text-xs font-semibold flex items-center gap-2 transition-colors"
+                className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-text-secondary hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-white/10 text-xs font-medium flex items-center gap-2 transition-colors cursor-pointer"
               >
-                {copied ? <Check size={14} className="text-emerald-600 dark:text-emerald-400" /> : <Copy size={14} />}
-                <span>{copied ? 'Copied to Clipboard' : 'Copy Summary'}</span>
+                {copied ? <Check size={14} className="text-emerald-500" /> : <Copy size={14} />}
+                <span>{copied ? 'Copied to Clipboard' : 'Copy Full Debrief'}</span>
               </button>
 
               <button
+                type="button"
                 onClick={downloadTranscript}
-                className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-text-secondary hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-white/10 text-xs font-semibold flex items-center gap-2 transition-colors"
+                className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-text-secondary hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-white/10 text-xs font-medium flex items-center gap-2 transition-colors cursor-pointer"
               >
                 <Download size={14} />
-                <span>Download Transcript (.txt)</span>
+                <span>Download Transcript</span>
               </button>
 
               <GlassButton
@@ -678,24 +684,27 @@ export const InterviewPage: React.FC = () => {
                 className="px-5 py-2 text-xs font-semibold"
               >
                 <RotateCcw size={14} />
-                <span>Start New Mock Loop</span>
+                <span>Start New Simulation</span>
               </GlassButton>
             </div>
           </GlassCard>
 
-          {/* Question-by-Question Detailed Review */}
+          {/* Breakdown Per Question */}
           <div className="space-y-4">
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white">Question-by-Question Breakdown</h3>
-            <div className="space-y-4">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white uppercase tracking-wider text-xs">
+              Detailed Question-by-Question Debrief
+            </h3>
+
+            <div className="space-y-3">
               {sessionRecords.map((r, i) => (
-                <GlassCard key={i} className="p-6 space-y-4 border-slate-200 dark:border-white/10">
+                <GlassCard key={i} className="p-5 space-y-3 border-slate-200 dark:border-white/10">
                   <div className="flex items-start justify-between gap-4">
                     <div className="space-y-1">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-purple-700 dark:text-purple-300 bg-purple-500/10 px-2 py-0.5 rounded-md border border-purple-500/20">
-                        {r.question.category}
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-brand-cyan">
+                        Question {i + 1} • {r.question.category}
                       </span>
-                      <h4 className="text-base font-semibold text-slate-900 dark:text-white mt-1">
-                        Q{i + 1}: {r.question.question}
+                      <h4 className="text-sm font-semibold text-slate-900 dark:text-white">
+                        {r.question.question}
                       </h4>
                     </div>
                     <div className="text-right shrink-0">
@@ -706,7 +715,7 @@ export const InterviewPage: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="bg-slate-50 dark:bg-surface-elevated/60 p-3 rounded-xl border border-slate-200 dark:border-white/5 text-xs text-text-muted leading-relaxed">
+                  <div className="bg-slate-50 dark:bg-[#161922]/60 p-3 rounded-xl border border-slate-200 dark:border-white/5 text-xs text-text-muted leading-relaxed">
                     <strong className="text-text-secondary">Your Response: </strong>
                     {r.answer}
                   </div>

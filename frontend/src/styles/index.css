@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 :root, html.dark {
+  color-scheme: dark;
   --bg-main: #090A0E;
   --bg-surface: #111318;
   --bg-elevated: #161922;
@@ -20,6 +21,7 @@
 }
 
 html.light {
+  color-scheme: light;
   --bg-main: #F8FAFC;
   --bg-surface: #FFFFFF;
   --bg-elevated: #F1F5F9;
@@ -155,13 +157,25 @@ html.light .tactile-input:focus, html.light .liquid-input:focus {
 }
 
 /* Form controls theme adaptation */
-html.light input[type="text"],
-html.light input[type="email"],
-html.light input[type="password"],
-html.light input[type="url"],
+input, textarea, select {
+  color: inherit;
+}
+
+html.light input,
 html.light textarea,
 html.light select {
   color: #0F172A;
+}
+
+html.dark input,
+html.dark textarea,
+html.dark select {
+  color: #F8FAFC;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #64748B;
 }
 
 html.light input::placeholder,
@@ -169,10 +183,26 @@ html.light textarea::placeholder {
   color: #64748B;
 }
 
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #94A3B8;
+}
+
+/* Date / time controls */
+input[type="date"],
+input[type="datetime-local"] {
+  color-scheme: dark;
+}
+
+html.light input[type="date"],
+html.light input[type="datetime-local"] {
+  color-scheme: light;
+}
+
 /* Select options */
 option {
-  background-color: #161922;
-  color: #F3F4F6;
+  background-color: #111318;
+  color: #F8FAFC;
 }
 
 html.light option {
@@ -211,5 +241,16 @@ html.light ::-webkit-scrollbar-thumb:hover {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* Clean, high-fidelity print output */
+@media print {
+  body {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+  }
+  .print\:hidden {
+    display: none !important;
   }
 }

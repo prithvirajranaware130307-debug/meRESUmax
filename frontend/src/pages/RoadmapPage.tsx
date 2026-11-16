@@ -146,14 +146,14 @@ export const RoadmapPage: React.FC = () => {
               value={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
               placeholder="Milestone title (e.g. Master Docker container networking)"
-              className="w-full p-2.5 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:border-blue-500"
+              className="w-full p-2.5 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500"
             />
             <textarea
               value={newDesc}
               onChange={(e) => setNewDesc(e.target.value)}
               placeholder="Objective details, capstone requirements, or reference links..."
               rows={2}
-              className="w-full p-2.5 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:border-blue-500"
+              className="w-full p-2.5 bg-slate-50 dark:bg-black/40 border border-slate-300 dark:border-white/10 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500"
             />
             <div className="flex items-center justify-between pt-1">
               <select

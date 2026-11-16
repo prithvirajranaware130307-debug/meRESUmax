@@ -142,11 +142,11 @@ export const CareerToolsPage: React.FC = () => {
 
       {/* Tabs Switcher */}
       <div className="flex justify-center">
-        <div className="p-1 rounded-2xl bg-slate-100 dark:bg-surface-elevated/80 border border-slate-200 dark:border-white/10 flex items-center gap-1">
+        <div className="p-1 rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center gap-1">
           <button
             type="button"
             onClick={() => { setActiveTab('cover-letter'); setError(''); }}
-            className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition-all ${
+            className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition-all cursor-pointer ${
               activeTab === 'cover-letter'
                 ? 'bg-purple-600 text-white shadow-sm'
                 : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/50 dark:hover:bg-white/5'
@@ -158,7 +158,7 @@ export const CareerToolsPage: React.FC = () => {
           <button
             type="button"
             onClick={() => { setActiveTab('linkedin'); setError(''); }}
-            className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition-all ${
+            className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition-all cursor-pointer ${
               activeTab === 'linkedin'
                 ? 'bg-blue-600 text-white shadow-sm'
                 : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/50 dark:hover:bg-white/5'
@@ -190,7 +190,7 @@ export const CareerToolsPage: React.FC = () => {
                   value={candidateName}
                   onChange={(e) => setCandidateName(e.target.value)}
                   placeholder="e.g. Alex Mercer"
-                  className="w-full bg-slate-50 dark:bg-surface-elevated/80 border border-slate-200 dark:border-white/10 rounded-xl px-3.5 py-2 text-slate-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:border-purple-500"
+                  className="w-full bg-white dark:bg-[#0D0F14] border border-slate-300 dark:border-white/15 rounded-xl px-3.5 py-2 text-slate-900 dark:text-white text-xs sm:text-sm placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-purple-500"
                 />
               </div>
 
@@ -203,7 +203,7 @@ export const CareerToolsPage: React.FC = () => {
                   value={targetRole}
                   onChange={(e) => setTargetRole(e.target.value)}
                   placeholder="e.g. Senior Frontend Engineer"
-                  className="w-full bg-slate-50 dark:bg-surface-elevated/80 border border-slate-200 dark:border-white/10 rounded-xl px-3.5 py-2 text-slate-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:border-purple-500"
+                  className="w-full bg-white dark:bg-[#0D0F14] border border-slate-300 dark:border-white/15 rounded-xl px-3.5 py-2 text-slate-900 dark:text-white text-xs sm:text-sm placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-purple-500"
                 />
               </div>
 
@@ -216,7 +216,7 @@ export const CareerToolsPage: React.FC = () => {
                   value={companyName}
                   onChange={(e) => setCompanyName(e.target.value)}
                   placeholder="e.g. Stripe, Linear, or Netflix"
-                  className="w-full bg-slate-50 dark:bg-surface-elevated/80 border border-slate-200 dark:border-white/10 rounded-xl px-3.5 py-2 text-slate-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:border-purple-500"
+                  className="w-full bg-white dark:bg-[#0D0F14] border border-slate-300 dark:border-white/15 rounded-xl px-3.5 py-2 text-slate-900 dark:text-white text-xs sm:text-sm placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-purple-500"
                 />
               </div>
 
@@ -227,10 +227,10 @@ export const CareerToolsPage: React.FC = () => {
                 <select
                   value={tone}
                   onChange={(e) => setTone(e.target.value)}
-                  className="w-full bg-slate-50 dark:bg-surface-elevated/80 border border-slate-200 dark:border-white/10 rounded-xl px-3.5 py-2 text-slate-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:border-purple-500 cursor-pointer"
+                  className="w-full bg-white dark:bg-[#0D0F14] border border-slate-300 dark:border-white/15 rounded-xl px-3.5 py-2 text-slate-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:border-purple-500 cursor-pointer"
                 >
                   {TONE_OPTIONS.map(opt => (
-                    <option key={opt} value={opt} className="bg-white dark:bg-surface-elevated text-slate-900 dark:text-white">
+                    <option key={opt} value={opt} className="bg-white dark:bg-[#111318] text-slate-900 dark:text-white">
                       {opt}
                     </option>
                   ))}
@@ -246,7 +246,7 @@ export const CareerToolsPage: React.FC = () => {
                   onChange={(e) => setJobDescription(e.target.value)}
                   placeholder="Paste key responsibilities or requirements to match keywords..."
                   rows={4}
-                  className="w-full bg-slate-50 dark:bg-surface-elevated/80 border border-slate-200 dark:border-white/10 rounded-xl p-3 text-slate-900 dark:text-white text-xs placeholder-text-muted focus:outline-none focus:border-purple-500 resize-y"
+                  className="w-full bg-white dark:bg-[#0D0F14] border border-slate-300 dark:border-white/15 rounded-xl p-3 text-slate-900 dark:text-white text-xs placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-purple-500 resize-y"
                 />
               </div>
 
@@ -350,7 +350,7 @@ export const CareerToolsPage: React.FC = () => {
                     Ready to Craft Your Tailored Cover Letter
                   </h3>
                   <p className="text-xs text-text-muted leading-relaxed">
-                    Provide your target role and company name on the left, then click <strong>"Generate Cover Letter"</strong> to produce an executive, ATS-calibrated letter.
+                    Provide the company name, target role, and preferred tone on the left, then click <strong>"Generate Cover Letter"</strong> to produce an ATS-optimized pitch.
                   </p>
                 </div>
               </GlassCard>
@@ -362,11 +362,11 @@ export const CareerToolsPage: React.FC = () => {
       {/* TAB 2: LINKEDIN OPTIMIZER */}
       {activeTab === 'linkedin' && (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Controls */}
+          {/* Inputs */}
           <div className="lg:col-span-5 space-y-4">
             <GlassCard className="p-6 space-y-4 border-slate-200 dark:border-white/10">
               <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                <Linkedin size={18} className="text-blue-500 dark:text-blue-400" />
+                <Briefcase size={18} className="text-blue-500 dark:text-blue-400" />
                 <span>Profile Parameters</span>
               </h2>
 
@@ -379,7 +379,7 @@ export const CareerToolsPage: React.FC = () => {
                   value={candidateName}
                   onChange={(e) => setCandidateName(e.target.value)}
                   placeholder="e.g. Alex Mercer"
-                  className="w-full bg-slate-50 dark:bg-surface-elevated/80 border border-slate-200 dark:border-white/10 rounded-xl px-3.5 py-2 text-slate-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:border-blue-500"
+                  className="w-full bg-white dark:bg-[#0D0F14] border border-slate-300 dark:border-white/15 rounded-xl px-3.5 py-2 text-slate-900 dark:text-white text-xs sm:text-sm placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500"
                 />
               </div>
 
@@ -392,7 +392,7 @@ export const CareerToolsPage: React.FC = () => {
                   value={linkedinRole}
                   onChange={(e) => setLinkedinRole(e.target.value)}
                   placeholder="e.g. Senior Software Engineer"
-                  className="w-full bg-slate-50 dark:bg-surface-elevated/80 border border-slate-200 dark:border-white/10 rounded-xl px-3.5 py-2 text-slate-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:border-blue-500"
+                  className="w-full bg-white dark:bg-[#0D0F14] border border-slate-300 dark:border-white/15 rounded-xl px-3.5 py-2 text-slate-900 dark:text-white text-xs sm:text-sm placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500"
                 />
               </div>
 
@@ -405,7 +405,7 @@ export const CareerToolsPage: React.FC = () => {
                   onChange={(e) => setLinkedinSkills(e.target.value)}
                   placeholder="e.g. React, TypeScript, Python, Microservices, AWS"
                   rows={3}
-                  className="w-full bg-slate-50 dark:bg-surface-elevated/80 border border-slate-200 dark:border-white/10 rounded-xl p-3 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-blue-500 resize-y"
+                  className="w-full bg-white dark:bg-[#0D0F14] border border-slate-300 dark:border-white/15 rounded-xl p-3 text-slate-900 dark:text-white text-xs placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500 resize-y"
                 />
               </div>
 

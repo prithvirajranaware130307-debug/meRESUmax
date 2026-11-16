@@ -8,6 +8,12 @@ export default {
   theme: {
     extend: {
       colors: {
+        surface: {
+          DEFAULT: 'var(--bg-surface)',
+          card: 'var(--bg-surface)',
+          elevated: 'var(--bg-elevated)',
+          subtle: 'var(--bg-subtle)',
+        },
         bg: {
           main: 'var(--bg-main)',
           surface: 'var(--bg-surface)',
@@ -26,6 +32,10 @@ export default {
           secondary: 'var(--text-secondary)',
           muted: 'var(--text-muted)',
         },
+        mint: {
+          500: '#10B981',
+          DEFAULT: '#10B981',
+        },
         brand: {
           blue: '#3B82F6',
           cyan: '#06B6D4',
@@ -35,6 +45,7 @@ export default {
           rose: '#EF4444',
           accent: '#2563EB',
           yellow: '#E8FF47',
+          card: 'var(--bg-surface)',
         },
       },
       fontFamily: {

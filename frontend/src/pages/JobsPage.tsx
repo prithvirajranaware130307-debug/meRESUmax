@@ -130,7 +130,7 @@ export const JobsPage: React.FC = () => {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Job title, keywords, or skills..."
-              className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#0D0F14] border border-slate-200 dark:border-white/10 rounded-lg text-xs sm:text-sm text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
+              className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#0D0F14] border border-slate-200 dark:border-white/10 rounded-lg text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
             />
             <Search size={14} className="absolute left-3 top-2.5 text-slate-400 dark:text-zinc-500" />
           </div>
@@ -141,7 +141,7 @@ export const JobsPage: React.FC = () => {
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               placeholder="City, region, or Remote"
-              className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#0D0F14] border border-slate-200 dark:border-white/10 rounded-lg text-xs sm:text-sm text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
+              className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#0D0F14] border border-slate-200 dark:border-white/10 rounded-lg text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
             />
             <MapPin size={14} className="absolute left-3 top-2.5 text-slate-400 dark:text-zinc-500" />
           </div>
@@ -173,7 +173,7 @@ export const JobsPage: React.FC = () => {
           <button
             type="button"
             onClick={fetchJobListings}
-            className="px-3 py-1.5 rounded-md bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shrink-0"
+            className="px-3 py-1.5 rounded-md bg-rose-500/20 hover:bg-rose-500/30 text-rose-700 dark:text-rose-200 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shrink-0"
           >
             <RotateCcw size={12} />
             <span>Retry Search</span>

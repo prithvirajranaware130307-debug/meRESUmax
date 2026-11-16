@@ -103,7 +103,7 @@ export const LoginPage: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@domain.com"
-                  className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#0D0F14] border border-slate-300 dark:border-white/10 rounded-lg text-sm text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all disabled:opacity-50"
+                  className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#0D0F14] border border-slate-300 dark:border-white/10 rounded-lg text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all disabled:opacity-50"
                 />
                 <Mail size={15} className="absolute left-3 top-2.5 text-slate-400 dark:text-zinc-500 pointer-events-none" />
               </div>
@@ -121,7 +121,7 @@ export const LoginPage: React.FC = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#0D0F14] border border-slate-300 dark:border-white/10 rounded-lg text-sm text-slate-900 dark:text-white placeholder-text-muted focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all disabled:opacity-50"
+                  className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#0D0F14] border border-slate-300 dark:border-white/10 rounded-lg text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all disabled:opacity-50"
                 />
                 <Lock size={15} className="absolute left-3 top-2.5 text-slate-400 dark:text-zinc-500 pointer-events-none" />
               </div>
