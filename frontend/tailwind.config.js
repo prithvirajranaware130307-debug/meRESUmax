@@ -7,6 +7,10 @@ export default {
   ],
   theme: {
     extend: {
+      opacity: {
+        '15': '0.15',
+        '98': '0.98',
+      },
       colors: {
         surface: {
           DEFAULT: 'var(--bg-surface)',

@@ -154,6 +154,20 @@ export const Navbar: React.FC = () => {
     } else if (e.key === 'End') {
       e.preventDefault();
       items[items.length - 1]?.focus();
+    } else if (e.key === 'Tab') {
+      setMoreMenuOpen(false);
+    }
+  };
+
+  const handleMoreTriggerKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+      if (!moreMenuOpen) {
+        e.preventDefault();
+        setMoreMenuOpen(true);
+        setTimeout(() => {
+          menuItemsRef.current[0]?.focus();
+        }, 50);
+      }
     }
   };
 
@@ -224,7 +238,7 @@ export const Navbar: React.FC = () => {
                     className={`px-2.5 lg:px-3 py-1.5 text-xs lg:text-sm font-medium rounded-lg flex items-center gap-1.5 transition-all duration-150 shrink-0 ${
                       active 
                         ? 'text-slate-900 dark:text-white bg-slate-200/80 dark:bg-white/[0.09] shadow-sm font-semibold' 
-                        : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
+                        : 'text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
                     }`}
                   >
                     <Icon size={14} className={`shrink-0 ${active ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-zinc-400'}`} />
@@ -243,17 +257,18 @@ export const Navbar: React.FC = () => {
                   aria-expanded={moreMenuOpen}
                   aria-controls="more-menu-dropdown"
                   onClick={() => setMoreMenuOpen(prev => !prev)}
-                  className={`px-2.5 lg:px-3 py-1.5 text-xs lg:text-sm font-medium rounded-lg flex items-center gap-1.5 transition-all duration-150 cursor-pointer shrink-0 ${
-                    isMoreActive
+                  onKeyDown={handleMoreTriggerKeyDown}
+                  className={`px-2.5 lg:px-3 py-1.5 text-xs lg:text-sm font-medium rounded-lg flex items-center gap-1.5 transition-all duration-150 cursor-pointer shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 ${
+                    isMoreActive || moreMenuOpen
                       ? 'text-slate-900 dark:text-white bg-slate-200/80 dark:bg-white/[0.09] shadow-sm font-semibold'
-                      : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
+                      : 'text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
                   }`}
                 >
                   <span>More</span>
                   <ChevronDown 
                     size={13} 
-                    className={`shrink-0 opacity-70 transition-transform duration-200 ${
-                      moreMenuOpen ? 'rotate-180 text-slate-900 dark:text-white' : ''
+                    className={`shrink-0 transition-transform duration-200 ${
+                      moreMenuOpen ? 'rotate-180 text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400'
                     }`} 
                   />
                 </button>
@@ -264,7 +279,7 @@ export const Navbar: React.FC = () => {
                     role="menu"
                     aria-labelledby="more-menu-trigger"
                     onKeyDown={handleMoreMenuKeyDown}
-                    className="absolute left-0 mt-2 w-52 rounded-xl bg-white/98 dark:bg-[#0D0F14]/95 backdrop-blur-md border border-slate-200 dark:border-white/10 shadow-elevated p-1.5 z-50 flex flex-col gap-0.5 animate-in fade-in zoom-in-95 duration-100"
+                    className="absolute left-0 mt-2 w-52 sm:w-56 rounded-xl bg-white/98 dark:bg-[#111318]/98 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-xl shadow-slate-900/15 dark:shadow-2xl dark:shadow-black/70 p-1.5 z-50 flex flex-col gap-0.5 animate-in fade-in zoom-in-95 duration-100"
                   >
                     {MORE_AUTH_LINKS.map((link, idx) => {
                       const Icon = link.icon;
@@ -276,14 +291,27 @@ export const Navbar: React.FC = () => {
                           ref={el => (menuItemsRef.current[idx] = el)}
                           role="menuitem"
                           onClick={() => setMoreMenuOpen(false)}
-                          className={`px-3 py-2 text-xs font-medium rounded-lg flex items-center gap-2.5 transition-all duration-150 ${
+                          className={`group px-3 py-2 text-xs font-medium rounded-lg flex items-center gap-2.5 transition-all duration-150 focus:outline-none focus-visible:ring-1 ${
                             active
-                              ? 'text-blue-600 dark:text-white bg-blue-50 dark:bg-white/[0.10] font-semibold'
-                              : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.05]'
+                              ? 'text-blue-700 dark:text-white bg-blue-50/90 dark:bg-white/[0.10] font-semibold'
+                              : 'text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.05] focus:bg-slate-100 dark:focus:bg-white/[0.05] focus-visible:ring-slate-300 dark:focus-visible:ring-white/20'
                           }`}
                         >
-                          <Icon size={14} className={`shrink-0 ${active ? 'text-blue-600 dark:text-white' : 'text-slate-500 dark:text-zinc-400'}`} />
-                          <span>{link.label}</span>
+                          <Icon 
+                            size={14} 
+                            className={`shrink-0 transition-colors ${
+                              active 
+                                ? 'text-blue-600 dark:text-white' 
+                                : 'text-slate-500 group-hover:text-slate-800 dark:text-slate-400 dark:group-hover:text-white'
+                            }`} 
+                          />
+                          <span className="flex-1">{link.label}</span>
+                          {active && (
+                            <span 
+                              className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400 shrink-0" 
+                              aria-hidden="true" 
+                            />
+                          )}
                         </Link>
                       );
                     })}
@@ -370,7 +398,7 @@ export const Navbar: React.FC = () => {
           role="dialog"
           aria-modal="true"
           aria-label="Mobile Navigation Drawer"
-          className="md:hidden fixed top-16 inset-x-3 sm:inset-x-4 max-h-[calc(100vh-5rem)] overflow-y-auto bg-white/98 dark:bg-[#0D0F14]/95 backdrop-blur-xl rounded-xl p-3 sm:p-4 shadow-elevated border border-slate-200 dark:border-white/10 pointer-events-auto flex flex-col gap-1.5 z-50 animate-in fade-in zoom-in-95 duration-150"
+          className="md:hidden fixed top-16 inset-x-3 sm:inset-x-4 max-h-[calc(100vh-5rem)] overflow-y-auto bg-white/98 dark:bg-[#111318]/98 backdrop-blur-xl rounded-xl p-3 sm:p-4 shadow-xl shadow-slate-900/15 dark:shadow-2xl dark:shadow-black/70 border border-slate-200 dark:border-white/10 pointer-events-auto flex flex-col gap-1.5 z-50 animate-in fade-in zoom-in-95 duration-150"
         >
           {!isAuthenticated ? (
             <>
@@ -378,45 +406,45 @@ export const Navbar: React.FC = () => {
                 to="/"
                 onClick={() => setMobileMenuOpen(false)}
                 className={`px-3 py-2 text-sm font-medium rounded-lg flex items-center justify-between transition-colors ${
-                  isActive('/') ? 'text-blue-600 dark:text-white bg-blue-50 dark:bg-white/[0.08] font-semibold' : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
+                  isActive('/') ? 'text-blue-700 dark:text-white bg-blue-50/90 dark:bg-white/[0.08] font-semibold' : 'text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
                 }`}
               >
                 <span>Home</span>
-                <ChevronRight size={14} className="text-text-muted" />
+                <ChevronRight size={14} className="text-slate-400 dark:text-text-muted" />
               </Link>
               <Link
                 to="/jobs"
                 onClick={() => setMobileMenuOpen(false)}
                 className={`px-3 py-2 text-sm font-medium rounded-lg flex items-center justify-between transition-colors ${
-                  isActive('/jobs') ? 'text-blue-600 dark:text-white bg-blue-50 dark:bg-white/[0.08] font-semibold' : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
+                  isActive('/jobs') ? 'text-blue-700 dark:text-white bg-blue-50/90 dark:bg-white/[0.08] font-semibold' : 'text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
                 }`}
               >
                 <span>Explore Jobs</span>
-                <ChevronRight size={14} className="text-text-muted" />
+                <ChevronRight size={14} className="text-slate-400 dark:text-text-muted" />
               </Link>
               <a
                 href="/#features"
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 text-sm font-medium text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04] rounded-lg flex items-center justify-between transition-colors"
+                className="px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04] rounded-lg flex items-center justify-between transition-colors"
               >
                 <span>Features</span>
-                <ChevronRight size={14} className="text-text-muted" />
+                <ChevronRight size={14} className="text-slate-400 dark:text-text-muted" />
               </a>
               <a
                 href="/#how-it-works"
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 text-sm font-medium text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04] rounded-lg flex items-center justify-between transition-colors"
+                className="px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04] rounded-lg flex items-center justify-between transition-colors"
               >
                 <span>Workflow</span>
-                <ChevronRight size={14} className="text-text-muted" />
+                <ChevronRight size={14} className="text-slate-400 dark:text-text-muted" />
               </a>
               <a
                 href="/#faq"
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 text-sm font-medium text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04] rounded-lg flex items-center justify-between transition-colors"
+                className="px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04] rounded-lg flex items-center justify-between transition-colors"
               >
                 <span>FAQ</span>
-                <ChevronRight size={14} className="text-text-muted" />
+                <ChevronRight size={14} className="text-slate-400 dark:text-text-muted" />
               </a>
 
               <div className="flex items-center justify-between px-3 py-1 text-xs text-text-secondary">
@@ -472,12 +500,24 @@ export const Navbar: React.FC = () => {
                     key={link.to}
                     to={link.to}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`px-3 py-2 text-sm font-medium rounded-lg flex items-center gap-2.5 transition-colors ${
-                      active ? 'text-blue-600 dark:text-white bg-blue-50 dark:bg-white/[0.09] font-semibold' : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
+                    className={`group px-3 py-2 text-sm font-medium rounded-lg flex items-center gap-2.5 transition-colors focus:outline-none focus-visible:ring-1 ${
+                      active
+                        ? 'text-blue-700 dark:text-white bg-blue-50/90 dark:bg-white/[0.10] font-semibold'
+                        : 'text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.05] focus:bg-slate-100 dark:focus:bg-white/[0.05] focus-visible:ring-slate-300 dark:focus-visible:ring-white/20'
                     }`}
                   >
-                    <Icon size={16} className={`shrink-0 ${active ? 'text-blue-600 dark:text-white' : 'text-slate-500 dark:text-zinc-400'}`} />
-                    <span>{link.label}</span>
+                    <Icon 
+                      size={16} 
+                      className={`shrink-0 transition-colors ${
+                        active 
+                          ? 'text-blue-600 dark:text-white' 
+                          : 'text-slate-500 group-hover:text-slate-800 dark:text-slate-400 dark:group-hover:text-white'
+                      }`} 
+                    />
+                    <span className="flex-1">{link.label}</span>
+                    {active && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400 shrink-0" aria-hidden="true" />
+                    )}
                   </Link>
                 );
               })}
@@ -496,12 +536,24 @@ export const Navbar: React.FC = () => {
                     key={link.to}
                     to={link.to}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`px-3 py-2 text-sm font-medium rounded-lg flex items-center gap-2.5 transition-colors ${
-                      active ? 'text-blue-600 dark:text-white bg-blue-50 dark:bg-white/[0.09] font-semibold' : 'text-text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
+                    className={`group px-3 py-2 text-sm font-medium rounded-lg flex items-center gap-2.5 transition-colors focus:outline-none focus-visible:ring-1 ${
+                      active
+                        ? 'text-blue-700 dark:text-white bg-blue-50/90 dark:bg-white/[0.10] font-semibold'
+                        : 'text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.05] focus:bg-slate-100 dark:focus:bg-white/[0.05] focus-visible:ring-slate-300 dark:focus-visible:ring-white/20'
                     }`}
                   >
-                    <Icon size={16} className={`shrink-0 ${active ? 'text-blue-600 dark:text-white' : 'text-slate-500 dark:text-zinc-400'}`} />
-                    <span>{link.label}</span>
+                    <Icon 
+                      size={16} 
+                      className={`shrink-0 transition-colors ${
+                        active 
+                          ? 'text-blue-600 dark:text-white' 
+                          : 'text-slate-500 group-hover:text-slate-800 dark:text-slate-400 dark:group-hover:text-white'
+                      }`} 
+                    />
+                    <span className="flex-1">{link.label}</span>
+                    {active && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400 shrink-0" aria-hidden="true" />
+                    )}
                   </Link>
                 );
               })}
