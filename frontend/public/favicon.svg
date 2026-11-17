@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#111625" />
+      <stop offset="100%" stop-color="#07090E" />
+    </linearGradient>
+    <linearGradient id="cyanBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06B6D4" />
+      <stop offset="100%" stop-color="#3B82F6" />
+    </linearGradient>
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#06B6D4" stop-opacity="0.2" />
+    </linearGradient>
+  </defs>
+
+  <!-- Precision Monogram Rounded Tile -->
+  <rect x="2" y="2" width="60" height="60" rx="14" ry="14" fill="url(#bgGrad)" stroke="url(#borderGrad)" stroke-width="2" />
+
+  <!-- Outlined Document / Resume Body -->
+  <path d="M20 13 H36 L46 23 V49 C46 50.1 45.1 51 44 51 H20 C18.9 51 18 50.1 18 49 V15 C18 13.9 18.9 13 20 13 Z"
+        stroke="#FFFFFF" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" fill="rgba(255, 255, 255, 0.03)" />
+
+  <!-- Fold Flap -->
+  <path d="M36 13 V23 H46"
+        stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+
+  <!-- Resume Content Accent Lines -->
+  <line x1="24" y1="31" x2="40" y2="31" stroke="url(#cyanBlue)" stroke-width="3.2" stroke-linecap="round" />
+  <line x1="24" y1="38" x2="40" y2="38" stroke="url(#cyanBlue)" stroke-width="3.2" stroke-linecap="round" />
+  <line x1="24" y1="45" x2="33" y2="45" stroke="#06B6D4" stroke-width="3.2" stroke-linecap="round" />
+
+  <!-- Precision Active Indicator Dot -->
+  <circle cx="51.5" cy="12.5" r="4.5" fill="url(#cyanBlue)" stroke="#07090E" stroke-width="1.8" />
+</svg>
